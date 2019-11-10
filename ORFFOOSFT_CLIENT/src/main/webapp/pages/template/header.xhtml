@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="navbar-header">
+			<a class="navbar-brand"
+				href="#{request.contextPath}/pages/home.xhtml"> <img
+				src="#{request.contextPath}/assets/images/company-logo.png" alt="Logo" />
+				<span class="brand-title">Mark Solution</span>
+			</a>
+			<ul class="nav navbar-nav visible-xs-block">
+				<li><a data-toggle="collapse" data-target="#navbar-mobile"><i
+						class="icon-tree5"></i></a></li>
+				<li><a class="sidebar-mobile-main-toggle"><i
+						class="icon-paragraph-justify3"></i></a></li>
+			</ul>
+		</div>
+
+		<div class="navbar-collapse collapse" id="navbar-mobile">
+			<ul class="nav navbar-nav">
+				<li><a class="sidebar-control sidebar-main-toggle hidden-xs"><i
+						class="icon-paragraph-justify3"></i></a></li>
+			</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+				<li class="navbar-text nav-region"><span class="label reg-txt">#{loginBean.userInfoDTO.showRoomCode}
+						/ #{loginBean.userInfoDTO.showRoomName}</span></li>
+				<li class=" language-switch m-r-10"><h:selectOneMenu
+						value="#{languageBean.localeCode}" onchange="submit()"
+						data-width="100%" class="langdd"
+						valueChangeListener="#{languageBean.countryLocaleCodeChanged}">
+						<f:selectItems value="#{languageBean.countriesInMap}" />
+					</h:selectOneMenu></li>
+
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown"> <i class="icon-grid3"></i> <span
+						class="visible-xs-inline-block position-right">Welcome,
+							Admin</span>
+				</a> <ui:include src="/pages/template/modulemenu.xhtml" /></li>
+
+				<!--  -->
+
+
+				<ui:include src="/pages/notification/systemNotifications.xhtml" />
+
+				<li class="dropdown dropdown-user"><a class="dropdown-toggle"
+					data-toggle="dropdown"> <img
+						src="#{request.contextPath}/assets/images/Pic.jpg" alt="img" />
+						<span><h:outputText
+								value="#{loginBean.userDetailSession.username}" /></span> <i
+						class="caret"></i>
+				</a>
+
+					<ul class="dropdown-menu dropdown-menu-right">
+						<li><div class="media">
+								<div class="media-left">
+									<img src="#{request.contextPath}/assets/images/Pic.jpg"
+										class="img-circle img-lg" alt="" style="max-width: 50px; max-height: 50px" />
+								</div>
+								<div class="media-body">
+									<span class="media-heading text-semibold">#{loginBean.userInfoDTO.employeeName}</span>
+									<div class="text-size-mini text-muted">
+										<i class="icon-user-tie text-size-small"></i>
+										&nbsp;#{loginBean.userInfoDTO.employeeDesignation}
+									</div>
+									<div class="text-size-mini text-muted">
+										<i class="icon-envelope text-size-small"></i>
+										&nbsp;#{loginBean.userInfoDTO.employeeEmail}
+									</div>
+								</div>
+							</div></li>
+						<li class="divider"></li>
+
+						<li>
+							<div class="media-left">
+								<p:commandLink value="&#xeb33;&nbsp;#{msg['my_profile']}"
+									action="#{employeeProfileBean.loadEmployeeProfile}"
+									rendered="true" onclick="PF('progressDlg').show();"
+									oncomplete="PF('progressDlg').hide();"
+									styleClass="btn btn-primary font-iconmoon">
+								</p:commandLink>
+							</div>
+
+							<div class="media-body text-right">
+								<p:commandLink value="&#xec48;&nbsp;#{msg['logout']}"
+									onclick="PF('logout').show()"
+									styleClass="btn btn-danger font-iconmoon m-r-10">
+								</p:commandLink>
+							</div>
+						</li>
+
+					</ul></li>
+			</ul>
+		</div>
+
+		<p:dialog header="#{msg['confirm_logout']}" draggable="false" modal="true"
+			styleClass="p-0 overlay-pop modal-dialog" closable="true" width="30%"
+			widgetVar="logout" showEffect="fade" hideEffect="fade"
+			closeOnEscape="true" resizable="false">
+			<div class="modal-body">
+				<h:outputText value="#{msg['do_you_logout']}" />
+			</div>
+			<div class="modal-footer m-t-10">
+				<p:commandButton value="&#xed6a;&nbsp;#{msg['no']}" title="#{msg['no']}"
+					styleClass="btn bg-slate heading-btn font-iconmoon"
+					oncomplete="PF('logout').hide()" />
+				<p:commandButton ajax="false" immediate="true"
+					styleClass="btn bg-success heading-btn font-iconmoon" title="#{msg['yes']}"
+					value="&#xed6e;&nbsp;#{msg['yes']}" action="#{loginBean.logout}"
+					oncomplete="PF('logout').hide()">
+				</p:commandButton>
+			</div>
+		</p:dialog>
+	</div>
+
+</ui:composition>

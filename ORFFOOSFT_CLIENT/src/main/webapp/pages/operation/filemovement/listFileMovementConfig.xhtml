@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/pages/template/layout.xhtml">
+	<ui:define name="content">
+		<ui:param name="bean" value="#{fileMovementConfigBean}"></ui:param>
+		<title>InfoTex | File Movement Hierarchy Configuration List</title>
+		<div class="page-header page-header-default">
+			<div class="page-header-content">
+				<div class="page-title">
+					<h4>#{msg['hierarchy_config_list']}</h4>
+					<ul class="breadcrumb">
+						<li><a href="#{msg['DefaultHomePage']}"><i
+								class="icon-home2 position-left"></i>#{msg['home']}</a></li>
+						<li>#{msg['masters']}</li>
+						<li>#{msg['hierarchy_config_list']} </li>
+
+					</ul>
+					<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+				</div>
+				<ui:include src="/pages/pageHeadingElements.xhtml" />
+			</div>
+		</div>
+		<div class="content">
+			<div class="row">
+				<div class="col-lg-6">
+					<h6 class="panel-title m-t-5">
+
+						<span class="textb"> <h:outputText
+								value="#{bean.totalRecords}" id="recordcount"></h:outputText></span> -
+						Total #{msg['fuel_coupon']} #{msg['list']}<a
+							class="heading-elements-toggle"><i class="icon-more"></i></a>
+					</h6>
+				</div>
+
+				<div class="col-lg-6 text-right">
+					<div class="form-group m-b-10">
+						<p:commandButton value="&#xea0e; #{msg['add']}"				
+							title="#{msg['add']}" id="addId" disabled="#{bean.disableAddButton}"
+							action="#{bean.addFileMovementConfig}"
+							class="btn bg-success font-iconmoon" update="growls"
+							onclick="PF('progressDlg').show();">
+							<f:setPropertyActionListener value="ADD"
+								target="#{bean.action}"></f:setPropertyActionListener>
+						</p:commandButton>
+						<p:commandButton value="&#xe912; #{msg['edit']}"
+							action="#{bean.editFileMovementConfig}" title="#{msg['edit']}"
+							update="growls" id="editId" class="btn bg-primary font-iconmoon">
+							<f:setPropertyActionListener value="EDIT"
+								target="#{bean.action}"></f:setPropertyActionListener>
+						</p:commandButton>
+
+
+						<p:commandButton value="&#xea18; #{msg['view']}" id="viewId"
+							title="#{msg['view']}" action="#{bean.viewFileMovementConfig}"
+							class="btn bg-info heading-btn  font-iconmoon" update="growls">
+							<f:setPropertyActionListener value="VIEW"
+								target="#{bean.action}"></f:setPropertyActionListener>
+						</p:commandButton>
+
+
+						<p:commandButton value="&#xe99e; #{msg['delete']}" id="deleteId"
+							action="#{bean.deleteFileMovementConfig}" title="#{msg['delete']}"
+							update="growls" class="btn bg-danger font-iconmoon">
+							<f:setPropertyActionListener value="DELETE"
+								target="#{bean.action}"></f:setPropertyActionListener>
+						</p:commandButton>
+
+
+
+
+						<p:dialog header="Confirm Delete" draggable="false" modal="true"
+							styleClass="p-0 overlay-pop modal-dialog" closable="true"
+							width="30%" widgetVar="confirmFileMovementConfigListBYAppFeatureIdDelete"
+							showEffect="fade" hideEffect="fade" closeOnEscape="true"
+							resizable="false">
+
+							<div class="modal-body">
+
+								<h:outputText
+									value="Are you sure you want to delete this Record ?" />
+
+							</div>
+
+							<div class="modal-footer m-t-10">
+								<p:commandButton value="&#xed6a;&nbsp;No"
+									styleClass="btn bg-slate heading-btn font-iconmoon"
+									oncomplete="PF('confirmFileMovementConfigListBYAppFeatureIdDelete').hide()" />
+								<p:commandButton ajax="false"
+									styleClass="btn bg-success heading-btn font-iconmoon"
+									value="&#xed6e;&nbsp;Yes"
+									action="#{bean.deleteFileMovementConfigListBYAppFeatureId}"
+									oncomplete="PF('confirmFileMovementConfigListBYAppFeatureIdDelete').hide()">
+								</p:commandButton>
+							</div>
+						</p:dialog>
+
+						<p:commandButton value="&#xe916;&nbsp;#{msg['clear']}"
+							immediate="true" action="#{bean.clearListPage}"
+							onclick="PF('progressDlg').show();"
+							oncomplete="PF('progressDlg').hide();" title="#{msg['clear']}"
+							class="btn bg-slate font-iconmoon">
+						</p:commandButton>
+					</div>
+				</div>
+			</div>
+			
+			
+			
+			<div class="panel panel-info ">
+				<div class="panel-body p-0">
+					<div class="table-responsive">
+					<p:dataTable id="Id" widgetVar="fileMovementConfigWdgt" 
+						class="table" var="data" rowKey="#{data.id}"
+						selection="#{bean.selectedFileMovementConfig}"
+						value="#{bean.fileMovementConfigLazyList}" lazy="true"
+						paginatorAlwaysVisible="true" paginator="true"
+						rowsPerPageTemplate="5,10,15" rows="5" rowIndexVar="idx"
+						paginatorPosition="bottom" emptyMessage="No records found"
+						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+					
+						<p:ajax event="filter" oncomplete="updateFilterSelection()" />
+						
+							<p:ajax event="rowSelectRadio"
+									listener="#{bean.onRowSelect}"
+									update=":#{p:component('addId')}" />
+								<p:column headerText="#" class="width-5 text-center">
+									<h:outputText value="#{idx+1}" />
+								</p:column>
+								<p:column filterable="true"
+									filterBy="#{data.appFeature.featureName}"
+									filterMatchMode="contains" headerText="#{msg['fm_appfeature']}"
+									sortBy="#{data.appFeature.featureName}" sortable="true">
+									<f:facet name="filter">
+										<p:inputText id="appFeatureId" class="form-control"
+											onkeyup="PF('fileMovementConfigWdgt').filter()" />
+									</f:facet>
+									<h:outputText value="#{data.appFeature.featureName}" />
+								</p:column>
+								
+								<p:column filterable="true"
+									filterBy="#{data.createdBy.username}"
+									filterMatchMode="contains" headerText="#{msg['created_by']}"
+									sortBy="#{data.createdBy.username}" sortable="true">
+									<f:facet name="filter">
+										<p:inputText id="createdById" class="form-control"
+											onkeyup="PF('fileMovementConfigWdgt').filter()" />
+									</f:facet>
+									<h:outputText value="#{data.createdBy.username}" />
+								</p:column>
+							
+							 
+							
+							<p:column headerText="#{msg['created_date']}"
+								styleClass="text-center " filterable="true" sortable="true"
+								filterBy="#{data.createdDate}" sortBy="#{data.createdDate}">
+								<f:facet name="filter">
+									<p:calendar id="popup" class="form-control calend-icon"
+										navigator="true" placeholder="DD-MM-YYYY" pattern="dd-MM-yyyy">
+										<p:ajax event="dateSelect"
+											oncomplete="PF('fileMovementConfigWdgt').filter()" />
+									</p:calendar>
+								</f:facet>
+								<h:outputText value="#{data.createdDate}">
+									<f:convertDateTime timeZone="GMT+05:30" pattern="dd-MM-yyyy" />
+								</h:outputText>
+							</p:column> 
+							
+							
+							<p:column headerText="#{msg['select']}" selectionMode="single"
+								style="width:6%;text-align:center" />
+							
+					</p:dataTable>
+					
+					<p:remoteCommand name="updateFilterSelection"
+								update=":#{p:component('recordcount')}" autoRun="true" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

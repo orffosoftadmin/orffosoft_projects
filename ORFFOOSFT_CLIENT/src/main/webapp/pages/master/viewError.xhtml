@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/pages/template/layout.xhtml">
+	<ui:define name="content">
+		<title>Infotex | View Error</title>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="clearfix">
+					<div class="pull-left">
+						<h4 class="page-title">#{msg['view_err']}</h4>
+					</div>
+					<div class="pull-right hidden-xs">
+						<ol class="breadcrumb m-t-10 text12 ph0">
+							<li><i class="fa fa-home mr-sm"></i><a href="#">#{msg['home']}</a></li>
+							<li>#{msg['hlp_dsk']}</li>
+							<li class="active">#{msg['view_err']}</li>
+						</ol>
+					</div>
+					
+				</div>
+				<div class="panel panel-color panel-top-bor">
+					<div class="panel-body">
+						<div class="row view-style">
+							<div class="col-lg-6 col-md-6 col-sm-6">
+									<div class="form-group">
+											<p:outputLabel class="" value="#{msg['code']}" />
+											<h:outputText value="ERR541254" class="" />
+									</div> 
+							</div>
+							<div class="col-lg-6 col-md-6 col-sm-6">
+									<div class="form-group">
+											<p:outputLabel class="" value="#{msg['name']}" />
+											<h:outputText value="Wrong Information" class="" />
+									</div> 
+							</div>
+							
+									
+						</div>
+						<div class="row view-style">
+						<div class="col-lg-6 col-md-6 col-sm-6">
+								<div class="form-group">
+											<p:outputLabel class="" value="#{msg['desc']}" />
+											<h:outputText value="This is Error Description" class="" />
+								</div> 
+							</div>
+						<div class="col-lg-6 col-md-6 col-sm-6">
+								<div class="form-group">
+											<p:outputLabel class="" value="#{msg['desc_tamil']}" />
+											<h:outputText value="This is Error Description" class="" />
+								</div> 
+						</div>
+						</div>
+						<div class="row view-style">
+						<div class="col-lg-3 col-md-3 col-sm-3">
+								<div class="form-group">
+											<p:outputLabel class="" value="#{msg['act_status']}" />
+											<h:outputText value="Solved" class="" />
+								</div>
+						</div>
+							
+						</div>
+						<div class="col-lg-12 text-right ph0">
+							
+							<p:commandButton value="&#xf060;&nbsp;#{msg['back']}"
+								styleClass="btn btn-sm btn-info waves-effect waves-light fa-input"></p:commandButton>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- end col -->
+		</div>
+	</ui:define>
+</ui:composition>

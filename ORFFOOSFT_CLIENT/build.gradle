@@ -1,0 +1,146 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'war'
+apply plugin: 'pmd'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'checkstyle'
+
+
+
+buildscript {
+	ext {
+		springBootVersion = '1.5.10.RELEASE'
+		checkstyleversion = '8.4'
+	}
+	repositories {
+		mavenCentral()
+        
+		
+		
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+
+
+sourceCompatibility = 1.8
+
+war {
+	baseName = 'ORFFOSOFT_CLIENT'
+}
+
+sourceSets {
+   main.java.srcDir "src/main/java"
+   main.resources.srcDir "src/main/resources"
+   test.java.srcDir "src/test/java"
+   test.resources.srcDir "src/test/resources"
+}
+
+springBoot {
+    mainClass = "co.mark.solution.MarkSolutionClientApplication"
+}
+
+pmd {
+    sourceSets = []
+}
+
+checkstyle {
+    configFile = new File("${projectDir}/src/main/resources/checkstyle_rules_v2.xml")
+    
+    sourceSets = []    
+    ignoreFailures = false
+	toolVersion = checkstyleversion
+	showViolations = true
+}
+
+
+repositories {
+	mavenCentral()
+	maven{
+            url "http://jaspersoft.artifactoryonline.com/jaspersoft/third-party-ce-artifacts/"
+        }
+}
+
+configurations {
+	providedRuntime
+	all*.exclude group: 'ch.qos.logback', module: 'logback-classic' 
+ 	all*.exclude group: 'org.slf4j', module: 'slf4j-log4j12' 
+ 	compile.exclude module: 'spring-boot-starter-logging'
+}
+
+dependencies {
+    compile project(':ORFFOSOFT_CORE')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile("org.springframework.boot:spring-boot-devtools")
+	compile('org.projectlombok:lombok')
+	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+	// https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
+	providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	// https://www.primefaces.org/docs/vdl/6.1/core/
+	compile group: "org.primefaces", name: "primefaces", version: "6.1"
+	compile group: 'commons-fileupload', name: 'commons-fileupload', version: '1.3.1'
+	compile 'com.sun.faces:jsf-api:2.2.14'
+    compile 'com.sun.faces:jsf-impl:2.2.14'
+    compile 'javax.servlet:jstl:1.2'
+    compile 'jstl:jstl:1.2'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.8.2'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.8.2'
+    compile 'org.apache.commons:commons-lang3:3.2.1'
+ 	compile 'javax.inject:javax.inject:1'
+ 	compile 'org.apache.commons:commons-lang3:3.0'
+ 	compile 'commons-fileupload:commons-fileupload:1.3'
+ 	compile 'commons-io:commons-io:2.4'
+ 	compile 'commons-logging:commons-logging:1.1.1'
+ 	// https://mvnrepository.com/artifact/org.ocpsoft.rewrite/rewrite-servlet
+ 	compile group: 'org.ocpsoft.rewrite', name: 'rewrite-servlet', version: '3.4.1.Final'
+ 	// https://mvnrepository.com/artifact/org.ocpsoft.rewrite/rewrite-config-prettyfaces
+ 	compile group: 'org.ocpsoft.rewrite', name: 'rewrite-config-prettyfaces', version: '3.4.1.Final'
+ 	// https://mvnrepository.com/artifact/org.ocpsoft.rewrite/rewrite-integration-faces
+ 	compile group: 'org.ocpsoft.rewrite', name: 'rewrite-integration-faces', version: '3.4.1.Final'
+    compile("org.apache.tomcat.embed:tomcat-embed-jasper")
+    // https://mvnrepository.com/artifact/org.primefaces.extensions/primefaces-extensions
+    compile group: 'org.primefaces.extensions', name: 'primefaces-extensions', version: '6.1.0'
+    
+    // https://mvnrepository.com/artifact/cglib/cglib-nodep
+    compile group: 'cglib', name: 'cglib-nodep', version: '2.2'
+    
+    // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
+	compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.3.4'
+    // https://mvnrepository.com/artifact/org.jasypt/jasypt
+	compile group: 'org.jasypt', name: 'jasypt', version: '1.9.0'
+    
+    // https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports
+	compile group: 'net.sf.jasperreports', name: 'jasperreports', version: '5.5.2'
+	// https://mvnrepository.com/artifact/com.lowagie/itext
+	compile group: 'com.lowagie', name: 'itext', version: '2.1.7'
+	
+	compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '1.5.5'
+	
+	 // https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml
+	compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.9'
+	
+	//compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.13'
+	
+	// https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml-schemas
+	compile group: 'org.apache.poi', name: 'poi-ooxml-schemas', version: '3.9'
+	// https://mvnrepository.com/artifact/joda-time/joda-time
+	compile group: 'joda-time', name: 'joda-time', version: '2.3'
+	
+	compile group: 'org.apache.tiles', name: 'tiles-jsp', version:'3.0.5'
+	// https://mvnrepository.com/artifact/com.google.guava/guava
+    compile group: 'com.google.guava', name: 'guava', version: '11.0.2'
+	
+
+	// https://mvnrepository.com/artifact/com.itextpdf/itextpdf
+   compile group: 'com.itextpdf', name: 'itextpdf', version: '5.5.12'
+
+
+  // https://mvnrepository.com/artifact/com.itextpdf.tool/xmlworker
+  compile group: 'com.itextpdf.tool', name: 'xmlworker', version: '5.5.12'
+  
+    testCompile("junit:junit")
+}

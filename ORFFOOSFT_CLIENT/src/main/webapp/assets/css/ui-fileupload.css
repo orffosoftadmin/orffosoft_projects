@@ -1,0 +1,48 @@
+/* hide the icons in the file upload button bar */
+.ui-fileupload-buttonbar .ui-icon {
+    display: none !important;
+}
+
+/* adjust the padding of all buttons inside the file upload button bar */
+.ui-fileupload-buttonbar .ui-button-text-icon-left .ui-button-text {
+	width:100%;
+    padding: 0.8em 0em !important;
+    font-weight:normal;
+    color:#fff;
+    text-shadow:none;
+    font-family: FontAwesome, 'open_sansregular', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+}
+
+/* unstyle the file upload button bar background */
+.ui-fileupload-buttonbar.ui-widget-header {
+    background-color: transparent !important;
+    border: 0 none !important;
+    padding: 0;
+}
+
+.ui-fileupload {
+	margin:0;
+}
+
+/* increase fileupload button spacing between 'choose' and 'upload' */
+.ui-fileupload-buttonbar .ui-fileupload-choose {
+    margin-right:0 !important;
+    background:#188ae2 !important;
+    border:0px;
+    width: 85%;
+}
+
+/* remove the border of file upload content list */
+.ui-fileupload-content {
+    border: 0 none !important;
+}
+
+body .ui-fileupload .ui-fileupload-buttonbar {
+    padding: 0px;
+}
+body .ui-fileupload .ui-fileupload-buttonbar .ui-button {
+    margin-right:0px;
+}
+body .ui-fileupload .ui-fileupload-content {
+    display: none;
+}

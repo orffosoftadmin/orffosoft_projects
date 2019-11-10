@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/pages/template/layout.xhtml">
+	<ui:define name="content">
+		<title>InfoTex | Product Variety List</title>
+		<h:form id="listForm">
+			<div class="row">
+				<div class="col-lg-6 col-md-6 col-sm-6">
+					<h4 class="page-title">#{msg['prod_variety_master']}</h4>
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-6">
+					<div class="pull-right hidden-xs">
+						<ol class="breadcrumb m-t-10 text12 ph0">
+							<li><i class="fa fa-home mr-sm"></i><a href="#">#{msg['home']}</a></li>
+							<li>#{msg['master']}</li>
+							<li class="active">#{msg['prod_variety_master']}</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+
+			<!-- search -->
+			<!--   <div class="panel panel-color panel-default panel-top-bor">  -->
+			<div class="panel panel-default panel-top-bor">
+				<div class="panel-body">
+					<p:outputPanel id="searchPanel">
+						<div class="row">
+
+							<div class="col-md-4">
+								<div class="form-group">
+									<h:outputLabel for="ccode"
+										value="#{msg['prod_category_code']} - #{msg['name']}" />
+									<h:selectOneMenu id="ccode" converter="#{entityConverter}"
+										value="#{productVarietyMasterBean.productCategoryDto}"
+										scrollHeight="5" class="form-control">
+										<p:ajax
+										listener="#{productVarietyMasterBean.onProductCategoryChange}"
+											update="gcode" />
+										<f:selectItem itemLabel="#{msg['select']} "
+											itemValue="#{null}" noSelectionOption="true" />
+										<f:selectItems itemValue="#{p}" var="p"
+											itemLabel="#{p.productCatCode} - #{languageBean.localeCode eq 'ta_IN' ? (p.regionalName ne null ? p.regionalName : '') : p.productCatName} "
+										value="#{productVarietyMasterBean.productCategoryDtoList}" />
+
+									</h:selectOneMenu>
+								</div>
+							</div>
+
+							<div class="col-md-4">
+								<div class="form-group">
+									<p:outputLabel for="gcode"
+										value="#{msg['prod_group_code']} - #{msg['name']}" />
+									<h:selectOneMenu tabindex="1" id="gcode"
+										converter="#{entityConverter}"
+										value="#{productVarietyMasterBean.productGroupDto}"
+										class="form-control">
+
+										<f:selectItem itemLabel="#{msg['select']} "
+											itemValue="#{null}" noSelectionOption="true" />
+										<f:selectItems itemValue="#{p}" var="p"
+											itemLabel="#{p.code} - #{languageBean.localeCode eq 'ta_IN' ? (p.lname ne null ? p.lname : '') : p.name}"
+										value="#{productVarietyMasterBean.productGroupDtoList}" />
+									</h:selectOneMenu>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<p:outputLabel class="fa-input"
+										value="#{msg['prod_variey_code']}" />
+									<p:inputText id="vcode" class="form-control" autocomplete="off"
+										maxlength="4" value="#{productVarietyMasterBean.code}">
+									</p:inputText>
+									<p:tooltip for="vcode" styleClass="cus-tooltip"
+										value="#{msg['enter_product_variety_code']}" />
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4">
+								<div class="form-group">
+									<p:outputLabel class="fa-input"
+										value="#{msg['prod_variety_name']}" />
+									<p:inputText id="vname" maxlength="100" class="form-control"
+										autocomplete="off" value="#{productVarietyMasterBean.name}">
+									</p:inputText>
+									<p:tooltip for="vname" styleClass="cus-tooltip"
+										value="#{msg['enter_product_variety_name']}" />
+								</div>
+							</div>
+
+							<div class="col-md-4">
+								<div class="form-group">
+									<p:outputLabel class="fa-input"
+										value="#{msg['prod_variety_lname']}" />
+
+									<p:inputText id="vlname" maxlength="100" class="form-control"
+										autocomplete="off" value="#{productVarietyMasterBean.lname}">
+
+									</p:inputText>
+									<p:tooltip for="vlname" styleClass="cus-tooltip"
+										value="#{msg['enter_product_variety_lname']}" />
+								</div>
+							</div>
+
+							<div class="col-md-4">
+								<div class="form-group">
+									<p:outputLabel for="status" value="#{msg['status']}" />
+									<p:selectOneMenu id="status" styleClass="form-control int-drop"
+										value="#{productVarietyMasterBean.statusValue}">
+
+										<f:selectItem itemLabel="#{msg['select']}  "
+											noSelectionOption="true" />
+
+
+										<f:selectItem itemLabel="#{msg['active']}" itemValue="true" />
+										<f:selectItem itemLabel="#{msg['inactive']}" itemValue="false" />
+									</p:selectOneMenu>
+									<p:watermark value="Select" for="status"></p:watermark>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="col-md-4">
+			<div class="form-group">
+					<label class="control-label">Product Item Name</label>
+					<input type="text" maxlength="250" class="form-control" />
+			</div>
+			</div> -->
+
+
+						<div class="row">
+							<div class="col-lg-12 col-md-12 col-sm-12">
+								<div class="text-right">
+									<p:commandButton id="clear"
+										class="btn btn-sm btn-cancel fa-input waves-effect waves-light"
+										update="searchPanel table"
+										value="&#xf12d;&nbsp;#{msg['clear']}"
+										actionListener="#{productVarietyMasterBean.clear}">
+									</p:commandButton>
+
+
+									<p:commandButton id="search"
+										value="&#xf002;&nbsp;#{msg['search']}"
+										update=" searchPanel table growls"
+										class="btn btn-sm fa-input btn-info waves-effect waves-light m-l-10"
+										action="#{productVarietyMasterBean.search}">
+									</p:commandButton>
+								</div>
+							</div>
+						</div>
+
+						<div class="row m-t-20">
+							<div class="col-lg-12">
+								<div class="portlet m-b-0">
+									<div class="panel-grey">
+										<h3 class="portlet-title">#{msg['product_var_mstr_list']}</h3>
+										<div class="portlet-widgets">
+											<p:commandButton update="form"
+												action="#{productVarietyMasterBean.showForm}"
+												value="&#xf067;&nbsp;#{msg['add']}"
+												class="btn btn-xs fa-input btn-success waves-effect waves-light m-r-10">
+												<f:setPropertyActionListener value="ADD"
+													target="#{productVarietyMasterBean.action}"></f:setPropertyActionListener>
+											</p:commandButton>
+											<p:commandButton update=" table growls"
+												action="#{productVarietyMasterBean.showForm}"
+												value="&#xf044;&nbsp;#{msg['edit']}"
+												class="btn btn-xs fa-input btn-primary waves-effect waves-light m-r-10">
+												<f:setPropertyActionListener value="EDIT"
+													target="#{productVarietyMasterBean.action}"></f:setPropertyActionListener>
+											</p:commandButton>
+											<p:commandButton
+												action="#{productVarietyMasterBean.showForm}"
+												value="&#xf06e;&nbsp;#{msg['view']}"
+												class="btn btn-xs fa-input btn-info waves-effect waves-light">
+												<f:setPropertyActionListener value="VIEW"
+													target="#{productVarietyMasterBean.action}"></f:setPropertyActionListener>
+											</p:commandButton>
+											
+											
+												<p:commandButton value="&#xf1f8;&nbsp;#{msg['delete']}" update="growls"
+																class="fa-input btn btn-xs btn-danger waves-effect waves-light m-l-10"
+													actionListener="#{productVarietyMasterBean.processDelete}" >
+												</p:commandButton>
+									
+											<p:dialog header="#{msg['confirmation']}" widgetVar="dlg1" modal="true" position="center"
+												    resizable="false" closable="false"
+												    styleClass="cus-model-popup card_dialogbox">
+												    <h:form>
+												      <div class="bot-space text-center">
+												        <h5 class="line-height18">#{msg['confirm_delete']}</h5>
+												      </div>
+													   <div class="top-space sep-top">
+													       <h:commandButton  styleClass="btn btn-sm btn-default ui-confirmdialog-no "
+													       				 value="#{msg['no']}" onclick="PF('dlg1').hide();">
+													       </h:commandButton>
+													       <h:commandButton styleClass="btn btn-sm btn-primary ui-confirmdialog-yes m-l-10"
+													       					value="#{msg['yes']}" 
+													      					 action="#{productVarietyMasterBean.deleteAction}"
+													      				  	onclick="PF('dlg1').hide();">
+													       </h:commandButton>
+												      </div>
+												    </h:form>
+												   </p:dialog>	
+
+										</div>
+										<div class="clearfix"></div>
+									</div>
+
+									<div id="bg-primary1" class="panel-collapse collapse in">
+										<div class="portlet-body p0">
+											<div class="row">
+												<div class="col-md-12">
+													<div class="table-responsive">
+														<p:dataTable id="table" var="data"
+															selection="#{productVarietyMasterBean.productVarietyMasterDTO}"
+															value="#{productVarietyMasterBean.productVarietyMasterDTOList}"
+															rowKey="#{data}"
+															paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+															rows="10" paginator="true" paginatorPosition="bottom"
+															emptyMessage="#{msg['no_records_found']}"
+															rowsPerPageTemplate="5,10,15" rowIndexVar="idx">
+
+
+															<p:columnGroup type="header">
+																<p:row>
+																	<p:column rowspan="2" headerText="#{msg['serial_no']}" />
+																	<p:column rowspan="2"
+																		headerText="#{msg['prod_category_code']}" />
+																	<p:column rowspan="2"
+																		headerText="#{msg['prod_group_code']}" />
+																	<p:column rowspan="2"
+																		headerText="#{msg['prod_variey_code']}" />
+																	<p:column rowspan="2"
+																		headerText="#{msg['prod_variety_name']}" />
+																	<p:column rowspan="2"
+																		headerText="#{msg['prod_variety_lname']}" />
+																	<p:column rowspan="2"
+																		headerText="#{msg['created_date']}" />
+																	<p:column rowspan="2" headerText="#{msg['status']}" />
+
+																	<p:column rowspan="2" headerText="#{msg['select']}" />
+
+																</p:row>
+															</p:columnGroup>
+															<p:column style="width:50px; text-align:center;">
+																<h:outputText value="#{idx+1}" />
+															</p:column>
+															<p:column style="white-space:nowrap;">
+																<h:outputText
+																	value="#{data.productGroupMasterDTO.productCategoryDTO.productCatCode}" />
+															</p:column>
+															<p:column style="white-space:nowrap;">
+																<h:outputText value="#{data.productGroupMasterDTO.code}" />
+															</p:column>
+
+															<p:column style="white-space:nowrap;"
+																styleClass="text-left">
+																<h:outputText value="#{data.code}" />
+															</p:column>
+
+															<p:column style="white-space:nowrap;"
+																styleClass="text-left">
+																<h:outputText value="#{data.name}" />
+															</p:column>
+															<p:column style="white-space:nowrap;"
+																styleClass="text-left">
+																<h:outputText value="#{data.lname}" />
+															</p:column>
+															<p:column style="white-space:nowrap;"
+																styleClass="text-center">
+																<h:outputText value="#{data.createdDate}">
+																	<f:convertDateTime timeZone="GMT+05:30"
+																		pattern="dd-MMM-YYYY " />
+																</h:outputText>
+															</p:column>
+
+															<p:column styleClass="text-center">
+																<h:outputText style="white-space:nowrap;"
+																	styleClass="#{data.activeStatus eq true ? 'text-success':'text-danger'}"
+																	value="#{data.activeStatus eq true ? msg['active'] : msg['inactive'] }">
+																</h:outputText>
+															</p:column>
+
+															<p:column styleClass="text-center" selectionMode="single"
+																disableSelection="false">
+															</p:column>
+
+														</p:dataTable>
+													</div>
+													<!-- <div class="col-md-12 ph0">
+														<div class="col-md-6 m-t-20">
+															<button
+																class="btn-xs btn-icon waves-effect waves-light btn-primary m-r-10"
+																title="Download PDF">
+																<i class="fa fa-download"></i> PDF
+															</button>
+															<button
+																class="btn-xs btn-icon waves-effect waves-light btn-success"
+																title="Download Excel">
+																<i class="fa fa-download"></i> Excel
+															</button>
+														</div>
+
+													</div> -->
+												</div>
+												<!-- end col -->
+												<div class="clearfix"></div>
+											</div>
+											<!-- end row -->
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</p:outputPanel>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

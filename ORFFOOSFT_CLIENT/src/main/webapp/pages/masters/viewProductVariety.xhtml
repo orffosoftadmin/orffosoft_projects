@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	template="/pages/template/layoutWithIndividualForm.xhtml">
+	<ui:define name="content">
+		<title>MarkSolution | View Product Variety</title>
+		<!-- Page Header -->
+		<div class="page-header page-header-default">
+			<div class="page-header-content">
+				<div class="page-title">
+					<h4>#{msg['item_view']}</h4>
+					<ul class="breadcrumb">
+						<li><a href="#{request.contextPath}/pages/home.xhtml"><i
+								class="icon-home2 position-left"></i>#{msg['home']}</a></li>
+						<li>#{msg['online_master_menu']}</li>
+						<li class="active">#{msg['item_view']}</li>
+					</ul>
+					<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+				</div>
+				<ui:include src="/pages/pageHeadingElements.xhtml" />
+			</div>
+		</div>
+		<!-- Page Header End -->
+		<div class="content">
+			<!-- collapse panel -->
+			<div
+				class="panel-group m-b-10 panel-group-control panel-group-control-right"
+				id="accordion-control-right">
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						<h2 class="panel-title">
+							#{msg['item']}   Details
+							
+						</h2>
+					</div>
+						<div class="panel-body page-scroll-without-process p-t-10">
+							<div class="row view-style">
+
+								<div class="col-lg-3 col-md-3  col-sm-6">
+									<div class="form-group">
+										<p:outputLabel styleClass="" value="#{msg['item_code']} " />
+										<h:outputText value="#{productVarietyMasterBean.productVarietyMasterDTO.code}">
+										</h:outputText>
+									</div>
+								</div>
+
+								<div class="col-lg-3 col-md-3  col-sm-6">
+									<div class="form-group">
+										<p:outputLabel value="#{msg['item_name']}" />
+										<h:outputText value="#{productVarietyMasterBean.productVarietyMasterDTO.name}">
+										</h:outputText>
+									</div>
+								</div>
+								<div class="col-lg-3 col-md-3  col-sm-6">
+									<div class="form-group">
+										<p:outputLabel value="#{msg['unit_of_measurement']}" />
+										<h:outputText value="#{productVarietyMasterBean.productVarietyMasterDTO.uomMaster.name}" id="unit_of_measurement">
+										</h:outputText>
+									</div>
+								</div>
+                                 <div class="col-lg-3 col-md-3  col-sm-6">
+									<div class="form-group">
+										<p:outputLabel value="#{msg['hsn_code']}" />
+										<h:outputText value="#{productVarietyMasterBean.productVarietyMasterDTO.hsnCode}" id="hsn">
+										</h:outputText>
+									</div>
+								</div>
+							</div>
+						
+							<div class="row view-style">
+
+								<div class="col-lg-3 col-md-3  col-sm-6">
+									<div class="form-group">
+										<p:outputLabel value="#{msg['status']}" />
+										<h:outputText value="#{productVarietyMasterBean.productVarietyMasterDTO.statusValue  eq 'true'?'Active':'Inactive'}" id="status">
+										</h:outputText>
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-lg-12 col-md-12 col-sm-12 text-right p-b-15">
+										<p:commandButton value="&#xeddf;&nbsp;#{msg['back']}"
+											title="#{msg['back']}" action="#{productVarietyMasterBean.getVarityList}"
+											class="btn bg-info font-iconmoon m-l-0">
+										</p:commandButton>
+								</div>
+							</div>
+						</div>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

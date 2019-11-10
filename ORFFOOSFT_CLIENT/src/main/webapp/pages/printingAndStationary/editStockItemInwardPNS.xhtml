@@ -1,0 +1,1162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/pages/template/layout.xhtml">
+	<ui:define name="content">
+		<h:form id="itemPNS">
+			<title>InfoTex | Stock Item Inward</title>
+			<!-- Page Header -->
+			<div class="page-header page-header-default">
+				<div class="page-header-content">
+					<div class="page-title">
+						<h4>#{msg['edit_stock_item_inward']}</h4>
+						<ul class="breadcrumb">
+							<li><a href="#{request.contextPath}/pages/home.xhtml"><i
+									class="icon-home2 position-left"></i>#{msg['home']}</a></li>
+							<li>#{msg['oper']}</li>
+							<li>#{msg['stock_management']}</li>
+							<li>#{msg['item_inward']}</li>
+							<li class="active">#{msg['edit_stock_item_inward']}</li>
+						</ul>
+						<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+					</div>
+					<ui:include src="/pages/pageHeadingElements.xhtml" />
+				</div>
+			</div>
+			<!-- End Page Header -->
+			<div class="content">
+				<div
+					class="panel-group panel-group-control panel-group-control-right m-b-15"
+					id="accordion-control-right">
+					<div class="panel panel-info ">
+						<div class="panel-heading">
+							<h6 class="panel-title">
+								#{msg['stock_item_inward']}
+								<p:outputLabel styleClass="pull-right">
+									<span class="mand-red">*</span>
+									<span>#{msg['mand_fields']}</span>
+								</p:outputLabel>
+
+							</h6>
+						</div>
+						<div class="page-scroll">
+							<div class="panel-body p-t-10">
+								<h5 class="bord_bot m-t-0">
+									<span class="iform-title"><i
+										class="fa fa-th-large m-r-5"></i>#{msg['sup_detail']}</span>
+								</h5>
+								<div class="row custom-form-1 label-form">
+									<div class="col-lg-3 col-md-3 col-sm-6">
+										<div class="form-group">
+											<p:outputLabel value="#{msg['supplier_type']}" />
+											<div class="input-group ui-outputlabel ui-widget">
+												<span class="input-group-addon"><i class="icon-list"></i></span>
+												<h:selectOneMenu styleClass="form-control"
+													value="#{stockItemInwardBean.selectedSupplierTypeMaster}"
+													converter="#{entityConverter}" disabled="true">
+													<f:selectItem itemLabel="Select Supplier Type"
+														noSelectionOption="true" itemValue="#{null}"></f:selectItem>
+													<f:selectItems
+														value="#{stockItemInwardBean.supplierTypeMasterList}"
+														var="list" itemValue="#{list}" itemLabel="#{list.code}">
+													</f:selectItems>
+												</h:selectOneMenu>
+
+												<!-- <h:selectOneMenu styleClass="form-control">
+												<f:selectItem itemLabel="Private Supplier"
+													noSelectionOption="true"></f:selectItem>
+												<f:selectItem itemValue="Government Supplier"
+													itemLabel="Government Supplier"></f:selectItem>
+												<f:selectItem itemValue="Private Supplier"
+													itemLabel="Private Supplier"></f:selectItem>
+											</h:selectOneMenu>
+											 -->
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-6">
+										<div class="form-group">
+											<p:outputLabel value="#{msg['sup_code']} / #{msg['name']}" />
+											<div class="input-group ui-outputlabel ui-widget">
+												<span class="input-group-addon"><i class="fa fa-bank"></i></span>
+												<p:outputPanel id="SupplierMasterData">
+													<h:selectOneMenu styleClass="form-control"
+														value="#{stockItemInwardBean.selectedSupplierMaster}"
+														filter="true" filterMatchMode="contains"
+														style="width:200px;" converter="#{entityConverter}"
+														disabled="true">
+														<f:selectItem itemLabel="Select Supplier Code / Name"
+															noSelectionOption="true" itemValue="#{null}"></f:selectItem>
+														<f:selectItems
+															value="#{stockItemInwardBean.supplierMasterList}"
+															var="list" itemValue="#{list}"
+															itemLabel="#{list.code} - #{list.name}">
+														</f:selectItems>
+													</h:selectOneMenu>
+												</p:outputPanel>
+											</div>
+										</div>
+
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-6">
+										<div class="form-group">
+											<p:outputLabel value="#{msg['gst_no']}" />
+											<span class="text-danger">*</span>
+											<div class="input-group">
+												<span class="input-group-addon"><i class="icon-hash"></i></span>
+												<p:outputPanel id="gstPanelUpdate">
+													<p:inputText styleClass="form-control" disabled="true"
+														value="#{stockItemInwardBean.gstNumber}">
+													</p:inputText>
+												</p:outputPanel>
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-6">
+										<div class="form-group">
+											<p:outputLabel value="#{msg['inward_type']}" />
+											<div class="input-group ui-outputlabel ui-widget">
+												<span class="input-group-addon"><i class="icon-list"></i></span>
+												<h:selectOneMenu styleClass="form-control"
+													value="#{stockItemInwardBean.inwardType}"
+													id="inwardTypeSelection" disabled="true">
+
+													<f:selectItem itemLabel="Select Inwared Type"
+														noSelectionOption="true" itemValue="#{null}"></f:selectItem>
+													<f:selectItem itemValue="Direct Inward"
+														itemLabel="Direct Inward"></f:selectItem>
+													<f:selectItem itemValue="PO Based Inward"
+														itemLabel="PO Based Inward"></f:selectItem>
+												</h:selectOneMenu>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<p:outputPanel id="purchaseOrderDetails">
+									<p:outputPanel id="purchaseOrderDetails_Second"
+										rendered="#{stockItemInwardBean.renderedInward}">
+										<h5 class="bord_bot m-t-0">
+											<span class="iform-title"><i
+												class="fa fa-th-large m-r-5"></i>#{msg['pur_order']}</span>
+										</h5>
+										<div class="row custom-form-1 label-form">
+											<div class="col-lg-3 col-md-3 col-sm-6">
+												<div class="form-group">
+													<p:outputLabel value="#{msg['purchase_order_number']}" />
+													<div class="input-group ui-outputlabel ui-widget">
+														<span class="input-group-addon"><i
+															class="icon-hash"></i></span>
+														<h:selectOneMenu styleClass="form-control"
+															value="#{stockItemInwardBean.selectedPurchaseOrder}"
+															filter="true" filterMatchMode="contains"
+															style="width:200px;" converter="#{entityConverter}"
+															disabled="true">
+															<f:selectItem itemLabel="Select Purchase Order"
+																noSelectionOption="true" itemValue="#{null}"></f:selectItem>
+															<f:selectItems
+																value="#{stockItemInwardBean.purchaseOrderList}"
+																var="list" itemValue="#{list}"
+																itemLabel="#{list.poNumberPrefix}">
+															</f:selectItems>
+														</h:selectOneMenu>
+													</div>
+												</div>
+											</div>
+											<p:outputPanel id="purchaseOrderPanel">
+												<div class="col-lg-3 col-md-3 col-sm-6">
+													<div class="form-group form-group_calend">
+														<p:outputLabel value="#{msg['pur_date']}" />
+														<span class="text-danger">*</span>
+														<div class="input-group">
+															<span class="input-group-addon"><i
+																class="icon-calendar22"></i></span>
+															<p:inputText styleClass="form-control" disabled="true"
+																value="#{stockItemInwardBean.purchaseDate}">
+															</p:inputText>
+														</div>
+													</div>
+
+												</div>
+												<div class="col-lg-3 col-md-3 col-sm-6">
+													<div class="form-group form-group_calend">
+														<p:outputLabel value="#{msg['pur_odr_val_date']}" />
+														<span class="text-danger">*</span>
+														<div class="input-group">
+															<span class="input-group-addon"><i
+																class="icon-calendar22"></i></span>
+															<p:inputText styleClass="form-control" disabled="true"
+																value="#{stockItemInwardBean.purhaseOrderValidityDate}">
+															</p:inputText>
+														</div>
+													</div>
+												</div>
+											</p:outputPanel>
+										</div>
+									</p:outputPanel>
+
+									<p:outputPanel id="addItemReceivedDetails_Second"
+										rendered="#{stockItemInwardBean.addItemReceiveDetails}">
+										<h5 class="bord_bot m-t-0">
+											<span class="iform-title"><i
+												class="fa fa-th-large m-r-5"></i>#{msg['add_item_receive_details']}</span>
+										</h5>
+										<div class="row custom-form-1 label-form">
+											<div class="col-lg-3 col-md-3 col-sm-6">
+												<div class="form-group">
+													<p:outputLabel value="#{msg['item_code']} / #{msg['name']}" />
+													<!-- <span class="text-danger">*</span> -->
+													<div class="input-group">
+														<span class="input-group-addon"><i
+															class="icon-stack3"></i></span>
+														<h:selectOneMenu styleClass="form-control"
+															value="#{stockItemInwardBean.selectedProductVarietyMaster}"
+															filter="true" filterMatchMode="contains"
+															converter="#{entityConverter}"
+															id="ProductVarietyMasterList" disabled="true">
+															<f:selectItem itemLabel="Select Code / Name"
+																noSelectionOption="true" itemValue="#{null}"></f:selectItem>
+															<f:selectItems
+																value="#{stockItemInwardBean.productVarietyList}"
+																var="list" itemValue="#{list}"
+																itemLabel="#{list.code} - #{list.name}">
+															</f:selectItems>
+														</h:selectOneMenu>
+													</div>
+												</div>
+											</div>
+											<p:outputPanel id="hsnCodeUomUpdate">
+												<div class="col-lg-3 col-md-3 col-sm-6">
+													<div class="form-group">
+														<p:outputLabel value="#{msg['hsn_code']}" />
+														<div class="input-group ui-outputlabel ui-widget">
+															<span class="input-group-addon"><i
+																class="icon-hash"></i></span>
+															<p:inputText styleClass="form-control"
+																value="#{stockItemInwardBean.hsnCode}" disabled="true">
+
+															</p:inputText>
+														</div>
+													</div>
+												</div>
+												<div class="col-lg-3 col-md-3 col-sm-6">
+													<div class="form-group">
+														<p:outputLabel value="#{msg['uom']}" />
+														<div class="input-group ui-outputlabel ui-widget">
+															<span class="input-group-addon"><i
+																class="icon-design"></i></span>
+															<p:inputText styleClass="form-control"
+																value="#{stockItemInwardBean.uom}" disabled="true">
+															</p:inputText>
+														</div>
+													</div>
+												</div>
+
+												<div class="col-lg-3 col-md-3 col-sm-6">
+													<div class="form-group">
+														<p:outputLabel value="#{msg['qty']}" />
+														<div class="input-group ui-outputlabel ui-widget">
+															<span class="input-group-addon"><i
+																class="icon-hash"></i></span>
+															<p:inputText styleClass="form-control text-right" id="stkItemQty" 
+																value="#{stockItemInwardBean.stockTransferItems.orderedQty}">
+															</p:inputText>
+														</div>
+														<p:tooltip for="stkItemQty" value="#{msg['qnty_valid_msg']}"/>
+													</div>
+												</div>
+												<div class="col-lg-3 col-md-3 col-sm-6">
+													<div class="form-group">
+														<p:outputLabel value="#{msg['unit_rate']}" />
+														<div class="input-group ui-outputlabel ui-widget">
+															<span class="input-group-addon"><i
+																class="fa fa-inr"></i></span>
+															<p:inputText styleClass="form-control text-right" id="stkItemUnitRate" 
+																value="#{stockItemInwardBean.stockTransferItems.unitRate}">
+															</p:inputText>
+														</div>
+														<p:tooltip for="stkItemUnitRate" value="#{msg['amt_valid_msg']}"/>
+													</div>
+
+												</div>
+												<div class="col-lg-3 col-md-3 col-sm-6">
+													<div class="form-group">
+														<p:outputLabel value="#{msg['dis_master']}" />
+														<div class="input-group ui-outputlabel ui-widget">
+															<span class="input-group-addon"><i
+																class="icon-percent"></i></span>
+															<p:inputText styleClass="form-control text-right" id="stkItemDiscount"  
+																value="#{stockItemInwardBean.stockTransferItems.discountPercent}">
+															</p:inputText>
+														</div>
+														<p:tooltip for="stkItemDiscount" value="#{msg['per_valid_msg']}"/>	
+													</div>
+
+												</div>
+												<div class="col-lg-3 col-md-3 col-sm-6">
+													<div class="form-group">
+														<p:outputLabel value="#{msg['tax']}" />
+														<div class="input-group ui-outputlabel ui-widget">
+															<span class="input-group-addon"><i
+																class="icon-percent"></i></span>
+															<p:inputText styleClass="form-control text-right" id="stkItemTax"
+																value="#{stockItemInwardBean.stockTransferItems.taxPercent}">
+															</p:inputText>
+														</div>
+														<p:tooltip for="stkItemTax" value="#{msg['per_valid_msg']}"/>														
+													</div>
+												</div>
+
+
+												<div class="col-lg-3 col-md-3 col-sm-6">
+													<div class="form-group">
+														<p:outputLabel value="#{msg['description']}" />
+														<div class="input-group ui-outputlabel ui-widget">
+															<span class="input-group-addon"><i
+																class="icon-file-text"></i></span>
+															<p:inputText styleClass="form-control" id="note"
+																placeholder=""
+																value="#{stockItemInwardBean.description}">
+															</p:inputText>
+														</div>
+														<p:tooltip for="note" value="#{msg['des_vaid_msg']}"/>
+													</div>
+												</div>
+											</p:outputPanel>
+										</div>
+
+										<div class="row">
+											<div class="col-lg-12 text-right">
+												<div class="form-group">
+													<p:commandButton title="#{msg['clear']}"
+														value="&#xe916; #{msg['clear']}"
+														update="growls,itemTablePanel,hsnCodeUomUpdate"
+														class="btn bg-slate btn-sm font-iconmoon"
+														actionListener="#{stockItemInwardBean.clearItemTable}">
+													</p:commandButton>
+
+													<p:commandButton value="&#xea0e;&nbsp;#{msg['add']}"
+														title="#{msg['add']}"
+														class="btn btn-sm bg-success font-iconmoon m-l-8"
+														data-toggle="modal" data-target="#modal_theme_info"
+														actionListener="#{stockItemInwardBean.itemCollectiorAddNewInward}"
+														update="growls,:itemPNS:itemTablePanel,:itemPNS:hsnCodeUomUpdate">
+													</p:commandButton>
+												</div>
+											</div>
+										</div>
+									</p:outputPanel>
+								</p:outputPanel>
+
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="table-responsive m-b-10">
+											<p:outputPanel id="itemTablePanel" 
+												styleClass="#{stockItemInwardBean.collectorSupplierItemList.size() gt 5 ? 'overflow-table':'col-lg-12 ph0'}">
+												<!-- ItemPO Based  -->
+												<p:dataTable
+													value="#{stockItemInwardBean.collectorSupplierItemList}"
+													var="item" id="itemListTable" rowIndexVar="index"
+													rendered="#{stockItemInwardBean.inwardType eq 'PO Based Inward'}"
+													styleClass="report-table" scrollable="true" 
+													scrollHeight="#{stockItemInwardBean.collectorSupplierItemList.size() eq 0 ? '35' : 
+									  				 stockItemInwardBean.collectorSupplierItemList.size() eq 1 ? '55':
+									  				 stockItemInwardBean.collectorSupplierItemList.size() eq 2 ? '109':
+													 stockItemInwardBean.collectorSupplierItemList.size() eq 3 ? '163':
+													 stockItemInwardBean.collectorSupplierItemList.size() eq 4 ? '217':
+													 stockItemInwardBean.collectorSupplierItemList.size() gt 4 and  stockItemInwardBean.collectorSupplierItemList.size() lt 6 ? '271' :'250'}">
+
+													<p:column headerText="#" styleClass="text-center width-3">
+														<h:outputText value="#{index +1 }" />
+													</p:column>
+
+													<p:column headerText="#{msg['item_code']} / #{msg['name']}"
+														styleClass="width-15">
+														<h:outputText
+															value="#{item.productVarietyMaster.code}/ #{item.productVarietyMaster.name}" />
+													</p:column>
+
+													<p:column headerText="#{msg['description']}"
+														styleClass="width-15">
+														<h:outputText value="#{item.itemNote}" />
+													</p:column>
+
+													<p:column headerText="#{msg['hsn_code']}"
+														styleClass="width-8 text-center">
+														<h:outputText value="#{item.productVarietyMaster.hsnCode}" />
+													</p:column>
+
+													<p:column headerText="#{msg['uom']}"
+														styleClass="width-6 text-center">
+														<h:outputText value="#{item.uomMaster.id}" />
+													</p:column>
+
+													<p:column headerText="#{msg['qty']}"
+														styleClass="width-6 text-center">
+														<h:outputText value="#{item.itemQty}" />
+													</p:column>
+
+													<p:column headerText="#{msg['unit_rate']} (&#xf156;)"
+														styleClass="fa-input width-8 text-right">
+														<h:outputText value="#{item.unitRate}" />
+													</p:column>
+
+													<p:column headerText="#{msg['total_rate']} (&#xf156;)"
+														styleClass="fa-input width-10 text-right">
+														<h:outputText value="#{item.itemTotal}">
+															<f:convertNumber type="currency"></f:convertNumber>
+														</h:outputText>
+													</p:column>
+
+													<p:column headerText="#{msg['dis_master']} (&#xf295;)"
+														styleClass="fa-input width-8 text-right">
+														<h:outputText value="#{item.discountPercent}" />
+													</p:column>
+
+													<p:column headerText="#{msg['dis_value']} (&#xf156;)"
+														styleClass="fa-input width-10 text-right">
+														<h:outputText value="#{item.discountValue}" />
+													</p:column>
+
+													<p:column headerText="#{msg['tax']} (&#xf295;)"
+														styleClass="fa-input width-5 text-right">
+														<h:outputText value="#{item.taxPercent}" />
+													</p:column>
+
+													<p:column headerText="#{msg['tax_value']} (&#xf156;)"
+														styleClass="fa-input width-10 text-right">
+														<h:outputText value="#{item.taxValue}" />
+													</p:column>
+
+													<p:column headerText="#{msg['nt_price']} (&#xf156;)"
+														styleClass="fa-input width-20 text-right">
+														<h:outputText value="#{item.itemTotal}">
+															<f:convertNumber type="currency"></f:convertNumber>
+														</h:outputText>
+													</p:column>
+
+
+													<p:columnGroup type="footer">
+														<p:row>
+															<p:column colspan="6" style="text-align:right"
+																footerText="#{msg['tot']}" />
+															<p:column
+																footerText="#{stockItemInwardBean.unitRateTotal}" />
+															<p:column
+																footerText="#{stockItemInwardBean.totalRateTotal}" />
+															<p:column
+																footerText="#{stockItemInwardBean.discountValueTotal}"
+																colspan="2" />
+															<p:column
+																footerText="#{stockItemInwardBean.taxValueTotal}"
+																colspan="2" />
+															<p:column style="text-align:left"
+																footerText="#{stockItemInwardBean.netPriceTotal}" />
+														</p:row>
+													</p:columnGroup>
+												</p:dataTable>
+												<!-- ItemInward  -->
+
+
+												<p:dataTable
+													value="#{stockItemInwardBean.stockTransferItemsInwardUpdateList}"
+													var="item" id="itemListTableIntenInward"
+													rowIndexVar="index"
+													rendered="#{stockItemInwardBean.inwardType eq 'Direct Inward'}"
+													styleClass="report-table" editable="true" scrollable="true" 
+													scrollHeight="#{stockItemInwardBean.stockTransferItemsInwardUpdateList.size() eq 0 ? '35' : 
+									  				 stockItemInwardBean.stockTransferItemsInwardUpdateList.size() eq 1 ? '74':
+									  				 stockItemInwardBean.stockTransferItemsInwardUpdateList.size() eq 2 ? '109':
+													 stockItemInwardBean.stockTransferItemsInwardUpdateList.size() eq 3 ? '163':
+													 stockItemInwardBean.stockTransferItemsInwardUpdateList.size() eq 4 ? '217':
+													 stockItemInwardBean.stockTransferItemsInwardUpdateList.size() gt 4 and  stockItemInwardBean.stockTransferItemsInwardUpdateList.size() lt 6 ? '271' :'250'}">
+
+													<p:ajax event="rowEdit"
+														listener="#{stockItemInwardBean.onRowEdit}"
+														update="growls" />
+													<p:ajax event="rowEditCancel"
+														listener="#{stockItemInwardBean.onRowCancel}"
+														update="growls" />
+
+													<p:column headerText="#" styleClass="text-center width-3">
+														<h:outputText value="#{index +1 }" />
+													</p:column>
+
+													<p:column headerText="#{msg['item_code']} / #{msg['name']}"
+														styleClass="width-12">
+														<h:outputText
+															value="#{item.productVarietyMaster.code}/ #{item.productVarietyMaster.name}" />
+													</p:column>
+
+
+													<p:column headerText="#{msg['hsn_code']}"
+														styleClass="text-center width-7">
+														<h:outputText value="#{item.productVarietyMaster.hsnCode}" />
+													</p:column>
+
+													<p:column headerText="#{msg['uom']}"
+														styleClass="text-center width-6">
+														<h:outputText value="#{item.uomMaster.id}" />
+													</p:column>
+
+													<p:column headerText="#{msg['qty']}"
+														styleClass="text-center width-6">
+														<p:cellEditor>
+															<f:facet name="output">
+																<h:outputText value="#{item.orderedQty}"
+																	styleClass="fa-input" />
+															</f:facet>
+															<f:facet name="input">
+																<p:inputText styleClass="fa-input" id="orderedQtyInput"
+																	value="#{item.orderedQty}"/>
+															</f:facet>
+														</p:cellEditor>
+													</p:column>
+
+													<p:column headerText="#{msg['unit_rate']}&lt;br/&gt;(&#xf156;)"
+														styleClass="fa-input width-7 text-right">
+														<p:cellEditor>
+															<f:facet name="output">
+																<h:outputText value="#{item.unitRate}" />
+															</f:facet>
+															<f:facet name="input">
+																<p:inputText styleClass="fa-input" id="unitRateInput"
+																	value="#{item.unitRate}"/>
+															</f:facet>
+														</p:cellEditor>
+													</p:column>
+
+													<p:column headerText="#{msg['total_rate']}&lt;br/&gt;(&#xf156;)"
+														styleClass="fa-input text-right width-8">
+														<h:outputText value="#{item.itemTotal}">
+															<f:convertNumber type="currency"></f:convertNumber>
+														</h:outputText>
+													</p:column>
+
+													<p:column headerText="#{msg['dis_master']}&lt;br/&gt;(&#xf295;)"
+														styleClass="text-right fa-input width-8">
+														<p:cellEditor>
+															<f:facet name="output">
+																<h:outputText value="#{item.discountPercent}" />
+															</f:facet>
+															<f:facet name="input">
+																<p:inputText styleClass="fa-input"
+																	id="discountPercentInput"
+																	value="#{item.discountPercent}" />
+															</f:facet>
+														</p:cellEditor>
+													</p:column>
+
+													<p:column headerText="#{msg['dis_value']}&lt;br/&gt;(&#xf156;)"
+														styleClass="fa-input text-right width-9">
+														<h:outputText value="#{item.discountValue}" />
+													</p:column>
+
+													<p:column headerText="#{msg['tax']}&lt;br/&gt;(&#xf295;)"
+														styleClass="fa-input width-6 text-right">
+														<p:cellEditor>
+															<f:facet name="output">
+																<h:outputText value="#{item.taxPercent}"
+																	styleClass="fa-input" />
+															</f:facet>
+															<f:facet name="input">
+																<p:inputText styleClass="fa-input" id="taxPercentInput"
+																	value="#{item.taxPercent}" />
+															</f:facet>
+														</p:cellEditor>
+													</p:column>
+
+													<p:column headerText="#{msg['tax_value']}&lt;br/&gt;(&#xf156;)"
+														styleClass="fa-input text-right width-7">
+														<h:outputText value="#{item.taxValue}" />
+													</p:column>
+
+													<p:column headerText="#{msg['nt_price']}&lt;br/&gt;(&#xf156;)"
+														styleClass="fa-input text-right width-8">
+														<h:outputText value="#{item.itemNetTotal}">
+															<f:convertNumber type="currency"></f:convertNumber>
+														</h:outputText>
+													</p:column>
+
+													<p:column headerText="#{msg['action']}"
+														styleClass="text-center width-13">
+														<p:rowEditor value="&#xe912;"
+															class="cust-edit-btn text-center dis-inblk"/>
+														<p:commandButton value="&#xe99e;"
+															update=":itemPNS:itemListTableIntenInward"
+															class="btn bg-danger font-iconmoon btn-xs pull-left"
+															title="#{msg['delete']}"
+															actionListener="#{stockItemInwardBean.reinitUpdate(item)}">
+															<p:collector value="#{item}"
+																removeFrom="#{stockItemInwardBean.stockTransferItemsInwardUpdateList}"
+																unique="true" />
+														</p:commandButton>
+													</p:column>
+
+													<p:columnGroup type="footer">
+														<p:row>
+															<p:column colspan="5" style="text-align:right"
+																footerText="#{msg['tot']}" />
+															<p:column
+																footerText="#{stockItemInwardBean.unitRateTotalEdit}" />
+															<p:column
+																footerText="#{stockItemInwardBean.totalRateTotalEdit}" />
+															<p:column
+																footerText="#{stockItemInwardBean.discountValueTotalEdit}"
+																colspan="2" />
+															<p:column
+																footerText="#{stockItemInwardBean.taxValueTotalEdit}"
+																colspan="2" />
+															<p:column style="text-align:left"
+																footerText="#{stockItemInwardBean.netPriceTotalEdit}" />
+															<p:column style="text-align:left" colspan="1"
+																footerText="" />
+														</p:row>
+													</p:columnGroup>
+												</p:dataTable>
+											</p:outputPanel>
+										</div>
+									</div>
+								</div>
+
+								<h5 class="bord_bot m-t-0">
+									<span class="iform-title"><i
+										class="fa fa-th-large m-r-5"></i>#{msg['inv_dtl']}</span>
+								</h5>
+								<p:outputPanel id="invoiceDetailsPanel">
+									<div class="row custom-form-1 label-form ">
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<div class="form-group">
+												<p:outputLabel value="#{msg['invoice_number']}" />
+												<div class="input-group">
+													<span class="input-group-addon"><i class="icon-hash"></i></span>
+													<p:inputText styleClass="form-control"
+														value="#{stockItemInwardBean.purchaseInvoice.invoiceNumber}">
+													</p:inputText>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<p:outputLabel value="#{msg['invoice_date']}" />
+											<div class="form-group form-group_calend">
+												<p:calendar id="leasefrom"
+													value="#{stockItemInwardBean.purchaseInvoice.invoiceDate}"
+													mindate="new Date()" pattern="dd-MMM-yyyy"
+													placeholder="dd-mmm-yyyy" mask="true" navigator="true"
+													requiredMessage="Required"
+													styleClass="form-control-1 calend-icon-1">
+													<p:ajax update="" event="dateSelect" />
+												</p:calendar>
+											</div>
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-12 ">
+											<div class="form-group">
+												<p:outputLabel value="#{msg['dc_number']}" />
+												<div class="input-group">
+													<span class="input-group-addon"><i class="icon-hash"></i></span>
+													<p:inputText styleClass="form-control" placeholder=""
+														value="#{stockItemInwardBean.purchaseInvoice.dcNumber}">
+													</p:inputText>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-12 ">
+											<p:outputLabel value="#{msg['payment_due_date']}" />
+											<div class="form-group form-group_calend">
+												<p:calendar id="duedate"
+													value="#{stockItemInwardBean.purchaseInvoice.paymentDuedate}"
+													mindate="new Date()" pattern="dd-MMM-yyyy"
+													placeholder="dd-mmm-yyyy" mask="true" navigator="true"
+													requiredMessage="Required"
+													styleClass="form-control-1 calend-icon-1">
+													<p:ajax update="" event="dateSelect" />
+												</p:calendar>
+											</div>
+										</div>
+									</div>
+									<div class="row custom-form-1 label-form">
+										<div class="col-lg-3 col-md-3 col-sm-12">
+											<div class="form-group">
+												<p:outputLabel
+													value="#{msg['int_applicable_delay_payment']}" />
+												<div class="input-group ui-outputlabel ui-widget">
+													<span class="input-group-addon"><i
+														class="icon-percent"></i></span>
+													<h:selectOneMenu styleClass="form-control"
+														value="#{stockItemInwardBean.interestApplicablePayment}">
+														<f:selectItem itemLabel="Select" noSelectionOption="true"
+															itemValue="#{null}"></f:selectItem>
+														<f:selectItem itemValue="Yes" itemLabel="Yes"></f:selectItem>
+														<f:selectItem itemValue="No" itemLabel="No"></f:selectItem>
+													</h:selectOneMenu>
+												</div>
+											</div>
+										</div>
+
+										<div class="col-lg-3 col-md-3 col-sm-12">
+											<div class="form-group">
+												<p:outputLabel value="#{msg['rate_of_interest']}" />
+												<div class="input-group">
+													<span class="input-group-addon"><i
+														class="icon-percent"></i></span>
+													<p:inputText styleClass="form-control text-right" id="stkItmRtInt" 
+														value="#{stockItemInwardBean.purchaseInvoice.rateOfInterest}">
+													</p:inputText>
+												</div>
+												<p:tooltip for="stkItmRtInt" value="#{msg['per_valid_msg']}"/>
+											</div>
+										</div>
+										<div class="col-md-3">
+
+											<div class="form-group">
+												<p:outputLabel value="#{msg['up_doc']}"
+													style="display: block;" />
+												<div class="input-group width-100 pull-left">
+													<div
+														class=" no-padding contact-upload upload-popup pull-left">
+														<div class="btn-file-upload">
+															<p:fileUpload styleClass="file-select" label="&#xf093;&nbsp;&nbsp;#{msg['upload']}"
+																fileUploadListener="#{stockItemInwardBean.handleFileUpload}"
+																mode="advanced" auto="true" update="growls">
+															</p:fileUpload>
+														</div>
+													</div>
+												</div>
+												<!--
+										<p:commandButton value="&#xf093; #{msg['upload']}" title="#{msg['upload']}" 
+											onclick="PF('pridocupload').show();" style=""
+											class=" fa-input  btn btn-sm bg-primary cust-btn-h 
+											font-iconmoon m-l-0  pull-right">
+										</p:commandButton>-->
+											</div>
+										</div>
+
+										<div class="col-lg-3 col-md-3 col-sm-12 text-right">
+											<div class="form-group">
+												<p:outputLabel value="&nbsp;" styleClass="dis-block" />
+												<p:commandButton title="#{msg['clear']}"
+													value="&#xe916; #{msg['clear']}"
+													update="growls,invoiceDetailsPanel,invoiceDetailsTablePanel"
+													class="btn bg-slate btn-sm font-iconmoon m-l-0"
+													actionListener="#{stockItemInwardBean.clearInvoiceTable}">
+												</p:commandButton>
+
+												<p:commandButton value="&#xea0e;&nbsp;#{msg['add']}"
+													title="#{msg['add']}"
+													class="btn btn-sm bg-success font-iconmoon m-l-8"
+													data-toggle="modal" data-target="#modal_theme_info"
+													actionListener="#{stockItemInwardBean.itemInvoiceUpdateNew}"
+													update="growls,:itemPNS:invoiceDetailsPanel,:itemPNS:invoiceDetailsTablePanel">
+												</p:commandButton>
+											</div>
+										</div>
+									</div>
+								</p:outputPanel>
+
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="table-responsive m-b-10">
+											<p:outputPanel id="invoiceDetailsTablePanel" 
+												styleClass="#{stockItemInwardBean.selectedPurchaseInvoiceList.size() gt 5 ? 'overflow-table':'col-lg-12 ph0'}">
+												<p:dataTable
+													value="#{stockItemInwardBean.selectedPurchaseInvoiceList}"
+													var="item" styleClass="report-table cust-calend"
+													rowIndexVar="index" editable="true" scrollable="true" 
+													scrollHeight="#{stockItemInwardBean.selectedPurchaseInvoiceList.size() eq 0 ? '35' : 
+									  				 stockItemInwardBean.selectedPurchaseInvoiceList.size() eq 1 ? '45':
+									  				 stockItemInwardBean.selectedPurchaseInvoiceList.size() eq 2 ? '85':
+													 stockItemInwardBean.selectedPurchaseInvoiceList.size() eq 3 ? '125':
+													 stockItemInwardBean.selectedPurchaseInvoiceList.size() eq 4 ? '165':
+													 stockItemInwardBean.selectedPurchaseInvoiceList.size() gt 4 and  stockItemInwardBean.selectedPurchaseInvoiceList.size() lt 6 ? '205' :'220'}">
+
+													<p:column headerText="#" styleClass="text-center width-3">
+														<h:outputText value="#{index +1 }" styleClass="fa-input" />
+													</p:column>
+
+													<p:column headerText="#{msg['invoice_num']}"
+														styleClass="width-10">
+														<p:cellEditor>
+															<f:facet name="output">
+																<h:outputText value="#{item.invoiceNumber}"
+																	styleClass="fa-input" />
+															</f:facet>
+															<f:facet name="input">
+																<p:inputText styleClass="fa-input"
+																	id="input_invoiceNumber" value="#{item.invoiceNumber}"/>
+															</f:facet>
+														</p:cellEditor>
+													</p:column>
+
+													<p:column headerText="#{msg['invoice_date']}"
+														styleClass="text-center width-12 form-group_calend">
+														<p:cellEditor>
+															<f:facet name="output">
+																<h:outputText value="#{item.invoiceDate}"
+																	styleClass="form-control-1">
+																	<f:convertDateTime timeZone="GMT+05:30"
+																		pattern="dd-MMM-yyyy" />
+																</h:outputText>
+															</f:facet>
+															<f:facet name="input">
+																<p:calendar id="input_invoiceDate"
+																	value="#{item.invoiceDate}" mindate="new Date()"
+																	pattern="dd-MMM-yyyy" placeholder="dd-mmm-yyyy"
+																	mask="true" navigator="true" requiredMessage="Required"
+																	styleClass="calend-icon-1">
+																	<p:ajax event="dateSelect" />
+																</p:calendar>
+															</f:facet>
+														</p:cellEditor>
+													</p:column>
+
+
+													<p:column headerText="#{msg['dc_number']}"
+														styleClass="width-8">
+														<p:cellEditor>
+															<f:facet name="output">
+																<h:outputText value="#{item.dcNumber}" />
+															</f:facet>
+															<f:facet name="input">
+																<p:inputText styleClass="fa-input" id="input_dcNumber"
+																	value="#{item.dcNumber}"/>
+															</f:facet>
+														</p:cellEditor>
+													</p:column>
+
+													<p:column headerText="#{msg['payment_due_date']}"
+														styleClass="width-12 text-center form-group_calend">
+														<p:cellEditor>
+															<f:facet name="output">
+																<h:outputText value="#{item.paymentDuedate}"
+																	styleClass="fa-input">
+																	<f:convertDateTime timeZone="GMT+05:30"
+																		pattern="dd-MMM-yyyy" />
+																</h:outputText>
+															</f:facet>
+															<f:facet name="input">
+																<p:calendar id="input_paymentDueDate"
+																	value="#{item.paymentDuedate}" mindate="new Date()"
+																	pattern="dd-MMM-yyyy" mask="true" navigator="true"
+																	requiredMessage="Required" placeholder="dd-mmm-yyyy"
+																	styleClass="form-control-1 calend-icon-1">
+																	<p:ajax event="dateSelect" />
+																</p:calendar>
+															</f:facet>
+														</p:cellEditor>
+													</p:column>
+
+													<p:column headerText="#{msg['intr_aple']}"
+														styleClass="width-11">
+														<h:outputText value="#{item.interestApplicable eq 'true' ? 'yes' : 'no'}"
+															styleClass="fa-input" />
+													</p:column>
+
+													<p:column
+														headerText="#{msg['rate_of_interest']} (&#xf295;)"
+														styleClass="width-25 fa-input">
+														<p:cellEditor>
+															<f:facet name="output">
+																<h:outputText value="#{item.rateOfInterest}"
+																	styleClass="fa-input" />
+															</f:facet>
+															<f:facet name="input">
+																<p:inputText styleClass="fa-input"
+																	id="input_rateOfInterest"
+																	value="#{item.rateOfInterest}"/>
+															</f:facet>
+														</p:cellEditor>
+													</p:column>
+													<p:column headerText="#{msg['attached_docs']}"
+														styleClass="text-center width-10">
+														<p:commandButton value="&#xf019;&nbsp;&nbsp;#{msg['download']}" ajax="false"
+															class="btn bg-success fa-input"
+															title="#{msg['download']}"
+															actionListener="#{stockItemInwardBean.selectInvoiceRows(item)}">
+															<p:fileDownload
+																value="#{stockItemInwardBean.selectedeStockItemInwardPNSBean.downloadFile}" />
+														</p:commandButton>
+													</p:column>
+													<!-- 
+										            <p:column headerText="#{msg['attached_docs']} "
+										            	styleClass="fa-input width-10">
+									            	 		<p:commandButton value="#{item.invoiceNumber}" ajax="true" 
+											            		class="btn bg-success heading-btn  font-iconmoon"
+											            		actionListener="#{stockItemInwardBean.selectInvoiceRows(item)}"
+											            		oncomplete="PF('statusMediaView').show();"
+											            		update=":itemPNS:mediaViewPanel"
+											            		>
+														    </p:commandButton>
+										            </p:column>
+											          -->
+													<p:column headerText="#{msg['action']}"
+														styleClass="text-center width-12">
+														<p:rowEditor value="&#xe912;" class="cust-edit-btn"
+															style="display: inline; float:none" />
+													</p:column>
+												</p:dataTable>
+											</p:outputPanel>
+										</div>
+									</div>
+								</div>
+
+
+								<h5 class="bord_bot m-t-0">
+									<span class="iform-title"><i
+										class="fa fa-th-large m-r-5"></i>#{msg['trans_details']}</span>
+								</h5>
+
+								<div class="row custom-form-1 label-form">
+									<div class="col-lg-3 col-md-3 col-sm-6">
+										<div class="form-group">
+											<p:outputLabel value="#{msg['trans_ser_type']}" />
+											<div class="input-group ui-outputlabel ui-widget">
+												<span class="input-group-addon"><i class="icon-car"></i></span>
+												<h:selectOneMenu styleClass="form-control"
+													value="#{stockItemInwardBean.selectedTransportTypeMaster}"
+													filter="true" filterMatchMode="contains"
+													converter="#{entityConverter}">
+													<f:selectItem itemLabel="Select Service Type"
+														noSelectionOption="true"></f:selectItem>
+													<f:selectItems
+														value="#{stockItemInwardBean.transportTypeMasterList}"
+														var="list" itemValue="#{list}" itemLabel="#{list.name}">
+													</f:selectItems>
+													<p:ajax event="change" update="transportServiceNamePanel"
+														listener="#{stockItemInwardBean.transportTypeMasterListener}">
+													</p:ajax>
+												</h:selectOneMenu>
+												<!-- <h:selectOneMenu >
+												<f:selectItem itemLabel="Road Service"
+													noSelectionOption="true"></f:selectItem>
+												<f:selectItem itemValue="Road Service"
+													itemLabel="Road Service"></f:selectItem>
+												<f:selectItem itemValue="Air Service"
+													itemLabel="Air Service"></f:selectItem>
+												<f:selectItem itemValue="Inperson" itemLabel="Inperson"></f:selectItem>
+											</h:selectOneMenu>
+											 -->
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-6">
+										<div class="form-group">
+											<p:outputPanel id="transportServiceNamePanel">
+												<p:outputLabel value="#{msg['trans_ser_name']}" />
+												<div class="input-group ui-outputlabel ui-widget">
+													<span class="input-group-addon"><i class="icon-car"></i></span>
+													<h:selectOneMenu styleClass="form-control"
+														value="#{stockItemInwardBean.selectedTransportMaster}"
+														filter="true" filterMatchMode="contains"
+														converter="#{entityConverter}">
+														<f:selectItem itemLabel="Select Service Name"
+															noSelectionOption="true"></f:selectItem>
+														<f:selectItems
+															value="#{stockItemInwardBean.transportServiceMasterList}"
+															var="list" itemValue="#{list}" itemLabel="#{list.name}">
+														</f:selectItems>
+														<p:ajax event="change" update="transportServiceNamePanel">
+														</p:ajax>
+													</h:selectOneMenu>
+													<!-- <h:selectOneMenu styleClass="form-control" >
+												<f:selectItem itemLabel=" TVS Parcel Service"
+													noSelectionOption="true"></f:selectItem>
+												<f:selectItem itemValue=" TVS Parcel Service"
+													itemLabel=" TVS Parcel Service"></f:selectItem>
+											</h:selectOneMenu>
+											 -->
+												</div>
+											</p:outputPanel>
+										</div>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-6">
+										<div class="form-group">
+											<p:outputLabel value="#{msg['waybill_available']}" />
+											<div class="input-group ui-outputlabel ui-widget">
+												<span class="input-group-addon"><i
+													class="icon-certificate"></i></span>
+												<h:selectOneMenu styleClass="form-control"
+													value="#{stockItemInwardBean.wayBillAvailable}">
+													<f:selectItem itemLabel="Select Waybill Type"
+														noSelectionOption="true"></f:selectItem>
+													<f:selectItem itemValue="Yes" itemLabel="Yes"></f:selectItem>
+													<f:selectItem itemValue="No" itemLabel="No"></f:selectItem>
+													<p:ajax event="change" update="waybillNumberPanel weight"
+														listener="#{stockItemInwardBean.renderedWaybillNumber}">
+													</p:ajax>
+												</h:selectOneMenu>
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-6">
+										<div class="form-group">
+											<p:outputPanel id="waybillNumberPanel">
+												<p:outputPanel id="waybillNumberPanelLevel2"
+													rendered="#{stockItemInwardBean.waybillRendered}">
+													<p:outputLabel value="#{msg['waybill_no']}" />
+													<div class="input-group ui-outputlabel ui-widget">
+														<span class="input-group-addon"><i
+															class="icon-hash"></i></span>
+														<p:inputText styleClass="form-control"
+															value="#{stockItemInwardBean.wayBillNumber}"
+															placeholder=" ">
+														</p:inputText>
+													</div>
+												</p:outputPanel>
+											</p:outputPanel>
+										</div>
+									</div>
+									</div>
+									<div class="row custom-form-1 label-form">
+									<p:outputPanel id="weight">
+										<p:outputPanel
+											rendered="#{stockItemInwardBean.waybillRendered}">
+											<div class="col-lg-3 col-md-3 col-sm-6">
+												<div class="form-group">
+													<p:outputLabel value="#{msg['weight']}" />
+													<div class="input-group ui-outputlabel ui-widget">
+														<span class="input-group-addon"><i
+															class="icon-hash"></i></span>
+														<p:inputText styleClass="form-control"
+															value="#{stockItemInwardBean.weight}"
+															id="d">
+														</p:inputText>
+													</div>
+												</div>
+											</div>
+										</p:outputPanel>
+									</p:outputPanel>	
+
+								
+									<div class="col-lg-3 col-md-3 col-sm-6">
+										<div class="form-group">
+											<p:outputLabel value="#{msg['transport_charge_available']}" />
+											<div class="input-group ui-outputlabel ui-widget">
+												<span class="input-group-addon"><i
+													class="icon-stack3"></i></span>
+												<h:selectOneMenu styleClass="form-control"
+													value="#{stockItemInwardBean.transportChargeAvailble}">
+													<f:selectItem itemLabel="Select Type"
+														noSelectionOption="true"></f:selectItem>
+													<f:selectItem itemValue="Yes" itemLabel="Yes"></f:selectItem>
+													<f:selectItem itemValue="No" itemLabel="No"></f:selectItem>
+													<p:ajax event="change" update="transportChargeTypePanel receipt"
+														listener="#{stockItemInwardBean.renderedTransportChargeRendered}">
+													</p:ajax>
+												</h:selectOneMenu>
+											</div>
+										</div>
+									</div>
+									
+									<p:outputPanel id="receipt">
+										<p:outputPanel
+											rendered="#{stockItemInwardBean.transportChargeRendered}">
+											<div class="col-lg-3 col-md-3 col-sm-6">
+												<div class="form-group">
+													<p:outputLabel value="#{msg['receipt_num']}" />
+													<div class="input-group ui-outputlabel ui-widget">
+														<span class="input-group-addon"><i
+															class="icon-hash"></i></span>
+														<p:inputText styleClass="form-control"
+															value="#{stockItemInwardBean.receiptNumber}"
+															id="re">
+														</p:inputText>
+													</div>
+												</div>
+											</div>
+										</p:outputPanel>
+									</p:outputPanel>
+									
+									
+									
+									
+									<p:outputPanel id="transportChargeTypePanel">
+										<p:outputPanel id="transportChargeTypePanelLevel2"
+											rendered="#{stockItemInwardBean.transportChargeRendered}">
+											<div class="col-lg-3 col-md-3 col-sm-12">
+												<div class="form-group">
+													<p:outputLabel value="#{msg['trans_charge_type']}" />
+													<div class="input-group ui-outputlabel ui-widget">
+														<span class="input-group-addon"><i
+															class="icon-menu6"></i></span>
+														<h:selectOneMenu styleClass="form-control"
+															value="#{stockItemInwardBean.transportChargeType}">
+															<f:selectItem itemLabel="Select Type"
+																noSelectionOption="true"></f:selectItem>
+															<f:selectItem itemValue="Cash" itemLabel="Cash"></f:selectItem>
+															<f:selectItem itemValue="Cheque" itemLabel="Cheque"></f:selectItem>
+
+														</h:selectOneMenu>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-3 col-md-3 col-sm-6">
+												<div class="form-group">
+													<p:outputLabel value="#{msg['trans_charge_amt']}" />
+													<div class="input-group ui-outputlabel ui-widget">
+														<span class="input-group-addon"><i
+															class="fa fa-inr"></i></span>
+														<p:inputText styleClass="form-control text-right" id="transChgAmt"  
+															value="#{stockItemInwardBean.selectedStockTransferPNS.transportChargeAmount}">
+														</p:inputText>
+													</div>
+													<p:tooltip for="transChgAmt" value="#{msg['amt_valid_msg']}"></p:tooltip>
+												</div>
+											</div>
+										</p:outputPanel>
+									</p:outputPanel>
+									
+									<div class="col-lg-9 col-md-9 col-sm-12 text-right">
+										<div class="form-group m-b-0">
+											<p:outputLabel value="&nbsp;&nbsp;" styleClass="dis-block" />
+											<p:commandButton update="growls"
+												value="&#xed6a;&nbsp;#{msg['cancel']}"
+												title="#{msg['cancel']}"
+												class="btn bg-slate font-iconmoon m-r-0"
+												action="#{stockItemInwardBean.backStockItemInward}">
+											</p:commandButton>
+											<p:commandButton update="growls"
+												value="&#xeda7;&nbsp;#{msg['update']}"
+												title="#{msg['update']}"
+												class="btn bg-success font-iconmoon"
+												action="#{stockItemInwardBean.updateStockTransfer}"
+												onclick="PF('statusDialogLoading').show();"
+												oncomplete="PF('statusDialogLoading').hide();">
+											</p:commandButton>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+			<p:dialog widgetVar="statusDialogLoading" modal="true"
+				draggable="false" closable="false" resizable="false"
+				showHeader="false">
+				<img src="#{request.contextPath}/assets/images/preloader.gif" />
+			</p:dialog>
+
+			<p:dialog widgetVar="statusMediaView" modal="false" draggable="false"
+				closable="true" resizable="false" showHeader="false">
+				<p:outputPanel id="mediaViewPanel">
+					<p:media
+						value="#{stockItemInwardBean.selectedeStockItemInwardPNSBean.downloadFile}"
+						width="100%" height="300px" player="pdf">
+						<f:param name="id"
+							value="#{stockItemInwardBean.generateRandomIdForNotCaching()}" />
+					</p:media>
+
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

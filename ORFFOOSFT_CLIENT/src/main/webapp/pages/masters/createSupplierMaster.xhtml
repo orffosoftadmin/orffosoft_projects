@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/pages/template/layoutWithIndividualForm.xhtml">
+	<ui:define name="content">
+		<f:metadata>
+			<f:event type="preRenderView"
+				listener="#{loginBean.checkPrivilege('SUPPLIER_MASTER_ADD')}" />
+		</f:metadata>
+		<h:form id="suppForm">
+			<title>Mark Solution | Supplier</title>
+			<!-- Page Header -->
+			<div class="page-header page-header-default">
+				<div class="page-header-content">
+					<div class="page-title">
+						<h4>#{supplierMasterBean.action eq 'ADD' ?
+							msg['crt_supplier_master'] : msg['edit_supplier_master']}</h4>
+						<ul class="breadcrumb">
+							<li><a href="#{request.contextPath}/pages/home.xhtml"><i
+									class="icon-home2 position-left"></i>#{msg['home']}</a></li>
+							<li>#{msg['masters']}</li>
+							<li>#{msg['oper_master']}</li>
+							<li>#{supplierMasterBean.action eq 'ADD' ?
+								msg['crt_supplier_master'] : msg['edit_supplier_master']}</li>
+						</ul>
+						<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+					</div>
+					<ui:include src="/pages/pageHeadingElements.xhtml" />
+				</div>
+			</div>
+			<!-- End Page Header -->
+			<div class="content">
+				<div
+					class="panel-group panel-group-control panel-group-control-right m-b-15"
+					id="accordion-control-right">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<h6 class="panel-title">
+								#{msg['supplier_master']}
+								<p:outputLabel styleClass="pull-right">
+									(<span class="mand-red">*</span>
+									<span>#{msg['mand_fields']}</span>)
+								</p:outputLabel>
+							</h6>
+						</div>
+						<div id="accordion-control-right-group1"
+							class="panel-collapse collapse in page-scroll-without-process">
+
+							<p:outputPanel id="panel1">
+								<div class="panel-body p-t-10">
+									<div class="label-form">
+										<div class="row custom-form-1">
+											<div class="col-lg-6 col-md-12 col-sm-12">
+												<div class="row">
+													<div class="col-lg-6 col-md-6 col-sm-6">
+														<div class="form-group">
+															<p:outputLabel value="#{msg['sup_code']}" />
+															<span class="text-danger">*</span>
+															<div class="input-group ui-outputlabel ui-widget">
+																<span class="input-group-addon"><i
+																	class="icon-hash"></i></span>
+																<p:inputText styleClass="form-control" id="suppcode"
+																	value="#{supplierMasterBean.supplierMaster.code}"
+																	required="#{not empty param[update.clientId] || not empty param[submit.clientId]}"
+																	requiredMessage="#{msg['supply_code_req']}"
+																	validatorMessage="#{msg['supply_code_valid_msg']}">
+																	<p:ajax update="suppcodereqmsg" />
+																</p:inputText>
+															</div>
+															<h:message for="suppcode" class="validation-error-label"
+																id="suppcodereqmsg" />
+															<p:tooltip for="suppcode"
+																value="#{msg['supply_code_valid_msg']}" />
+														</div>
+													</div>
+
+													<div class="col-lg-6 col-md-6 col-sm-6">
+														<div class="form-group">
+															<p:outputLabel value="#{msg['sup_name']}" />
+															<span class="text-danger">*</span>
+															<div class="input-group ui-outputlabel ui-widget">
+																<span class="input-group-addon"><i
+																	class="icon-cart4"></i></span>
+																<p:inputText styleClass="form-control" id="suppname"
+																	value="#{supplierMasterBean.supplierMaster.name}"
+																	required="#{not empty param[submit.clientId]}"
+																	requiredMessage="#{msg['supply_name_req']}"
+																	validatorMessage="#{msg['supply_name_valid_msg']}">
+																	<p:ajax event="keyup" update="suppnamereqmsg" />
+																</p:inputText>
+															</div>
+
+															<h:message for="suppname" class="validation-error-label"
+																id="suppnamereqmsg" />
+															<p:tooltip for="suppname"
+																value="#{msg['supply_name_valid_msg']}" />
+														</div>
+													</div>
+												</div>
+
+
+												<div class="row">
+													<div class="col-lg-6 col-md-6 col-sm-6">
+														<div class="form-group">
+															<p:outputLabel
+																value="#{msg['sup_name']} (#{msg['in_tamil']})" />
+															<div class="input-group ui-outputlabel ui-widget">
+																<span class="input-group-addon"><i
+																	class="icon-cart4"></i></span>
+																<p:inputText styleClass="form-control" id="localName"
+																	minlength="3" maxlength="50"
+																	value="#{supplierMasterBean.supplierMaster.localName}"
+																	placeholder=" ">
+																</p:inputText>
+															</div>
+
+															<p:tooltip for="localName"
+																value="#{msg['supply_name_valid_msg']}" />
+														</div>
+													</div>
+
+
+													<div class="col-lg-6 col-md-6 col-sm-6">
+														<p:outputLabel value="#{msg['gst_no']}" />
+														<span class="text-danger">*</span>
+														<div class="form-group form-group_calend">
+															<p:inputText styleClass="form-control" id="gstno"
+															value="#{supplierMasterBean.supplierMaster.gstNumber}"
+															placeholder=" " maxlength="15" minimum="10">
+<!-- 															<f:validateLength minimum="10" maximum="15" /> -->
+															<p:ajax event="blur" update="gstnoreqmsg @this" />
+<!-- 															<f:validateRegex -->
+<!-- 																pattern="^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$" /> -->
+														</p:inputText>
+
+														</div>
+														<h:message for="gstno" class="validation-error-label"
+														id="gstnoreqmsg" />
+													<p:tooltip for="gstno" value="#{msg['gstin_no_valid_msg']}" />
+													</div>
+												</div>
+											</div>
+
+
+
+
+											<div class="col-lg-6 col-md-6 col-sm-12">
+												<div class="row">
+													<div class="col-lg-8 col-md-8 col-sm-8">
+														<div class="form-group">
+															<p:outputLabel value="#{msg['sup_add']}" />
+															<p:inputTextarea rows="4" 
+																class="form-control cust-textarea-height cust-dis-textarea"
+																 id="address"
+																value="#{supplierMasterBean.supplierMaster.address}"/>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-lg-3 col-md-3 col-sm-6">
+												<div class="form-group">
+													<p:outputLabel value="#{msg['con_per_name']}" />
+													<span class="text-danger">*</span>
+													<div class="input-group ui-outputlabel ui-widget">
+														<span class="input-group-addon"><i
+															class="icon-user"></i></span>
+
+														<p:inputText styleClass="form-control" id="contactname"
+															minlength="3" maxlength="50"
+															value="#{supplierMasterBean.supplierMaster.primaryContactName}"
+															placeholder=" "
+															required="#{not empty param[submit.clientId]}"
+															requiredMessage="#{msg['ct_per_name_is_req']}"
+															validatorMessage="#{msg['sup_con_per_name_valid_msg']}">
+															<f:validateLength minimum="3" maximum="100" />
+															<p:ajax event="keyup" update="contactnamereqmsg" />
+															<p:keyFilter regEx="/[a-z\s]/i"></p:keyFilter>
+														</p:inputText>
+													</div>
+													<h:message for="contactname" class="validation-error-label"
+														id="contactnamereqmsg" />
+													<p:tooltip for="contactname"
+														value="#{msg['sup_con_per_name_valid_msg']}" />
+												</div>
+											</div>
+											<div class="col-lg-3 col-md-3 col-sm-6">
+												<div class="form-group">
+													<p:outputLabel value="#{msg['email']}" />
+													<div class="input-group ui-outputlabel ui-widget">
+														<span class="input-group-addon"><i
+															class="icon-envelop3"></i></span>
+														<p:inputText styleClass="form-control" id="emailiid"
+															minlength="3" maxlength="50"
+															value="#{supplierMasterBean.supplierMaster.primaryEmail}"
+															placeholder=" ">
+															<f:validateLength minimum="8" maximum="50" />
+															<p:ajax event="keyup" update="emailiidreqmsg" />
+															<f:validateRegex
+																pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+														</p:inputText>
+													</div>
+
+													<h:message for="emailiid" class="validation-error-label"
+														id="emailiidreqmsg" />
+													<p:tooltip for="emailiid" value="#{msg['email_valid_msg']}" />
+												</div>
+											</div>
+											<div class="col-lg-3 col-md-3 col-sm-6">
+												<div class="form-group">
+													<p:outputLabel value="#{msg['mob_no']}" />
+													<span class="text-danger">*</span>
+													<div class="input-group ui-outputlabel ui-widget">
+														<span class="input-group-addon"><i
+															class="icon-mobile"></i></span>
+														<p:inputText styleClass="form-control" id="mobno"
+															maxlength="10"
+															value="#{supplierMasterBean.supplierMaster.primaryContactNumber}"
+															placeholder=" "
+															required="#{not empty param[submit.clientId]}"
+															requiredMessage="#{msg['mobile_req']}"
+															validatorMessage="#{msg['mob_valid_msg']}">
+															<f:validateLength minimum="10" maximum="10" />
+															<p:ajax event="keyup" update="mobnoreqmsg" />
+															<p:keyFilter regEx="/^[0-9]+$/"></p:keyFilter>
+															<f:validateRegex pattern="[7-9][0-9]{9}" />
+														</p:inputText>
+													</div>
+
+													<h:message for="mobno" class="validation-error-label"
+														id="mobnoreqmsg" />
+													<p:tooltip for="mobno" value="#{msg['mob_valid_msg']}" />
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row custom-form-1 label-form">
+										<div class="col-lg-12 col-md-12 col-sm-12 text-right">
+											<p:commandButton value="&#xed6a; #{msg['cancel']}"
+												styleClass="btn btn-sm bg-slate font-iconmoon"
+												action="#{supplierMasterBean.cancel}" immediate="true"
+												oncomplete="PF('progressDlg').hide();"
+												title="#{msg['cancel']}"
+												onclick="window.location.href='#{request.contextPath}/pages/masters/listSupplierMaster.xhtml'" />
+
+											<p:commandButton id="submit" binding="#{submit}"
+												rendered="#{supplierMasterBean.action eq 'ADD'}"
+												value="&#xed6e; #{msg['submit']}" title="#{msg['submit']}"
+												action="#{supplierMasterBean.submitSupplierMaster}"
+												onclick="PF('progressDlg').show();"
+												oncomplete="PF('progressDlg').hide();"
+												styleClass="btn btn-sm bg-success font-iconmoon"
+												update="panel1 growls">
+											</p:commandButton>
+
+											<p:commandButton id="update" binding="#{update}"
+												rendered="#{supplierMasterBean.action eq 'EDIT'}"
+												value="&#xeda7; #{msg['update']}" title="#{msg['update']}"
+												action="#{supplierMasterBean.updateSupplierMaster}"
+												onclick="PF('progressDlg').show();"
+												oncomplete="PF('progressDlg').hide();"
+												styleClass="btn btn-sm bg-success font-iconmoon"
+												update="panel1 growls" tabindex="9">
+											</p:commandButton>
+										</div>
+									</div>
+								</div>
+							</p:outputPanel>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

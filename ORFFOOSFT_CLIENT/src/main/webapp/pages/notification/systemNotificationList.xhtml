@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/pages/template/layout.xhtml">
+	<ui:define name="content">
+		<ui:param name="bean" value="#{systemNotificationBean}"></ui:param>
+
+		<title>InfoTex | System Notification List</title>
+		<!-- Page Header -->
+		<div class="page-header page-header-default">
+			<div class="page-header-content">
+				<div class="page-title">
+					<h4>#{msg['system_notifi_list']}</h4>
+					<ul class="breadcrumb">
+						<li><i class="fa fa-home m-r-5"></i><a href="#">#{msg['home']}</a></li>
+						<li><a href="#">#{msg['notification']}</a></li>
+						<li class="active">#{msg['system_notifi_list']}</li>
+					</ul>
+					<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+				</div>
+
+				<ui:include src="/pages/pageHeadingElements.xhtml" />
+			</div>
+		</div>
+		<!-- End Page Header -->
+		<div class="content">
+			<div class="row">
+				<div class="col-lg-6">
+					<h6 class="panel-title">
+						<strong><h:outputText value="#{bean.totalRecords}"
+								id="recordcount"></h:outputText></strong> - #{msg['system_notifi']}(s)<a
+							class="heading-elements-toggle"><i class="icon-more"></i></a>
+					</h6>
+				</div>
+
+				<div class="col-lg-6 text-right">
+					<div class="form-group m-b-10">
+						<p:commandButton value="&#xe9f5; #{msg['read']}"
+							action="#{bean.systemNotificationAction}"
+							onclick="PF('progressDlg').show();" title="#{msg['read']}"
+							oncomplete="PF('progressDlg').hide();"
+							class="btn bg-primary font-iconmoon" update="growls">
+							<f:setPropertyActionListener value="Read" target="#{bean.action}"></f:setPropertyActionListener>
+						</p:commandButton>
+						<p:commandButton value="&#xea18; #{msg['view']}" rendered="false"
+							onclick="PF('progressDlg').show();" title="#{msg['view']}"
+							oncomplete="PF('progressDlg').hide();"
+							class="btn bg-info heading-btn  font-iconmoon">
+						</p:commandButton>
+						<p:commandButton value="&#xe99e; #{msg['delete']}" update="growls"
+							onclick="PF('progressDlg').show();" title="#{msg['delete']}"
+							oncomplete="PF('progressDlg').hide();"
+							action="#{bean.systemNotificationAction}"
+							class="btn bg-danger font-iconmoon">
+							<f:setPropertyActionListener value="Delete"
+								target="#{bean.action}"></f:setPropertyActionListener>
+						</p:commandButton>
+						<p:commandButton value="&#xe916; #{msg['clear']}"
+							action="#{bean.showListPage}" immediate="true"
+							onstart="PF('progressDlg').show();" title="#{msg['clear']}"
+							oncomplete="PF('progressDlg').hide();"
+							class="btn bg-slate font-iconmoon">
+						</p:commandButton>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="panel panel-info ">
+				<div class="panel-body p-0">
+					<div class="table-responsive">
+						<p:dataTable id="notification" var="data" class="table"
+							widgetVar="notificationtable"
+							selection="#{bean.selectedSystemNotificaiton}"
+							rowKey="#{data.id}" value="#{bean.lazySystemNotificationList}"
+							lazy="true" emptyMessage="No Records Found"
+							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rows="10" paginator="true" paginatorPosition="bottom"
+							tableStyleClass="" rowsPerPageTemplate="10,15" rowIndexVar="idx">
+							<p:ajax event="filter" oncomplete="updateFilterSelection()" />
+							<p:ajax event="page" onstart="PF('progressDlg').show()"
+								onsuccess="PF('progressDlg').hide()" />
+
+							<p:column headerText="#" style="text-align: center; width: 3%;">
+								<h:outputText value="#{idx+1}" />
+							</p:column>
+							<p:column filterable="true" filterBy="#{data.fromUser.username}"
+								sortBy="#{data.fromUser.username}" filterMatchMode="contains"
+								sortable="true" headerText="#{msg['from']}">
+								<h:outputText value="#{data.fromUser.username}"></h:outputText>
+							</p:column>
+
+							<p:column filterable="true" filterBy="#{data.message}"
+								sortBy="#{data.message}" filterMatchMode="contains"
+								sortable="true" headerText="#{msg['subject_message']}">
+								<f:facet name="filter">
+									<p:inputText id="deptName" class="form-control"
+										onkeyup="PF('notificationtable').filter()" />
+								</f:facet>
+								<h:outputText value="#{data.message}"></h:outputText>
+							</p:column>
+
+
+							<p:column headerText="#{msg['created_date']}" style="width:15%"
+								filterBy="#{data.createdDate}"
+								styleClass="text-center form-group_calend"
+								filterMatchMode="equals" sortBy="#{data.createdDate}"
+								sortable="true">
+								<f:facet name="filter">
+									<p:calendar onchange="PF('notificationtable').filter()"
+										navigator="true" id="planTo" pattern="dd-MMM-yyyy"
+										placeholder="dd-mmm-yyyy" mask="true"
+										styleClass="form-control calend-icon text-center">
+										<p:ajax event="dateSelect"
+											oncomplete="PF('notificationtable').filter()" />
+									</p:calendar>
+								</f:facet>
+								<h:outputText value="#{data.createdDate}">
+									<f:convertDateTime pattern="dd-MMM-yyyy"
+										timeZone="#{loginBean.timeZone}" />
+								</h:outputText>
+							</p:column>
+
+							<p:column filterable="true" filterBy="#{data.notificationRead}"
+								sortBy="#{data.notificationRead}" filterMatchMode="contains"
+								sortable="true" headerText="#{msg['status']}">
+								<f:facet name="filter">
+									<h:selectOneMenu class="form-control select2"
+										onchange="PF('notificationtable').filter()">
+										<f:selectItem itemLabel="#{msg['select']}" />
+										<f:selectItem itemValue="true" itemLabel="Read" />
+										<f:selectItem itemValue="false" itemLabel="UnRead" />
+									</h:selectOneMenu>
+								</f:facet>
+
+								<h:outputText
+									value="#{data.notificationRead eq true?'Read':'UnRead'}"></h:outputText>
+							</p:column>
+
+
+							<p:column headerText="#{msg['select']}" selectionMode="single"
+								style="width:6%;text-align:center" />
+						</p:dataTable>
+						<p:remoteCommand name="updateFilterSelection"
+							update=":#{p:component('recordcount')}" autoRun="true" />
+
+					</div>
+
+					<ui:remove>
+						<div class="dataTables_info m-b-0 m-l-10"
+							id="DataTables_Table_2_info" role="status" aria-live="polite">
+							<button type="button" title="Download PDF"
+								class="btn btn-primary btn-xs">
+								<i class="icon-file-pdf position-left"></i>PDF
+							</button>
+							<button type="button" title="Download Excel"
+								class="btn btn-success btn-xs">
+								<i class="icon-file-excel position-left"></i>Excel
+							</button>
+						</div>
+					</ui:remove>
+				</div>
+			</div>
+
+		</div>
+
+
+		<p:dialog header="Confirm Delete" draggable="false" modal="true"
+			styleClass="p-0 overlay-pop modal-dialog" closable="true" width="30%"
+			widgetVar="confirmNotificationDelete" showEffect="fade"
+			hideEffect="fade" closeOnEscape="true" resizable="false">
+
+			<div class="modal-body">
+				<h:outputText value="Are you sure you want to delete this Record ?" />
+			</div>
+
+			<div class="modal-footer m-t-10">
+				<p:commandButton value="&#xed6a;&nbsp;No"
+					styleClass="btn bg-slate heading-btn font-iconmoon"
+					oncomplete="PF('confirmNotificationDelete').hide()" />
+				<p:commandButton ajax="false"
+					styleClass="btn bg-success heading-btn font-iconmoon"
+					value="&#xed6e;&nbsp;Yes" action="#{bean.deleteConfirm}"
+					oncomplete="PF('confirmNotificationDelete').hide()">
+				</p:commandButton>
+			</div>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

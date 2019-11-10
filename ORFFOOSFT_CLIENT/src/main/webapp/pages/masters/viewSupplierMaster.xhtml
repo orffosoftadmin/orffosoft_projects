@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/pages/template/layout.xhtml">
+	<ui:define name="content">
+		<h:form id="suppForm">
+			<title>Mark Solution | View Supplier</title>
+			<!-- Page Header -->
+			<div class="page-header page-header-default">
+				<div class="page-header-content">
+					<div class="page-title">
+						<h4>#{msg['view_supplier_master']}</h4>
+						<ul class="breadcrumb">
+							<li><a href="#{request.contextPath}/pages/home.xhtml"><i class="fa fa-home m-r-5"></i>#{msg['home']}</a></li>
+							<li>#{msg['masters']}</li>
+							<li>#{msg['oper_master']}</li>
+							<li>#{msg['view_supplier_master']}</li>
+						</ul>
+						<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+					</div>
+					<ui:include src="/pages/pageHeadingElements.xhtml" />
+				</div>
+			</div>
+			<!-- End Page Header -->
+			<div class="content">
+				<div
+					class="panel-group panel-group-control panel-group-control-right m-b-15"
+					id="accordion-control-right">
+					<div class="panel panel-info ">
+						<div class="panel-heading">
+							<h6 class="panel-title">#{msg['supplier_master']}</h6>
+						</div>
+						<div id="accordion-control-right-group1"
+							class="panel-collapse collapse in">
+
+							<p:outputPanel id="panel1">
+								<div class="panel-body p-t-10 p-b-10 page-scroll-without-process">
+
+									<div class="row view-style">
+												<div class="col-lg-3 col-md-3 col-sm-6">
+													<div class="form-group">
+														<p:outputLabel value="#{msg['sup_code']}" />
+														<h:outputText
+															value="#{supplierMasterBean.supplierMaster.code}"
+															class="" />
+													</div>
+												</div>
+
+												<div class="col-lg-3 col-md-3 col-sm-6">
+													<div class="form-group">
+														<p:outputLabel value="#{msg['sup_name']}" />
+														<h:outputText
+															value="#{supplierMasterBean.supplierMaster.name}"
+															class="" />
+													</div>
+												</div>
+
+												<div class="col-lg-3 col-md-3 col-sm-6">
+													<div class="form-group">
+														<p:outputLabel value="#{msg['sup_name']} (#{msg['in_tamil']})" />
+														<h:outputText
+															value="#{supplierMasterBean.supplierMaster.localName}"
+															class="" />
+													</div>
+												</div>
+												<div class="col-lg-3 col-md-3 col-sm-6">
+													<div class="form-group">
+														<p:outputLabel value="#{msg['dt_reg']}" />
+														<h:outputText
+															value="#{supplierMasterBean.supplierMaster.registrationDate}"
+															class="">
+															<f:convertDateTime type="date" pattern="dd-MMM-yyyy"
+																timeZone="#{loginBean.timeZone}" />
+														</h:outputText>
+													</div>
+												</div>
+											</div>
+
+									<div class="row view-style">
+										<div class="col-lg-6 col-md-6 col-sm-12">
+											
+
+											<div class="row view-style">
+												
+
+												<div class="col-lg-6 col-md-6 col-sm-12">
+													<div class="form-group">
+														<p:outputLabel value="#{msg['gst_no']}" />
+														<h:outputText
+															value="#{supplierMasterBean.supplierMaster.gstNumber}"
+															class="" />
+													</div>
+												</div>
+												<div class="col-lg-6 col-md-6 col-sm-12">
+													<div class="form-group">
+														<p:outputLabel value="#{msg['con_per_name']}" />
+														<h:outputText
+															value="#{supplierMasterBean.supplierMaster.primaryContactName}"
+															class="" />
+													</div>
+												</div>
+											</div>
+											<div class="row view-style">
+												<div class="col-lg-6 col-md-6 col-sm-12">
+													<div class="form-group">
+														<p:outputLabel value="#{msg['email']}" />
+														<h:outputText
+															value="#{supplierMasterBean.supplierMaster.primaryEmail}"
+															class="" />
+													</div>
+												</div>
+
+												<div class="col-lg-6 col-md-6 col-sm-12">
+													<div class="form-group">
+														<p:outputLabel value="#{msg['mob_no']}" />
+														<h:outputText
+															value="#{supplierMasterBean.supplierMaster.primaryContactNumber}"
+															class="" />
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-12">
+											<div class="form-group">
+												<p:outputLabel value="#{msg['sup_add']}" />
+												<h:outputText value="#{supplierMasterBean.supplierMaster.address}" class="" />
+											</div>
+										</div>
+									</div>
+
+										<div class="row view-style p-b-15">
+										<div class="col-lg-12 col-md-12 col-sm-12 text-right">
+											<p:commandButton value="&#xeddf; #{msg['back']}" title="#{msg['back']}" 
+												styleClass="btn btn-sm bg-info font-iconmoon m-l-10"
+												action="#{supplierMasterBean.cancel}" immediate="true"
+												oncomplete="PF('progressDlg').hide();"
+												onclick="window.location.href='#{request.contextPath}/pages/masters/listSupplierMaster.xhtml'" />
+										</div>
+									</div>
+								</div>
+							</p:outputPanel>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	template="/pages/template/layout.xhtml">
+	<ui:define name="content">
+		<title>InfoTex | Menu List</title>
+	<h:form id="form1">
+		<div class="row">
+			<div class="col-lg-6 col-md-6 col-sm-6">
+				<h4 class="page-title">#{msg['menu']} </h4>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-6">
+				<div class="text-right">
+					<ol class="breadcrumb mt text12 ph0">
+						<li><i class="fa fa-home mr-sm"></i><a href="#">#{msg['home']}</a></li>
+						<li class="active">#{msg['master']}</li>
+						<li class="active">#{msg['menu_list']}</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+
+		<div class="panel panel-color panel-top-bor">
+			<div class="panel-body">
+				<p:outputPanel id="mgroup">
+				<div class="row">
+			
+					<div class="col-lg-4 col-md-4 col-sm-4">
+						<div class="form-group">
+							<p:outputLabel value="#{msg['module']}" />
+							<h:selectOneMenu id="nenugroup" value="#{menuMasterBean.menuGroup}" 
+								converter="#{entityConverter}"  
+							
+								class="form-control" >
+								<f:selectItem itemLabel="#{msg['select']} "
+													itemValue="#{null}" noSelectionOption="true" />
+								<f:selectItems  itemValue="#{p}" var="p" itemLabel="#{languageBean.localeCode eq 'ta_IN' ? (p.lname ne null ? p.lname : '') : p.name}" 
+									value="#{menuMasterBean.menuGroupList}"/>
+							</h:selectOneMenu>
+						</div>
+					</div> 
+					<div class="col-lg-4 col-md-4 col-sm-4">
+						<div class="form-group">
+							<p:outputLabel value="#{msg['menu_code']}"  />
+							<p:inputText id="nenuname" value="#{menuMasterBean.code}" 
+							 a:autofocus="true" autocomplete="off"
+							 class="form-control" >
+							 </p:inputText>
+							 <p:tooltip for="nenuname" value="#{msg['enter_menu_code']}"/>
+						</div>
+					</div>
+				</div>
+
+				<div class="text-right m-b-20">
+					<p:commandButton value=" &nbsp; #{msg['clear']}"
+						update="mgroup table"
+						actionListener="#{menuMasterBean.clear}"
+						class="btn btn-cancel waves-effect w-md waves-light fa-input" />
+						
+					<p:commandButton value="&#xf002;&nbsp; #{msg['search']}"
+						update="mgroup table growls"
+						class="btn btn-info waves-effect w-md waves-light fa-input m-l-10"
+						action="#{menuMasterBean.search}"> 
+						</p:commandButton>
+				</div>
+
+
+				<div class="portlet m-b-0">
+					<div class="panel-grey">
+						<h3 class="portlet-title">#{msg['menu_list']}</h3>
+						<div class="portlet-widgets">
+						<p:commandButton value="&#xf067;&nbsp;#{msg['add']}"
+								class="fa-input btn btn-xs btn-success waves-effect waves-light m-r-10"
+								action="#{menuMasterBean.showForm}">
+							<f:setPropertyActionListener value="ADD"
+											target="#{menuMasterBean.action}" />
+						</p:commandButton>
+
+						<p:commandButton value="&#xf044;&nbsp;#{msg['edit']}"
+								update=" growls"
+								class="btn btn-xs btn-primary waves-effect waves-light fa-input m-r-10"
+								action="#{menuMasterBean.showForm}">
+								<f:setPropertyActionListener value="EDIT"
+											target="#{menuMasterBean.action}" />
+
+						</p:commandButton>
+						<p:commandButton value="&#xf06e;&nbsp;#{msg['view']}"
+							update=" growls"
+							action="#{menuMasterBean.showViewPage}"
+							class="btn btn-xs fa-input btn-info waves-effect waves-light">
+							<f:setPropertyActionListener value="VIEW"
+											target="#{menuMasterBean.action}" />
+						</p:commandButton>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+				<div id="bg-primary1" class="panel-collapse collapse in">
+										<div class="portlet-body p0">
+											<div class="row">
+												<div class="col-md-12">
+													<div class="table-responsive">
+														<p:dataTable id="table" var="data"
+															selection="#{menuMasterBean.menuMaster}"
+															value="#{menuMasterBean.menuMasterList}"
+															rowKey="#{data}"
+															paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+															rows="10" paginator="true" paginatorPosition="bottom"
+															emptyMessage="#{msg['no_records_found']}"
+															rowsPerPageTemplate="5,10,15" rowIndexVar="idx">
+
+
+															<p:columnGroup type="header">
+																<p:row>
+																	<p:column rowspan="2" headerText="#{msg['serial_no']}" />
+																	<p:column rowspan="2"
+																		headerText="#{msg['module']}" />
+																	<p:column rowspan="2"
+																		headerText="#{msg['menu_code']}" />
+																	<p:column rowspan="2"
+																		headerText="#{msg['menu_name']}"  />
+																	<p:column rowspan="2"
+																		headerText="#{msg['menu_lname']}" />
+																	
+																	<p:column rowspan="2" headerText="#{msg['select']}" />
+
+																</p:row>
+															</p:columnGroup>
+															<p:column style="width:50px; text-align:center;">
+																<h:outputText value="#{idx+1}" />
+															</p:column>
+															<p:column style="white-space:nowrap;">
+																<h:outputText
+																	value="#{data.menuGroup.name}" />
+															</p:column>
+															<p:column style="white-space:nowrap;">
+																<h:outputText value="#{data.code}" />
+															</p:column>
+
+															<p:column style="white-space:nowrap;"
+																styleClass="text-left">
+																<h:outputText value="#{data.name}" />
+															</p:column>
+
+															<p:column style="white-space:nowrap;"
+																styleClass="text-left">
+																<h:outputText value="#{data.lname}" />
+															</p:column> 
+															
+
+															<p:column styleClass="text-center" selectionMode="single"
+																disableSelection="false">
+															</p:column>
+
+														</p:dataTable>
+													</div>
+													<!-- <div class="col-md-12 ph0">
+														<div class="col-md-6 m-t-20">
+															<button
+																class="btn-xs btn-icon waves-effect waves-light btn-primary m-r-10"
+																title="Download PDF">
+																<i class="fa fa-download"></i> PDF
+															</button>
+															<button
+																class="btn-xs btn-icon waves-effect waves-light btn-success"
+																title="Download Excel">
+																<i class="fa fa-download"></i> Excel
+															</button>
+														</div>
+
+													</div> -->
+												</div>
+												<!-- end col -->
+												<div class="clearfix"></div>
+											</div>
+											<!-- end row -->
+										</div>
+									</div>
+			</p:outputPanel>
+			</div>
+		</div>
+			</h:form>
+	</ui:define>
+</ui:composition>

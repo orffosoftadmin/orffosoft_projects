@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	template="/pages/template/layout.xhtml">
+	<ui:define name="content">
+		<title>InfoTex | File Movement List</title>
+		<div class="page-header page-header-default">
+			<div class="page-header-content">
+				<div class="page-title">
+					<h4>#{msg['file_move_list']}</h4>
+					<ul class="breadcrumb">
+						<li><a href="#{request.contextPath}/pages/home.xhtml"><i
+								class="icon-home2 position-left"></i>#{msg['home']}</a></li>
+						<li>#{msg['personnel']}</li>
+						<li>#{msg['admin']}</li>
+						<li class="active">#{msg['file_move_list']}</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="content">
+			<div class="row">
+				<div class="col-lg-6 col-md-7 col-sm-6">
+					<h6 class="panel-title">
+						<span class="textb"><h:outputText
+								value="#{fileMovementBean.totalRecords}" id="recordcount"></h:outputText></span>
+						- #{msg['file_movmnt']}(s)
+					</h6>
+				</div>
+				<div class="col-lg-6 col-md-12 col-sm-12 text-right">
+					<div class="form-group m-b-10">
+						<p:commandButton value="&#xea0e; #{msg['add']}"
+							onstart="PF('statusDialog').show();"
+							onsuccess="PF('statusDialog').hide();"
+							action="#{fileMovementBean.loadFileMovementDetails}"
+							rendered="#{fileMovementBean.addButtonFlag}"
+							title="#{msg['add']}" class="btn bg-success font-iconmoon">
+							<f:setPropertyActionListener value="ADD"
+								target="#{fileMovementBean.action}" />
+						</p:commandButton>
+						<p:commandButton value="&#xe912; #{msg['edit']}" update="growls"
+							title="#{msg['edit']}" class="btn bg-primary font-iconmoon"
+							onstart="PF('statusDialog').show();"
+							onsuccess="PF('statusDialog').hide();"
+							action="#{fileMovementBean.showEditPage}">
+							<f:setPropertyActionListener value="Edit"
+								target="#{fileMovementBean.action}" />
+						</p:commandButton>
+						<p:commandButton value="&#xea18; #{msg['view']}"
+							action="#{fileMovementBean.showViewPage}"
+							onstart="PF('statusDialog').show();"
+							onsuccess="PF('statusDialog').hide();" title="#{msg['view']}"
+							update="growls" class="btn bg-info heading-btn  font-iconmoon">
+						</p:commandButton>
+						<p:commandButton value="&#xe99e; #{msg['delete']}" disabled="true"
+							onsuccess="PF('statusDialog').hide();"
+							onclick="PF('progressDlg').show();" title="#{msg['delete']}"
+							class="btn bg-danger font-iconmoon">
+						</p:commandButton>
+						<p:commandButton value="&#xe916;&nbsp;#{msg['clear']}"
+							action="#{fileMovementBean.clear}" title="#{msg['clear']}"
+							class="btn bg-slate font-iconmoon"
+							onclick="PF('progressDlg').show();"
+							oncomplete="PF('progressDlg').hide();">
+						</p:commandButton>
+					</div>
+				</div>
+			</div>
+
+			<div class="panel panel-default">
+				<div class="panel-body p-0">
+					<div class="table-responsive">
+						<p:dataTable id="table" var="data" lazy="true" widgetVar="table"
+							tableStyleClass="" rowKey="#{data.id}"
+							selection="#{fileMovementBean.selectedFileMovement}"
+							value="#{fileMovementBean.lazyFileMovementList}"
+							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							paginator="true" paginatorPosition="bottom"
+							rowsPerPageTemplate="5,10,15" rows="10" rowIndexVar="idx"
+							emptyMessage="#{msg['no_records_found']}">
+							<p:ajax event="rowSelectRadio"
+								listener="#{fileMovementBean.onRowSelect}" />
+							<p:ajax event="filter" oncomplete="updateFilterSelection()" />
+							<p:ajax event="page" onstart="PF('statusDialog').show()"
+								onsuccess="PF('statusDialog').hide()" />
+							<!-- SI No.  -->
+							<p:column headerText="#" styleClass="width-3 text-center">
+								<h:outputText value="#{idx+1}" />
+							</p:column>
+
+							<!--Application Number.  -->
+							<p:column id="RefNum" filterable="true"
+								filterBy="#{data.movementNumber}" filterMatchMode="contains"
+								headerText="#{msg['ref_num']}" sortBy="#{data.movementNumber}"
+								sortable="true">
+								<f:facet name="filter">
+									<p:inputText id="refNum" class="form-control "
+										onkeyup="PF('table').filter()" tabindex="1">
+									</p:inputText>
+								</f:facet>
+								<h:outputText value="#{data.movementNumber}" />
+							</p:column>
+
+
+							<p:column id="entMaster" filterable="true"
+								filterBy="#{data.entityMaster.name}" filterMatchMode="contains"
+								headerText="#{msg['ho_ro']}" sortBy="#{data.entityMaster.name}"
+								sortable="true">
+								<f:facet name="filter">
+									<h:selectOneMenu onchange="PF('table').filter()"
+										id="entityMaster" class="form-control select2">
+										<f:selectItem itemLabel="#{msg['select']}" itemValue="#{null}"
+											noSelectionOption="true" />
+										<f:selectItems value="#{fileMovementBean.entityMasterList}"
+											var="em" itemLabel="#{em.name}" itemValue="#{em.name}" />
+									</h:selectOneMenu>
+								</f:facet>
+								<h:outputText value="#{data.entityMaster.name}" />
+							</p:column>
+
+							<p:column id="entityType" filterable="true"
+								filterBy="#{data.entityMaster.entityTypeMaster.entityName}"
+								filterMatchMode="contains" headerText="#{msg['entity_master']}"
+								sortBy="#{data.entityMaster.entityTypeMaster.entityName}"
+								sortable="true">
+								<f:facet name="filter">
+									<h:selectOneMenu onchange="PF('table').filter()" id="entType"
+										class="form-control select2">
+										<f:selectItem itemLabel="#{msg['select']}" itemValue="#{null}"
+											noSelectionOption="true" />
+										<f:selectItems value="#{fileMovementBean.entityTypeList}"
+											var="et" itemLabel="#{et.entityName}"
+											itemValue="#{et.entityName}" />
+									</h:selectOneMenu>
+								</f:facet>
+								<h:outputText
+									value="#{data.entityMaster.entityTypeMaster.entityName}" />
+							</p:column>
+
+							<p:column id="entity" filterable="true"
+								filterBy="#{data.entityMaster.name}" filterMatchMode="contains"
+								headerText="#{msg['entity']}" sortBy="#{data.entityMaster.name}"
+								sortable="true">
+								<f:facet name="filter">
+									<h:selectOneMenu onchange="PF('table').filter()" id="ent"
+										class="form-control select2">
+										<f:selectItem itemLabel="#{msg['select']}" itemValue="#{null}"
+											noSelectionOption="true" />
+										<f:selectItems value="#{fileMovementBean.entityMasterList}"
+											var="em" itemLabel="#{em.name}" itemValue="#{em.name}" />
+									</h:selectOneMenu>
+								</f:facet>
+								<h:outputText value="#{data.entityMaster.name}" />
+							</p:column>
+
+							<p:column id="dept" filterable="true"
+								filterBy="#{data.departmentMaster.name}"
+								filterMatchMode="contains" headerText="#{msg['dept']}"
+								sortBy="#{data.departmentMaster.name}" sortable="true">
+								<f:facet name="filter">
+									<h:selectOneMenu onchange="PF('table').filter()" id="type"
+										class="form-control select2">
+										<f:selectItem itemLabel="#{msg['select']}" itemValue="#{null}"
+											noSelectionOption="true" />
+										<f:selectItems value="#{fileMovementBean.departmentList}"
+											var="dp" itemLabel="#{dp.name}" itemValue="#{dp.name}" />
+									</h:selectOneMenu>
+								</f:facet>
+								<h:outputText value="#{data.departmentMaster.name}" />
+							</p:column>
+							
+							<p:column id="section" filterable="true"
+								filterBy="#{data.sectionMaster.name}" filterMatchMode="contains"
+								headerText="#{msg['sec']}" sortBy="#{data.sectionMaster.name}"
+								sortable="true">
+								<f:facet name="filter">
+									<h:selectOneMenu onchange="PF('table').filter()" id="sec"
+										class="form-control select2">
+										<f:selectItem itemLabel="#{msg['select']}" itemValue="#{null}"
+											noSelectionOption="true" />
+										<f:selectItems value="#{fileMovementBean.sectionList}"
+											var="sec" itemLabel="#{sec.name}" itemValue="#{sec.name}" />
+									</h:selectOneMenu>
+								</f:facet>
+								<h:outputText value="#{data.sectionMaster.name}" />
+							</p:column>
+
+							<p:column filterBy=" #{data.fileMovementLog.stage}"
+								headerText="#{msg['status']}" filterMatchMode="contains"
+								filterable="true" sortBy=" #{data.fileMovementLog.stage}"
+								sortable="true" styleClass="text-center width-10">
+
+								<f:facet name="filter">
+
+									<h:selectOneMenu class="form-control select2"
+										onchange="PF('producttablewdgt').filter()" id="statusDropdown">
+										<f:selectItem itemLabel="#{msg['select']}" itemValue="#{null}"
+											noSelectionOption="true" />
+										<f:selectItem itemValue="INITIATED" itemLabel="INITIATED" />
+										<f:selectItem itemValue="SUBMITTED" itemLabel="SUBMITTED" />
+										<f:selectItem itemValue="APPROVED" itemLabel="APPROVED" />
+										<f:selectItem itemValue="FINAL APPROVED"
+											itemLabel="FINAL APPROVED" />
+										<f:selectItem itemValue="REJECTED" itemLabel="REJECTED" />
+									</h:selectOneMenu>
+								</f:facet>
+
+
+								<h:outputText value="#{data.fileMovementLog.stage}"
+									styleClass="label label-default width-custom"
+									rendered="#{data.fileMovementLog.stage eq 'initiated'}" />
+
+								<h:outputText value="#{data.fileMovementLog.stage}"
+									styleClass="label label-success width-custom"
+									rendered="#{data.fileMovementLog.stage eq 'SUBMITTED'}" />
+
+								<h:outputText value="#{data.fileMovementLog.stage}"
+									styleClass="label label-primary width-custom"
+									rendered="#{data.fileMovementLog.stage eq 'APPROVED'}"></h:outputText>
+								<h:outputText value="#{data.fileMovementLog.stage}"
+									styleClass="label label-success width-custom"
+									rendered="#{data.fileMovementLog.stage eq 'FINAL APPROVED'}"></h:outputText>
+								<h:outputText value="#{data.fileMovementLog.stage}"
+									styleClass="label label-danger width-custom"
+									rendered="#{data.fileMovementLog.stage eq 'REJECTED'}"></h:outputText>
+
+							</p:column>
+							<p:column headerText="#{msg['select']}" selectionMode="single"
+								styleClass="width-4 text-center" />
+
+						</p:dataTable>
+						<p:remoteCommand name="updateFilterSelection"
+							update=":#{p:component('recordcount')}" autoRun="true" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,655 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/pages/template/layout.xhtml">
+	<ui:define name="content">
+		<h:form id="itemPNS">
+			<title>Mark Solution | Stock Upload</title>
+			<!-- Page Header -->
+			<div class="page-header page-header-default">
+				<div class="page-header-content">
+					<div class="page-title">
+						<h4>#{msg['crt_stock_item_inward']}</h4>
+						<ul class="breadcrumb">
+							<li><a href="#{request.contextPath}/pages/home.xhtml"><i
+									class="icon-home2 position-left"></i>#{msg['home']}</a></li>
+							<li>#{msg['oper']}</li>
+							<li>#{msg['stock_management']}</li>
+							<li>#{msg['item_inward']}</li>
+							<li class="active">#{msg['crt_stock_item_inward']}</li>
+						</ul>
+						<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+					</div>
+					<ui:include src="/pages/pageHeadingElements.xhtml" />
+				</div>
+			</div>
+			<!-- End Page Header -->
+			<div class="content">
+				<div
+					class="panel-group panel-group-control panel-group-control-right m-b-15"
+					id="accordion-control-right">
+					<div class="panel panel-info ">
+						<div class="panel-heading">
+							<h6 class="panel-title">
+								#{msg['stock_item_inward']}
+								<p:outputLabel styleClass="pull-right">(
+									<span class="mand-red">*</span>
+									<span>#{msg['mand_fields']}</span>)
+								</p:outputLabel>
+							</h6>
+						</div>
+
+						<div class="page-scroll">
+							<div class="panel-body p-t-10">
+								<h5 class="bord_bot m-t-0">
+									<span class="iform-title"><i
+										class="fa fa-th-large m-r-5"></i>#{msg['sup_detail']}</span>
+								</h5>
+								<div class="row custom-form-1 label-form">
+									<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+										<div class="form-group">
+											<p:outputLabel value="Supplier Name" />
+											<span class="text-danger">*</span>
+											<div class="input-group ui-outputlabel ui-widget">
+												<span class="input-group-addon"><i class="icon-list"></i></span>
+												<p:autoComplete id="supplier" minQueryLength="1"
+													styleClass="form-control" converter="#{entityConverter}"
+													value="#{stockItemUploadBean.selectedSupplierMaster}"
+													itemValue="#{pro}" var="pro" itemLabel="#{pro.name}"
+													completeMethod="#{stockItemUploadBean.supplierAutocomplete}"
+													effect="fade">
+													<p:ajax update="itemPNS:gstPanelUpdate"></p:ajax>
+												</p:autoComplete>
+
+											</div>
+											<p:focus for="supplier" />
+										</div>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+										<div class="form-group">
+											<p:outputLabel value="#{msg['gst_no']}" />
+											<span class="text-danger">*</span>
+											<div class="input-group">
+												<span class="input-group-addon"><i class="icon-hash"></i></span>
+												<p:outputPanel id="gstPanelUpdate">
+													<p:inputText id="gstno" styleClass="form-control"
+														value="#{stockItemUploadBean.selectedSupplierMaster.gstNumber}"
+														disabled="true" />
+												</p:outputPanel>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<h5 class="bord_bot m-t-0">
+									<span class="iform-title"><i
+										class="fa fa-th-large m-r-5"></i>#{msg['add_item_receive_details']}</span>
+								</h5>
+								<p:outputPanel id="addItems">
+									<div class="row custom-form-1 label-form">
+										<!-- Sub four table start   prodCategGroup -->
+										<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+											<div class="form-group">
+												<p:outputLabel value="Item Name" />
+												<span class="text-danger">*</span>
+												<div class="input-group">
+													<span class="input-group-addon"><i
+														class="icon-stack3"></i></span>
+													<p:autoComplete id="itemName" minQueryLength="1"
+														styleClass="form-control" converter="#{entityConverter}"
+														value="#{stockItemUploadBean.goodsReceiptNote_D.productVarietyMaster}"
+														itemValue="#{item}" var="item" itemLabel="#{item.name}"
+														completeMethod="#{stockItemUploadBean.itemAutocomplete}"
+														effect="fade">
+														<p:ajax event="itemSelect"
+															listener="#{stockItemUploadBean.updategst}"
+															update="growls itemPNS:cgst,uom"></p:ajax>
+													</p:autoComplete>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<div class="form-group">
+												<p:outputLabel value="#{msg['uom']}" />
+												<div class="input-group ui-outputlabel ui-widget">
+													<span class="input-group-addon"><i
+														class="icon-design"></i></span>
+													<p:inputText styleClass="form-control" id="uom"
+														value="#{stockItemUploadBean.goodsReceiptNote_D.productVarietyMaster.uomMaster.name}"
+														disabled="true">
+													</p:inputText>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<div class="form-group">
+												<p:outputLabel value="Ordered #{msg['qty']}" />
+												<span class="text-danger">*</span>
+												<div class="input-group ui-outputlabel ui-widget">
+													<span class="input-group-addon"><i class="icon-hash"></i></span>
+													<p:inputText styleClass="form-control text-right"
+														requiredMessage="#{msg['PNS_order_Quantity']}"
+														required="#{not empty param[additem.clientId]}" id="qnty"
+														value="#{stockItemUploadBean.goodsReceiptNote_D.grn_D_Item_Qnty}">
+														<p:keyFilter regEx="/[0-9]/i" />
+														<p:ajax update="itemPNS:total growls"></p:ajax>
+													</p:inputText>
+
+												</div>
+												<h:message for="qnty"></h:message>
+												<p:tooltip for="qnty" value="#{msg['qnty_valid_msg']}" />
+											</div>
+										</div>
+
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<div class="form-group">
+												<p:outputLabel value="Accepted  #{msg['qty']}" />
+												<span class="text-danger">*</span>
+												<div class="input-group ui-outputlabel ui-widget">
+													<span class="input-group-addon"><i class="icon-hash"></i></span>
+													<p:inputText styleClass="form-control text-right"
+														requiredMessage="#{msg['PNS_order_Quantity']}"
+														required="#{not empty param[additem.clientId]}"
+														id="acceptedqnty"
+														value="#{stockItemUploadBean.goodsReceiptNote_D.grn_D_Accepted_Qnty}">
+														<p:keyFilter regEx="/[0-9]/i" />
+														<p:ajax update="itemPNS:total growls"></p:ajax>
+													</p:inputText>
+
+												</div>
+												<h:message for="acceptedqnty"></h:message>
+												<p:tooltip for="acceptedqnty"
+													value="#{msg['qnty_valid_msg']}" />
+											</div>
+										</div>
+
+									</div>
+
+
+									<div class="row custom-form-1 label-form">
+
+
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<div class="form-group">
+												<p:outputLabel value="Purchase Price (Per Piece)" />
+												<div class="input-group ui-outputlabel ui-widget">
+													<span class="input-group-addon"><i
+														class="fa fa-inr fa-lg"></i></span>
+													<p:inputText styleClass="form-control text-right"
+														value="#{stockItemUploadBean.goodsReceiptNote_D.grn_D_Purchase_Amount}"
+														requiredMessage="#{msg['PNS_unit_Rate']}"
+														id="purchasePrice"
+														validatorMessage="#{msg['PNS_unit_Rate_Error']}"
+														converterMessage="#{msg['PNS_unit_Rate_Error']}">
+														<f:validateDoubleRange minimum="0.1"></f:validateDoubleRange>
+														<p:ajax event="keyup" update="itemPNS:total"></p:ajax>
+													</p:inputText>
+												</div>
+												<h:message for="purchasePrice"></h:message>
+												<p:tooltip for="purchasePrice"
+													value="#{msg['amt_valid_msg']}" />
+											</div>
+										</div>
+
+
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<div class="form-group">
+												<p:outputLabel value="Selling Price" />
+												<span class="text-danger">*</span>
+												<div class="input-group ui-outputlabel ui-widget">
+													<span class="input-group-addon"><i
+														class="fa fa-inr fa-lg"></i></span>
+													<p:inputText styleClass="form-control text-right"
+														value="#{stockItemUploadBean.goodsReceiptNote_D.grn_D_Selling_Amount}"
+														requiredMessage="#{msg['PNS_unit_Rate']}"
+														required="#{not empty param[additem.clientId]}"
+														id="sellingPrice"
+														validatorMessage="#{msg['PNS_unit_Rate_Error']}"
+														converterMessage="#{msg['PNS_unit_Rate_Error']}">
+														<f:validateDoubleRange minimum="0.1"></f:validateDoubleRange>
+														<p:ajax
+															update="itemPNS:total , itemPNS:sellingPrice, growls"
+															listener="#{stockItemUploadBean.checkSelleingPrice}"></p:ajax>
+													</p:inputText>
+												</div>
+												<h:message for="sellingPrice"></h:message>
+												<p:tooltip for="sellingPrice"
+													value="#{msg['amt_valid_msg']}" />
+											</div>
+										</div>
+
+										<div class="col-lg-3 col-md-3 col-sm-4">
+											<div class="form-group">
+												<p:outputLabel value="#{msg['cgst']} Percentage" />
+												<div class="input-group ui-outputlabel ui-widget">
+													<span class="input-group-addon"><i
+														class="icon-percent"></i></span>
+													<p:inputText styleClass="form-control text-right width-25"
+														value="#{stockItemUploadBean.goodsReceiptNote_D.productVarietyMaster.cgst_percentage}"
+														id="cgst" disabled="true">
+														<f:validateDoubleRange minimum="0.0"></f:validateDoubleRange>
+														<p:ajax update="itemPNS:total"></p:ajax>
+													</p:inputText>
+												</div>
+												<p:tooltip for="cgst" value="#{msg['per_valid_msg']}" />
+											</div>
+										</div>
+										<ui:remove>
+											<div class="col-lg-3 col-md-3 col-sm-6">
+												<div class="form-group">
+													<p:outputLabel value="#{msg['cgst']} Amount" />
+													<div class="input-group ui-outputlabel ui-widget">
+														<span class="input-group-addon"><i
+															class="fa fa-inr fa-lg"></i></span>
+
+														<p:inputText styleClass="form-control text-right"
+															value="#{stockItemUploadBean.goodsReceiptNote_D.productVarietyMaster.sgst_percentage}"
+															id="cgstAmt" disabled="true">
+															<f:validateDoubleRange minimum="0.0"></f:validateDoubleRange>
+															<p:ajax update="itemPNS:total"></p:ajax>
+														</p:inputText>
+													</div>
+													<p:tooltip for="cgstAmt" value="#{msg['per_valid_msg']}" />
+												</div>
+											</div>
+										</ui:remove>
+										<div class="col-lg-3 col-md-3 col-sm-6">
+
+											<div class="form-group">
+												<p:outputLabel value="#{msg['sgst']}" />
+												<div class="input-group ui-outputlabel ui-widget">
+													<span class="input-group-addon"><i
+														class="icon-percent"></i></span>
+													<p:inputText styleClass="form-control text-right width-25"
+														value="#{stockItemUploadBean.goodsReceiptNote_D.productVarietyMaster.sgst_percentage}"
+														requiredMessage="#{msg['PNS_tax']}" id="sgst"
+														converterMessage="#{msg['PNS_tax_Error']}"
+														validatorMessage="#{msg['PNS_tax_Error']}" disabled="true">
+														<f:validateDoubleRange minimum="0.0"></f:validateDoubleRange>
+														<p:ajax update="itemPNS:total"></p:ajax>
+													</p:inputText>
+												</div>
+												<h:message for="sgst"></h:message>
+												<p:tooltip for="sgst" value="#{msg['per_valid_msg']}" />
+											</div>
+
+										</div>
+
+									</div>
+									<div class="row custom-form-1 label-form">
+
+
+
+										<ui:remove>
+											<div class="col-lg-3 col-md-3 col-sm-6">
+												<div class="form-group">
+													<p:outputLabel value="#{msg['sgst']} Amount" />
+													<div class="input-group ui-outputlabel ui-widget">
+														<span class="input-group-addon"><i
+															class="fa fa-inr fa-lg"></i></span>
+
+														<p:inputText styleClass="form-control text-right"
+															value="#{stockItemUploadBean.goodsReceiptNote_D.grn_D_Sgst_Amount}"
+															id="sgstAmt">
+															<f:validateDoubleRange minimum="0.0"></f:validateDoubleRange>
+															<p:ajax update="itemPNS:total"></p:ajax>
+														</p:inputText>
+													</div>
+													<p:tooltip for="sgstAmt" value="#{msg['per_valid_msg']}" />
+												</div>
+											</div>
+										</ui:remove>
+										<div class="col-lg-3 col-md-3 col-sm-6">
+
+											<div class="form-group">
+												<p:outputLabel value="Discount(Percentage)" />
+												<div class="input-group ui-outputlabel ui-widget">
+													<span class="input-group-addon"><i
+														class="icon-percent"></i></span>
+													<p:inputText styleClass="form-control text-right width-25"
+														value="#{stockItemUploadBean.goodsReceiptNote_D.grn_D_Discount_Percentage}"
+														id="dicountper">
+														<f:validateDoubleRange minimum="0.0"></f:validateDoubleRange>
+														<p:ajax update="itemPNS:total"></p:ajax>
+													</p:inputText>
+												</div>
+												<h:message for="dicountper"></h:message>
+												<p:tooltip for="dicountper" value="#{msg['per_valid_msg']}" />
+											</div>
+										</div>
+
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<div class="form-group">
+												<p:outputLabel value="Discount Amount" />
+												<div class="input-group ui-outputlabel ui-widget">
+													<span class="input-group-addon"><i
+														class="fa fa-inr fa-lg"></i></span>
+
+													<p:inputText styleClass="form-control text-right"
+														value="#{stockItemUploadBean.goodsReceiptNote_D.grn_D_Discount_Amount}"
+														id="discountAmt">
+														<f:validateDoubleRange minimum="0.0"></f:validateDoubleRange>
+														<p:ajax update="itemPNS:total"></p:ajax>
+													</p:inputText>
+												</div>
+												<p:tooltip for="discountAmt" value="#{msg['per_valid_msg']}" />
+											</div>
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<div class="form-group">
+												<p:outputLabel value="Total Purchase Price" />
+												<span class="text-danger">*</span>
+												<div class="input-group ui-outputlabel ui-widget">
+													<span class="input-group-addon"><i
+														class="fa fa-inr fa-lg"></i></span>
+													<p:inputText styleClass="form-control text-right"
+														value="#{stockItemUploadBean.goodsReceiptNote_D.grn_D_Accepted_Qnty * stockItemUploadBean.goodsReceiptNote_D.grn_D_Purchase_Amount}"
+														requiredMessage="#{msg['PNS_unit_Rate']}"
+														required="#{not empty param[additem.clientId]}" id="total"
+														disabled="true"
+														validatorMessage="#{msg['PNS_unit_Rate_Error']}"
+														converterMessage="#{msg['PNS_unit_Rate_Error']}">
+														<f:validateDoubleRange minimum="0.1"></f:validateDoubleRange>
+													</p:inputText>
+												</div>
+												<h:message for="total"></h:message>
+												<p:tooltip for="total" value="#{msg['amt_valid_msg']}" />
+											</div>
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<p:outputLabel value="&nbsp;&nbsp;" styleClass="dis-block" />
+											<p:commandButton title="#{msg['clear']}"
+												value="&#xe916; #{msg['clear']}"
+												class="btn bg-slate btn-sm font-iconmoon"
+												action="#{stockItemUploadBean.clearItemTable}">
+											</p:commandButton>
+
+											<p:commandButton value="&#xea0e;&nbsp;#{msg['add']}"
+												title="#{msg['add']}"
+												class="btn btn-sm bg-success font-iconmoon"
+												data-toggle="modal" data-target="#modal_theme_info"
+												actionListener="#{stockItemUploadBean.addItemToTable}"
+												update="growls itemPNS:itemListTableIntenInward, itemPNS:addItems,itemPNS:itemListTableIntenInward:netAmtFoter"
+												onstart="PF('statusDialog').show()"
+												onsuccess="PF('statusDialog').hide()">
+											</p:commandButton>
+										</div>
+
+									</div>
+								</p:outputPanel>
+
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="table-responsive m-b-10 footer-pad-0 p-t-10">
+											<!-- ItemInward  -->
+											<p:outputPanel
+												styleClass="#{stockItemUploadBean.goodsReceiptNote_DList.size() gt 5 ? 'overflow-table':'col-lg-12 ph0'}">
+												<p:dataTable
+													value="#{stockItemUploadBean.goodsReceiptNote_DList}"
+													var="item" id="itemListTableIntenInward"
+													rowIndexVar="index" scrollable="true"
+													rowKey="#{item.productVarietyMaster.id}"
+													styleClass="report-table" editable="true"
+													widgetVar="itemListTableIntenInwardWdgr"
+													scrollHeight="#{stockItemUploadBean.goodsReceiptNote_DList.size() eq 0 ? '34' : 
+							  				 stockItemUploadBean.goodsReceiptNote_DList.size() eq 1 ? '38': 
+							  				 stockItemUploadBean.goodsReceiptNote_DList.size() eq 2 ? '75':
+											 stockItemUploadBean.goodsReceiptNote_DList.size() eq 3 ? '112':
+											 stockItemUploadBean.goodsReceiptNote_DList.size() eq 4 ? '149':
+											 stockItemUploadBean.goodsReceiptNote_DList.size() gt 4 and stockItemUploadBean.goodsReceiptNote_DList.size() lt 6 ? '186' :'205'}">
+
+													<p:ajax event="rowEdit"
+														listener="#{stockItemUploadBean.onRowEdit}"
+														update="growls,itemListTableIntenInward" />
+													<p:ajax event="rowEditCancel"
+														listener="#{stockItemUploadBean.onRowCancel}"
+														update="growls,itemListTableIntenInward" />
+
+													<p:column headerText="#" styleClass="text-center width-3">
+														<h:outputText value="#{index +1 }" />
+													</p:column>
+
+													<p:column headerText="#{msg['item_code']} / #{msg['name']}"
+														styleClass="width-15">
+														<h:outputText styleClass="width-15"
+															value="#{item.productVarietyMaster.code}/ #{item.productVarietyMaster.name}" />
+													</p:column>
+
+													<p:column headerText="#{msg['hsn_code']}">
+														<h:outputText value="#{item.productVarietyMaster.hsnCode}" />
+													</p:column>
+													<p:column headerText="#{msg['uom']}" styleClass="width-6">
+														<h:outputText
+															value="#{item.productVarietyMaster.uomMaster.name}" />
+													</p:column>
+													<p:column headerText="#{msg['qty']}" styleClass="width-6">
+														<p:cellEditor>
+															<f:facet name="output">
+																<h:outputText value="#{item.grn_D_Accepted_Qnty}" />
+															</f:facet>
+															<f:facet name="input">
+																<p:inputText styleClass="fa-input" id="orderedQtyInput"
+																	value="#{item.grn_D_Accepted_Qnty}" style="width:100%" />
+															</f:facet>
+														</p:cellEditor>
+													</p:column>
+
+													<p:column
+														headerText="#{msg['unit_rate']} &lt;br/&gt;(&#xf156;)"
+														styleClass="fa-input text-right width-9">
+														<p:cellEditor>
+															<f:facet name="output">
+																<h:outputText value="#{item.grn_D_Purchase_Amount}"
+																	styleClass="fa-input" />
+															</f:facet>
+															<f:facet name="input">
+																<p:inputText styleClass="fa-input" id="unitRateInput"
+																	value="#{item.grn_D_Purchase_Amount}"
+																	style="width:100%" />
+															</f:facet>
+														</p:cellEditor>
+													</p:column>
+
+													<p:column
+														headerText="#{msg['total_rate']} &lt;br/&gt;(&#xf156;)"
+														styleClass="fa-input text-right width-10">
+														<h:outputText value="#{item.grn_D_Total_Purchase_Amt}"
+															styleClass="fa-input">
+															<f:convertNumber type="currency"></f:convertNumber>
+														</h:outputText>
+													</p:column>
+
+													<p:column
+														headerText="#{msg['dis_master']} &lt;br/&gt;(&#xf295;)"
+														styleClass="fa-input text-right width-7">
+														<p:cellEditor>
+															<f:facet name="output">
+																<h:outputText value="#{item.grn_D_Discount_Percentage}"
+																	styleClass="fa-input" />
+															</f:facet>
+															<f:facet name="input">
+																<p:inputText styleClass="fa-input"
+																	id="discountPercentInput"
+																	value="#{item.grn_D_Discount_Percentage}"
+																	style="width:100%" />
+															</f:facet>
+														</p:cellEditor>
+													</p:column>
+
+													<p:column
+														headerText="#{msg['dis_value']} &lt;br/&gt; (&#xf156;)"
+														styleClass="fa-input text-right width-9">
+														<h:outputText value="#{item.grn_D_Discount_Amount}"
+															styleClass="fa-input" />
+													</p:column>
+
+													<p:column headerText="#{msg['cgst']} &lt;br/&gt;(&#xf295;)"
+														styleClass="fa-input text-right width-6">
+														<p:cellEditor>
+															<f:facet name="output">
+																<h:outputText value="#{item.grn_D_Cgst_Percentage}"
+																	styleClass="fa-input" />
+															</f:facet>
+															<f:facet name="input">
+																<p:inputText styleClass="fa-input" id="cgstPer"
+																	value="#{item.grn_D_Cgst_Percentage}"
+																	style="width:100%" />
+															</f:facet>
+														</p:cellEditor>
+													</p:column>
+													<p:column
+														headerText="#{msg['cgst']} Value &lt;br/&gt;(&#xf156;)"
+														styleClass="fa-input text-right width-6">
+														<p:cellEditor>
+															<f:facet name="output">
+																<h:outputText value="#{item.grn_D_Cgst_Amount}" />
+															</f:facet>
+															<f:facet name="input">
+																<p:inputText styleClass="fa-input" id="csgtAmt"
+																	value="#{item.grn_D_Cgst_Amount}" style="width:100%" />
+															</f:facet>
+														</p:cellEditor>
+													</p:column>
+
+													<p:column headerText="#{msg['sgst']} &lt;br/&gt;(&#xf295;)"
+														styleClass="fa-input text-right width-6">
+														<p:cellEditor>
+															<f:facet name="output">
+																<h:outputText value="#{item.grn_D_Sgst_Percentage}"
+																	styleClass="fa-input" />
+															</f:facet>
+															<f:facet name="input">
+																<p:inputText styleClass="fa-input"
+																	value="#{item.grn_D_Sgst_Percentage}"
+																	style="width:100%" />
+															</f:facet>
+														</p:cellEditor>
+													</p:column>
+													<p:column
+														headerText="#{msg['sgst']} Value &lt;br/&gt;(&#xf156;)"
+														styleClass="fa-input text-right width-6">
+														<p:cellEditor>
+															<f:facet name="output">
+																<h:outputText value="#{item.grn_D_Sgst_Amount}" />
+															</f:facet>
+															<f:facet name="input">
+																<p:inputText styleClass="fa-input"
+																	value="#{item.grn_D_Sgst_Amount}" style="width:100%" />
+															</f:facet>
+														</p:cellEditor>
+													</p:column>
+
+													<p:column
+														headerText="#{msg['nt_price']} &lt;br/&gt; (&#xf156;)"
+														styleClass="fa-input text-right width-8">
+														<h:outputText value="#{item.grn_D_Net_Amount}"
+															styleClass="fa-input">
+															<f:convertNumber type="currency"></f:convertNumber>
+														</h:outputText>
+													</p:column>
+
+													<p:column headerText="#{msg['action']}"
+														styleClass="width-6 text-center">
+														<p:commandButton value="&#xe99e;"
+															update=":itemPNS:itemListTableIntenInward"
+															class="btn bg-danger font-iconmoon btn-xs"
+															title="#{msg['delete']}"
+															actionListener="#{stockItemUploadBean.removeListFromTable(item)}">
+														</p:commandButton>
+													</p:column>
+
+													<p:columnGroup type="footer">
+														<p:row>
+															<p:column colspan="2" styleClass="width-90"
+																footerText="TOTAL" />
+
+															<p:column>
+																<h:outputText id="netAmtFoter"
+																	value="#{stockItemUploadBean.goodsReceiptNote_DList.stream().mapToDouble(x -> x.grn_D_Net_Amount()).sum()}"></h:outputText>
+															</p:column>
+														</p:row>
+													</p:columnGroup>
+												</p:dataTable>
+											</p:outputPanel>
+
+										</div>
+									</div>
+								</div>
+
+
+								<div class="row">
+									<div class="col-lg-12">
+										<h5 class="bord_bot m-t-0">
+											<span class="iform-title"><i
+												class="fa fa-th-large m-r-5"></i>#{msg['inv_dtl']}</span>
+										</h5>
+									</div>
+								</div>
+								<p:outputPanel id="invoiceDetailsPanel">
+									<div class="row custom-form-1 label-form ">
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<p:outputLabel value="#{msg['payment_due_date']}" />
+											<div class="form-group form-group_calend">
+												<p:calendar id="duedate" placeholder="dd-mmm-yyyy"
+													value="#{stockItemUploadBean.selectedStockItemInwardPNSDTO.paymentDueDate}"
+													mindate="new Date()" pattern="dd-MMM-yyyy" mask="true"
+													navigator="true" styleClass="form-control-1 calend-icon-1">
+													<p:ajax event="dateSelect" />
+												</p:calendar>
+												<h:message for="duedate" class="validation-error-label"
+													id="msg_duedate" style="margin-top:28px;" />
+											</div>
+										</div>
+									</div>
+
+								</p:outputPanel>
+								<div class="text-right">
+									<p:commandButton value="&#xed6a;&nbsp;#{msg['cancel']}"
+										title="#{msg['cancel']}" immediate="true"
+										action="#{stockItemUploadBean.showListPage}"
+										class="btn bg-slate heading-btn  font-iconmoon">
+									</p:commandButton>
+
+									<p:commandButton update="growls"
+										value="&#xed6e;&nbsp;#{msg['submit']}"
+										title="#{msg['submit']}"
+										class="btn bg-success heading-btn  font-iconmoon"
+										action="#{stockItemUploadBean.submitData}"
+										onclick="PF('statusDialog').show();"
+										oncomplete="PF('statusDialog').hide();">
+									</p:commandButton>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<p:dialog widgetVar="statusMediaView" modal="false" draggable="true"
+				closable="true" resizable="false" showHeader="false" width="500"
+				height="400">
+				<p:outputPanel id="mediaViewPanel">
+					<p:overlayPanel>
+						<h3>PDF</h3>
+						<object type="application/pdf"
+							data="/resources/bin/main/invoiceFiles/in001.pdf?pfdrid_c=true"
+							width="100%" height="300px">
+							Your browser can't display pdf, <a
+								href="/bin/main/invoiceFiles/in001.pdf">click</a> to download
+							pdf instead.
+						</object>
+					</p:overlayPanel>
+					<p:commandButton value="Close"
+						onclick="PF('statusMediaView').hide();"></p:commandButton>
+				</p:outputPanel>
+			</p:dialog>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>

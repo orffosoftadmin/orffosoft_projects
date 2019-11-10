@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/pages/template/layout.xhtml">
+	<ui:define name="content">
+		<title>InfoTex | View Stock Item Inward</title>
+		<div class="page-header page-header-default">
+			<div class="page-header-content">
+				<div class="page-title">
+					<h4>#{msg['view_stock_item_inward']}</h4>
+					<ul class="breadcrumb">
+						<li><a href="#{request.contextPath}/pages/home.xhtml"><i
+								class="icon-home2 position-left"></i>#{msg['home']}</a></li>
+							<li>#{msg['oper']}</li>
+							<li>#{msg['stock_management']}</li>
+							<li>#{msg['item_inward']}</li>
+							<li class="active">#{msg['view_stock_item_inward']}</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<h:form id="itemPNS">
+			<div class="content">
+				<div class="panel">
+					<div class="panel-heading bg-info">
+						<h6 class="panel-title">#{msg['stock_item_inward']}</h6>
+					</div>
+					<div class="panel-body p-t-10 page-scroll-without-process">
+						<h5 class="bord_bot m-t-0">
+							<span class="iform-title"><i class="fa fa-th-large m-r-5"></i>#{msg['sup_detail']}</span>
+						</h5>
+						<div class="row view-style">
+							<div class="col-lg-3 col-md-3 col-sm-6">
+								<div class="form-group">
+									<p:outputLabel value="#{msg['supp_type_code']}" />
+									<h:outputText
+										value="#{stockItemInwardBean.selectedStockItemInwardPNSDTO.supplierType}"
+										class="" />
+								</div>
+							</div>
+							<div class="col-lg-3 col-md-3 col-sm-6">
+								<div class="form-group">
+									<p:outputLabel value="#{msg['sup_code']} / #{msg['name']}" />
+									<h:outputText
+										value="#{stockItemInwardBean.selectedStockItemInwardPNSDTO.supplierCodeName}"
+										class="" />
+								</div>
+							</div>
+							<div class="col-lg-3 col-md-3 col-sm-6">
+								<div class="form-group">
+									<p:outputLabel value="#{msg['gst_no']}" />
+									<h:outputText value="#{stockItemInwardBean.selectedStockItemInwardPNSDTO.gstNumber}" class="" />
+								</div>
+							</div>
+							<div class="col-lg-3 col-md-3 col-sm-6">
+								<div class="form-group">
+									<p:outputLabel value="#{msg['inward_type']}" />
+									<h:outputText
+										value="#{stockItemInwardBean.selectedStockItemInwardPNSDTO.transferType}"
+										class="" />
+								</div>
+							</div>
+						</div>
+
+
+						<h5 class="bord_bot m-t-0">
+							<span class="iform-title"><i class="fa fa-th-large m-r-5"></i>#{msg['pur_order']}</span>
+						</h5>
+						<div class="row view-style">
+							<div class="col-lg-3 col-md-3 col-sm-6">
+								<div class="form-group">
+									<p:outputLabel value="#{msg['pur_date']}" />
+									<h:outputText
+										value="#{stockItemInwardBean.selectedStockItemInwardPNSDTO.purchaseDate}"
+										class="">
+										<f:convertDateTime pattern="dd-MMM-yyyy" timeZone="GMT+05:30" />
+									</h:outputText>
+								</div>
+							</div>
+							<div class="col-lg-3 col-md-3 col-sm-6">
+								<div class="form-group">
+									<p:outputLabel value="#{msg['pur_odr_val_date']}" />
+									<h:outputText value="01-01-2018" class="">
+
+									</h:outputText>
+								</div>
+							</div>
+						</div>
+
+
+
+						<h5 class="m-t-0 m-b-0">
+							<span class="iform-title"><i class="fa fa-th-large m-r-5"></i>#{msg['item_receive_details']}</span>
+						</h5>
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="table-responsive m-b-5">
+								<p:outputPanel styleClass="#{stockItemInwardBean.selectedStockTransferItemsList.size() gt 5 ? 'overflow-table':'col-lg-12 ph0'}">
+								
+									<p:dataTable
+										value="#{stockItemInwardBean.selectedStockTransferItemsList}"
+										var="list" rowKey="#{list.id}" paginator="false"
+										id="liststockTransferLazyList" scrollable="true"
+										widgetVar="liststockTransferLazyListWdgr" lazy="true"
+										rowsPerPageTemplate="5,10,15" rowIndexVar="index"
+										paginatorPosition="bottom" emptyMessage="#{msg['no_record_found']}"
+										paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+										styleClass="report-table"
+										scrollHeight="#{stockItemInwardBean.selectedStockTransferItemsList.size() eq 0 ? '30' : 
+							  			stockItemInwardBean.selectedStockTransferItemsList.size() eq 1 ? '54': 
+							  			stockItemInwardBean.selectedStockTransferItemsList.size() eq 2 ? '107':
+										stockItemInwardBean.selectedStockTransferItemsList.size() eq 3 ? '160':
+										stockItemInwardBean.selectedStockTransferItemsList.size() eq 4 ? '213':
+										stockItemInwardBean.selectedStockTransferItemsList.size() gt 4 and stockItemInwardBean.selectedStockTransferItemsList.size() lt 6 ? 266 :'270'}">
+										<p:column headerText="#" class="text-center width-3">
+											<h:outputText styleClass="ui-column-title" value="#{index+1}"></h:outputText>
+										</p:column>
+
+										<p:column headerText="#{msg['item_code']} / #{msg['name']}"
+											class="width-12">
+											<h:outputText styleClass="ui-column-title"
+												value="#{list.supplierMaster.code} / #{list.supplierMaster.name}"></h:outputText>
+										</p:column>
+
+										<p:column headerText="#{msg['description']}" class="width-10">
+											<h:outputText styleClass="ui-column-title" value=" "></h:outputText>
+										</p:column>
+
+										<p:column headerText="#{msg['hsn_code']}" class="width-7">
+											<h:outputText styleClass="ui-column-title"
+												value="#{list.productVarietyMaster.hsnCode}"></h:outputText>
+										</p:column>
+
+										<p:column headerText="#{msg['uom']}" class="width-5">
+											<h:outputText styleClass="ui-column-title"
+												value="#{list.uomMaster.id}"></h:outputText>
+										</p:column>
+
+										<p:column headerText="#{msg['qty']}"
+											class="width-6 text-right">
+											<h:outputText styleClass="ui-column-title"
+												value="#{list.orderedQty}"></h:outputText>
+										</p:column>
+
+										<p:column headerText="#{msg['unit_rate']}&lt;br/&gt;(&#xf156;)"
+											styleClass="fa-input width-7 text-right">
+											<h:outputText styleClass="ui-column-title"
+												value="#{list.unitRate}"></h:outputText>
+										</p:column>
+
+										<p:column headerText="#{msg['total_rate']}&lt;br/&gt;(&#xf156;)"
+											styleClass="fa-input width-8 text-right">
+											<h:outputText styleClass="ui-column-title"
+												value="#{list.itemTotal}"></h:outputText>
+										</p:column>
+
+										<p:column headerText="#{msg['dis_master']}&lt;br/&gt;(&#xf295;)"
+											styleClass="fa-input width-6 text-right">
+											<h:outputText styleClass="ui-column-title"
+												value="#{list.discountPercent}"></h:outputText>
+										</p:column>
+
+										<p:column headerText="#{msg['dis_value']}&lt;br/&gt;(&#xf156;)"
+											styleClass="fa-input width-10 text-right">
+											<h:outputText styleClass="ui-column-title"
+												value="#{list.discountValue}"></h:outputText>
+										</p:column>
+
+										<p:column headerText="#{msg['tax']}&lt;br/&gt;(&#xf295;)"
+											styleClass="fa-input width-6 text-right">
+											<h:outputText styleClass="ui-column-title"
+												value="#{list.taxPercent}"></h:outputText>
+										</p:column>
+
+										<p:column headerText="#{msg['tax_value']}&lt;br/&gt;(&#xf156;)"
+											styleClass="fa-input width-8 text-right">
+											<h:outputText styleClass="ui-column-title"
+												value="#{list.taxValue}"></h:outputText>
+										</p:column>
+
+										<p:column headerText="#{msg['nt_price']}&lt;br/&gt;(&#xf156;)"
+											styleClass="fa-input width-12 text-right">
+											<h:outputText styleClass="ui-column-title"
+												value="#{list.itemNetTotal}"></h:outputText>
+										</p:column>
+
+										<p:columnGroup type="footer">
+											<p:row>
+												<p:column colspan="5" styleClass="width-43"
+													footerText="#{msg['tot']}" />
+												<p:column class="width-7"
+													footerText="#{stockItemInwardBean.unitRateTotalView}" />
+												<p:column class="width-8"
+													footerText="#{stockItemInwardBean.totalRateTotalView}" />
+												<p:column class="width-6" footerText="" />
+												<p:column class="width-10"
+													footerText="#{stockItemInwardBean.discountValueTotalView}" />
+												<p:column class="width-6" footerText="" />
+												<p:column class="width-8"
+													footerText="#{stockItemInwardBean.taxValueTotalView}"
+													colspan="2" />
+												<p:column class="width-12"
+													footerText="#{stockItemInwardBean.netPriceTotalView}" />
+											</p:row>
+										</p:columnGroup>
+									</p:dataTable>
+									</p:outputPanel>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-12 col-md-12 col-sm-12">
+							<h5 class="m-b-0">
+							<span class="iform-title"><i class="fa fa-th-large m-r-5"></i>#{msg['inv_dtl']}</span>
+						</h5>
+						</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-12 col-md-12 col-sm-12">
+								<div class="table-responsive">
+								<p:outputPanel styleClass="#{stockItemInwardBean.selectedPurchaseInvoiceList.size() gt 5 ? 'overflow-table':'col-lg-12 ph0'}">
+									<p:dataTable
+										value="#{stockItemInwardBean.selectedPurchaseInvoiceList}"
+										var="item" styleClass="report-table"
+										rowIndexVar="index" scrollable="true" 
+										scrollHeight="#{stockItemInwardBean.selectedPurchaseInvoiceList.size() eq 0 ? '35' : 
+									  				 stockItemInwardBean.selectedPurchaseInvoiceList.size() eq 1 ? '45':
+									  				 stockItemInwardBean.selectedPurchaseInvoiceList.size() eq 2 ? '80':
+													 stockItemInwardBean.selectedPurchaseInvoiceList.size() eq 3 ? '115':
+													 stockItemInwardBean.selectedPurchaseInvoiceList.size() eq 4 ? '165':
+													 stockItemInwardBean.selectedPurchaseInvoiceList.size() gt 4 and  stockItemInwardBean.selectedPurchaseInvoiceList.size() lt 6 ? '215' :'205'}">
+										<p:column headerText="#" styleClass="text-center width-3">
+											<h:outputText value="#{index +1}" />
+										</p:column>
+										<p:column headerText="#{msg['invoice_num']}" styleClass="text-center width-10">
+											<h:outputText value="#{item.invoiceNumber}"
+												styleClass="fa-input" />
+										</p:column>
+
+										<p:column headerText="#{msg['invoice_date']}"
+											styleClass="text-center width-10">
+											<h:outputText value="#{item.invoiceDate}">
+												<f:convertDateTime timeZone="GMT+05:30"
+													pattern="dd-MMM-yyyy" />
+											</h:outputText>
+										</p:column>
+
+										<p:column headerText="#{msg['dc_number']}" styleClass="text-center width-8">
+											<h:outputText value="#{item.dcNumber}" styleClass="fa-input" />
+										</p:column>
+
+										<p:column headerText="#{msg['payment_due_date']}"
+											styleClass="text-center width-12">
+											<h:outputText value="#{item.paymentDuedate}"
+												styleClass="fa-input">
+												<f:convertDateTime timeZone="GMT+05:30"
+													pattern="dd-MMM-yyyy" />
+											</h:outputText>
+										</p:column>
+
+										<p:column headerText="#{msg['intr_aple']}"
+											styleClass="width-12">
+											<h:outputText value="#{item.interestApplicable eq 'true'?'Yes':'No'}"
+												styleClass="" />
+										</p:column>
+
+										<p:column headerText="#{msg['rate_of_interest']} (&#xf295;)"
+											styleClass="fa-input text-right width-25">
+											<h:outputText value="#{item.rateOfInterest}"
+												styleClass="fa-input" />
+										</p:column>
+										<p:column headerText="#{msg['attached_docs']}"
+											styleClass="width-20 text-center">
+											<p:commandButton value="&#xf019;&nbsp;&nbsp;#{msg['download']}" ajax="false"
+												class="btn bg-success fa-input" title="#{msg['download']}" 
+												actionListener="#{stockItemInwardBean.selectInvoiceRows(item)}">
+												<p:fileDownload
+													value="#{stockItemInwardBean.selectedeStockItemInwardPNSBean.downloadFile}" />
+											</p:commandButton>
+										</p:column>
+									</p:dataTable>
+									</p:outputPanel>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-12 col-md-12 col-sm-12">
+						<h5 class="bord_bot">
+							<span class="iform-title"><i class="fa fa-th-large m-r-5"></i>#{msg['trans_details']}</span>
+						</h5>
+						</div>
+						</div>
+						<div class="row view-style">
+							<div class="col-lg-3 col-md-3 col-sm-6">
+								<div class="form-group">
+									<p:outputLabel value="#{msg['trans_ser_type']}" />
+									<h:outputText
+										value="#{stockItemInwardBean.selectedStockItemInwardPNSDTO.trans_ser_type}"
+										class="" />
+								</div>
+							</div>
+							<div class="col-lg-3 col-md-3 col-sm-6">
+								<div class="form-group">
+									<p:outputLabel value="#{msg['trans_ser_name']}" />
+									<h:outputText
+										value="#{stockItemInwardBean.selectedStockItemInwardPNSDTO.trans_ser_name}"
+										class="" />
+								</div>
+							</div>
+							<div class="col-lg-3 col-md-3 col-sm-6">
+								<div class="form-group">
+									<p:outputLabel value="#{msg['waybill_available']}" />
+									<h:outputText
+										value="#{stockItemInwardBean.selectedStockItemInwardPNSDTO.waybillAvailable eq 'true'?'Yes':'No'}"
+										class="" />
+								</div>
+							</div>
+							<div class="col-lg-3 col-md-3 col-sm-6">
+								<div class="form-group">
+									<p:outputLabel value="#{msg['waybill_no']}" />
+									<h:outputText
+										value="#{stockItemInwardBean.selectedStockItemInwardPNSDTO.waybill_no}"
+										class="" />
+								</div>
+							</div>
+							</div>
+							<div class="row view-style">
+													<div class="col-lg-3 col-md-3 col-sm-6">
+								<div class="form-group">
+									<p:outputLabel value="#{msg['weight']}" />
+									<h:outputText
+										value="#{stockItemInwardBean.selectedStockItemInwardPNSDTO.weight}"
+										class="" />
+								</div>
+							</div>
+							<div class="col-lg-3 col-md-3 col-sm-6">
+								<div class="form-group">
+									<p:outputLabel value="#{msg['transport_charge_available']}" />
+									<h:outputText
+										value="#{stockItemInwardBean.selectedStockItemInwardPNSDTO.transport_charge_available eq 'true'?'Yes':'No'}"
+										class="" />
+								</div>
+							</div>
+							<div class="col-lg-3 col-md-3 col-sm-6">
+								<div class="form-group">
+									<p:outputLabel value="#{msg['receipt_num']}" />
+									<h:outputText
+										value="#{stockItemInwardBean.selectedStockItemInwardPNSDTO.receiptNumber}"
+										class="" />
+								</div>
+							</div>
+							
+							<div class="col-lg-3 col-md-3 col-sm-6">
+								<div class="form-group">
+									<p:outputLabel value="#{msg['trans_charge_type']}" />
+									<h:outputText
+										value="#{stockItemInwardBean.selectedStockItemInwardPNSDTO.trans_charge_type}"
+										class="" />
+								</div>
+							</div>
+							</div>
+							<div class="row view-style">
+							<div class="col-lg-3 col-md-3 col-sm-6">
+								<div class="form-group">
+									<p:outputLabel value="#{msg['trans_charge_amt']}" />
+									<h:outputText
+										value="#{stockItemInwardBean.selectedStockItemInwardPNSDTO.trans_charge_amt}"
+										class="" />
+								</div>
+							</div>
+							<div class="col-lg-9 col-md-9 col-sm-12 text-right">
+								<p:outputLabel value="&nbsp;&nbsp;" />
+								<div class="text-right">
+									<p:commandButton value="&#xeddf; #{msg['back']}"
+										title="#{msg['back']}"
+										styleClass="btn btn-sm bg-info font-iconmoon"
+										action="#{stockItemInwardBean.backStockItemInward}" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /Customer Info Popup -->
+			<p:dialog widgetVar="statusMediaView" modal="false" draggable="true"
+				closable="true" resizable="false" showHeader="false">
+				<p:outputPanel id="mediaViewPanel">
+					<h3>PDF</h3>
+					<p:media player="pdf" type="application/pdf"
+						data="/home/user1/invoice/uploaded/corejava.pdf?pfdrid_c=true"
+						width="100%" height="300px">
+            Your browser can't display pdf, <a
+							href="/home/user1/invoice/uploaded/corejava.pdf">click</a> to download pdf instead.
+        </p:media>
+					<p:commandButton value="Close"
+						onclick="PF('statusMediaView').hide();"></p:commandButton>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Mark Solution | 404</title>
+	<meta charset="utf-8" />
+	<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<link href="#{request.contextPath}/assets/images/favicon.ico" rel="shortcut icon" />
+	<link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700" rel="stylesheet" type="text/css" />
+	<link
+	href="#{request.contextPath}/assets/css/bootstrap.min.css"
+	rel="stylesheet" type="text/css" />
+	<link href="#{request.contextPath}/assets/css/core.css"
+	rel="stylesheet" type="text/css" />
+	<link href="#{request.contextPath}/assets/css/icons.css"
+	rel="stylesheet" type="text/css" />
+	<link href="#{request.contextPath}/assets/css/pages.css"
+	rel="stylesheet" type="text/css" />
+
+	<!-- custom-->
+	<link href="#{request.contextPath}/assets/css/custom.css"
+		rel="stylesheet" type="text/css" />
+	<style type="text/css">
+		.fzf_error {margin-top: 30%;}
+		.fzf_error .text-error {line-height:normal}
+		.fa-input { font-family: FontAwesome, 'open_sansregular', 'Helvetica Neue', Helvetica, Arial, sans-serif !important; font-size: 13px; }
+	</style>
+</h:head>
+<h:body class="sessionexp-bg">
+<div class="account-pages"></div>
+	<h:form id="form">
+		<p:growl id="growl" showDetail="true" sticky="false" life="5000"
+			globalOnly="true" />
+		<!--BEGIN PAGE CONTENT-->
+
+		<div class="wrapper-page">
+			<div class="ex-page-content fzf_error text-center">
+			
+				<div class="text-error">404</div>
+				
+				<h3 class="text-uppercase font-600">Page not Found</h3>
+				
+                <br />
+                
+                <input type="submit" value=" Return Home" jsfc="h:commandButton" class="btn btn-success waves-effect waves-light fa-input"
+				action="#{loginBean.goToErrorPage}" />
+			</div>
+		</div>
+		
+		
+		<!--END PAGE CONTENT-->
+	</h:form>
+</h:body>
+</html>

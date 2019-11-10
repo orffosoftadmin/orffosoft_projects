@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="description" content="MarkSolution" />
+	<meta name="author" content="MarkSolution" />
+	<link rel="shortcut icon" href="assets/images/favicon.ico" />
+	<title>Mark Solution | Register New User</title>
+
+	<!-- Global stylesheets -->
+	<link
+		href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900"
+		rel="stylesheet" type="text/css" />
+	<link href="assets/css/icons/icomoon/styles.css" rel="stylesheet"
+		type="text/css" />
+	<link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
+	<link href="assets/css/core.css" rel="stylesheet" type="text/css" />
+	<link href="assets/css/components.css" rel="stylesheet" type="text/css" />
+	<link href="assets/css/colors.css" rel="stylesheet" type="text/css" />
+	<link href="assets/css/jui.css" rel="stylesheet" type="text/css" />
+	<link href="assets/css/pfui.css" rel="stylesheet" type="text/css" />
+	<link href="assets/css/login.css" rel="stylesheet" type="text/css" />
+	<link href="assets/css/overrides/components.css" rel="stylesheet"
+		type="text/css" />
+	<!-- /global stylesheets -->
+
+	<!-- /theme JS files -->
+	<script>
+		(function(i, s, o, g, r, a, m) {
+			i['GoogleAnalyticsObject'] = r;
+			i[r] = i[r] || function() {
+				(i[r].q = i[r].q || []).push(arguments)
+			}, i[r].l = 1 * new Date();
+			a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+			a.async = 1;
+			a.src = g;
+			m.parentNode.insertBefore(a, m)
+		})(window, document, 'script',
+				'../../../www.google-analytics.com/analytics.js', 'ga');
+
+		ga('create', 'UA-74137680-1', 'auto');
+		ga('send', 'pageview');
+	</script>
+
+</h:head>
+
+<body class="login-container signup-bg">
+	<div class="login_container">
+		<div class="wrapper-page">
+			<!-- Password recovery -->
+			<div class="form-container" style="padding-top: 10%">
+				<h:form id="form" class="m-t-20 login-form">
+					<input type="hidden" name="appName" value="PORTAL" />
+					<p:growl id="growl" showDetail="true" sticky="false" life="5000"
+						globalOnly="true" />
+					<div class="panel panel-body login-form">
+						<div class="text-center">
+							<h6 class="brand-name">
+								New User Register
+								<!-- Tamil Nadu Handloom Weavers'<br />Co-operative Society Limited -->
+							</h6>
+						</div>
+
+						<div class="row">
+							<div class="col-lg-12 col-md-12">
+								<div class="form-group has-feedback has-feedback-left">
+									<p:inputText autocomplete="off" a:autofocus="true"
+										class="form-control" id="username"
+										value="#{userManagementBean.userMasterDTO.username}"
+										label="username" placeholder="Username" />
+
+									<p:message for="username" />
+									<div class="form-control-feedback">
+										<i class="icon-user text-muted"></i>
+									</div>
+								</div>
+
+								<div class="form-group has-feedback has-feedback-left">
+									<p:password id="password"
+										value="#{userManagementBean.userMasterDTO.password}"
+										autocomplete="off" placeholder="Password"
+										class="form-control password" />
+									<p:message for="password" />
+									<div class="form-control-feedback">
+										<i class="icon-lock2 text-muted"></i>
+									</div>
+								</div>
+
+								<div class="form-group has-feedback has-feedback-left">
+									<p:inputText autocomplete="off" a:autofocus="true"
+										class="form-control"
+										value="#{userManagementBean.userMasterDTO.confirmPassword}"
+										label="" placeholder="Confirm Password" />
+
+									<p:message for="username" />
+									<div class="form-control-feedback">
+										<i class="icon-user text-muted"></i>
+									</div>
+								</div>
+
+								<div class="form-group has-feedback has-feedback-left">
+									<p:inputText autocomplete="off" a:autofocus="true"
+										class="form-control" id="storeName"
+										value="#{userManagementBean.userMasterDTO.storeName}"
+										label="storeName" placeholder="Store Name" />
+
+									<p:message for="storeName" />
+									<div class="form-control-feedback">
+										<i class="icon-user text-muted"></i>
+									</div>
+								</div>
+
+								<div class="form-group has-feedback has-feedback-left">
+									<p:inputText autocomplete="off" a:autofocus="true"
+										class="form-control" id="storecode"
+										value="#{userManagementBean.userMasterDTO.storeCode}"
+										label="storecode" placeholder="Store Code" />
+
+									<p:message for="storecode" />
+									<div class="form-control-feedback">
+										<i class="icon-user text-muted"></i>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<p:commandButton class="btn bg-pink btn-block" value="Register"
+										action="#{userManagementBean.submit}"
+										onclick="PF('statusDialog').show();"
+										oncomplete="PF('statusDialog').hide();" update="form growl">
+										<f:setPropertyActionListener value="REGISTER_WITH_NEW_STORE"
+											target="#{userManagementBean.action}"></f:setPropertyActionListener>
+									</p:commandButton>
+								</div>
+
+								<div class="form-group">
+									<p:commandButton class="btn bg-pink btn-block"
+										value="Back To Login Page"
+										action="#{userManagementBean.newUser}"
+										onclick="PF('statusDialog').show();"
+										oncomplete="PF('statusDialog').hide();" update="growl">
+										<f:setPropertyActionListener value="LOGIN_PAGE"
+											target="#{userManagementBean.action}"></f:setPropertyActionListener>
+									</p:commandButton>
+								</div>
+
+
+							</div>
+
+						</div>
+
+					</div>
+					<p:dialog header="GOTO LOGIN PAGE"
+						draggable="true" modal="true" id="goToLoginPage"
+						styleClass="p-0 overlay-pop modal-dialog"
+						width="30%" widgetVar="goToLoginPage" showEffect="fade"
+						hideEffect="fade" resizable="false">
+
+						<div class="modal-body">
+							<p:commandButton ajax="false"
+								styleClass="btn bg-success heading-btn font-iconmoon"
+								value="OK" title="OK"
+								action="#{userManagementBean.newUser}"
+								oncomplete="PF('statusDialog').hide()">
+								<f:setPropertyActionListener value="LOGIN_PAGE"
+											target="#{userManagementBean.action}"></f:setPropertyActionListener>
+							</p:commandButton>
+						</div>
+
+					</p:dialog>
+				</h:form>
+			</div>
+			<!-- /password recovery -->
+			<div class="push"></div>
+		</div>
+	</div>
+	<!-- <footer class="footer-bg">
+	<div class="loginFooterContainer">
+		<p class="copyrht-txt">
+			Copyright © 2017. <span>Mark solution </span> powered by <a href="">Mark Solution
+				Pvt. Ltd</a>
+		</p>
+	</div>
+	</footer> -->
+	<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+		closable="false" resizable="false" showHeader="false">
+		<img src="#{request.contextPath}/assets/images/please-wait.gif" />
+	</p:dialog>
+</body>
+</html>

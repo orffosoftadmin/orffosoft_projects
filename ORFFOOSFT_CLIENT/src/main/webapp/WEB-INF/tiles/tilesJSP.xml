@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+	<!-- Templates -->
+
+	<definition name="jsp.layout.basic" template="/WEB-INF/tiles/view/jsp/layout/jspBasicLayout.jsp">
+		<put-attribute name="title" value="Cooptex" />
+		<put-attribute name="header" value="/WEB-INF/tiles/view/jsp/common/header.jsp" />
+		<put-attribute name="menu" value="/WEB-INF/tiles/view/jsp/common/menu.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="model" value="/WEB-INF/tiles/view/jsp/common/blank.jsp" />
+		<put-attribute name="script" value="/WEB-INF/tiles/view/jsp/common/blank.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/tiles/view/jsp/common/footer.jsp" />
+	</definition>
+
+	<definition name="jsp.layout.basic.inc" template="/WEB-INF/tiles/view/jsp/layout/basicInc.jsp">
+		<put-attribute name="bodyInc" value="" />
+	</definition>
+
+	<definition name="jsp.exhibition.create" extends="jsp.layout.basic">
+		<put-attribute name="body" value="/WEB-INF/tiles/view/jsp/masters/createExhibition.jsp" />
+		<put-attribute name="model" value="/WEB-INF/tiles/view/jsp/masters/createExhibitionModel.jsp" />
+		<put-attribute name="script" value="/WEB-INF/tiles/view/jsp/masters/createExhibitionJS.jsp" />
+	</definition>
+	
+	<definition name="jsp.exhibition.list" extends="jsp.layout.basic">
+		<put-attribute name="body" value="/WEB-INF/tiles/view/jsp/masters/listExhibition.jsp" />
+		<put-attribute name="script" value="/WEB-INF/tiles/view/jsp/masters/createExhibitionJS.jsp" />
+	</definition>
+	
+	<definition name="jsp.exhibition.view" extends="jsp.layout.basic">
+		<put-attribute name="body" value="/WEB-INF/tiles/view/jsp/masters/viewExhibition.jsp" />
+	</definition>	
+
+	<definition name="jsp.welcome.home" extends="jsp.layout.basic">
+		<put-attribute name="body" value="/WEB-INF/tiles/view/jsp/accounts/budget.jsp" />
+		<put-attribute name="header" value="/WEB-INF/tiles/view/jsp/common/blank.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/tiles/view/jsp/common/footer.jsp" />
+	</definition>
+
+
+
+</tiles-definitions>

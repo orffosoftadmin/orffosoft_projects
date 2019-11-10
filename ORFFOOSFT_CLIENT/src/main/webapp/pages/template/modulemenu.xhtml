@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+	<div class="dropdown-menu dropdown-content" style="width: 200px">
+		<div class="row row-seamless btn-block-group">
+			<div class="col-xs-6">
+				   <a href="#{loginBean.portalClientLandingUrl}"><button
+						type="button"
+						class="btn btn-default btn-block btn-float btn-float-lg">
+						<i class="icon-user text-warning-600"></i> <span>Portal</span>
+					</button></a> 
+					
+			</div>
+		</div>
+	</div>
+</ui:composition>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>InfoTex | Session Expired</title>
+	<meta charset="utf-8" />
+	<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<link
+		href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900"
+		rel="stylesheet" type="text/css" />
+	<link href="assets/css/icons/icomoon/styles.css" rel="stylesheet"
+		type="text/css" />
+	<link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
+	<link href="assets/css/core.css" rel="stylesheet" type="text/css" />
+	<link href="assets/css/components.css" rel="stylesheet" type="text/css" />
+	<link href="assets/css/colors.css" rel="stylesheet" type="text/css" />
+	<link href="assets/css/jui.css" rel="stylesheet" type="text/css" />
+	<link href="assets/css/pfui.css" rel="stylesheet" type="text/css" />
+	<link href="assets/css/custom.css" rel="stylesheet" type="text/css" />
+	<!-- /global stylesheets -->
+	<style type="text/css">
+body {
+	min-height: auto
+}
+
+.sessionexp-bg {
+	margin-top: 15%;
+}
+
+.sessionexp-bg h1>i {
+	font-size: 60px;
+	color: #f9c851 !important;
+}
+
+.m-b-20 {
+	margin-bottom: 20px;
+}
+</style>
+</h:head>
+<h:body class="sessionexp-bg">
+	<h:form id="form">
+		<p:growl id="growl" showDetail="true" sticky="false" life="5000"
+			globalOnly="true" />
+		<div class="row">
+			<div class="col-lg-4 col-lg-offset-4 col-sm-6 col-sm-offset-3">
+				<h1 class="text-center">
+					<img src="assets/images/please-wait.gif" alt="Logo" />
+				</h1>
+				<div class="text-center content-group">
+					<h4>Please wait... you will be Redirected to this Page.....</h4>
+				</div>
+			</div>
+		</div>
+		<!-- /content area -->
+	</h:form>
+</h:body>
+</html>

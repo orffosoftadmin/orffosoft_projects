@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/pages/template/layout.xhtml">
+	<ui:define name="content">
+		<h:form id="itemPNS">
+			<title>Mark Solution | Customer Billing</title>
+			<!-- Page Header -->
+			<div class="page-header page-header-default">
+				<div class="page-header-content">
+					<div class="page-title">
+						<h4>Customer Billing</h4>
+						<ul class="breadcrumb">
+							<li><a href="#{request.contextPath}/pages/home.xhtml"><i
+									class="icon-home2 position-left"></i>#{msg['home']}</a></li>
+							<li>#{msg['oper']}</li>
+							<li>#{msg['stock_management']}</li>
+							<li>#{msg['item_inward']}</li>
+							<li class="active">Customer Billing</li>
+						</ul>
+						<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+					</div>
+					<ui:include src="/pages/pageHeadingElements.xhtml" />
+				</div>
+			</div>
+			<!-- End Page Header -->
+			<div class="content">
+				<div
+					class="panel-group panel-group-control panel-group-control-right m-b-15"
+					id="accordion-control-right">
+					<div class="panel panel-info ">
+						<div class="panel-heading">
+							<h6 class="panel-title">
+								Customer Billing
+								<p:outputLabel styleClass="pull-right">(
+									<span class="mand-red">*</span>
+									<span>#{msg['mand_fields']}</span>)
+								</p:outputLabel>
+							</h6>
+						</div>
+
+						<div class="page-scroll">
+							<div class="panel-body p-t-10">
+								<h5 class="bord_bot m-t-0">
+									<span class="iform-title"><i
+										class="fa fa-th-large m-r-5"></i>#{msg['sup_detail']}</span>
+								</h5>
+								<p:outputPanel id="supplierPanel">
+									<div class="row custom-form-1 label-form">
+										<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+											<div class="form-group">
+												<p:outputLabel class="fa-input" value="#{msg['cust_name']}" />
+												<p:outputLabel rendered="true" class="mand-red" value="*"></p:outputLabel>
+												<div class="input-group">
+													<span class="input-group-addon"><i class="icon-hash"></i></span>
+													<p:inputText id="custName" maxlength="2" class="form-control"
+														required="#{not empty param[submit.clientId]}"
+														requiredMessage="#{msg['product_variety_code_req']}"
+														value="#{productVarietyMasterBean.productVarietyMasterDTO.code}"
+														onkeypress="return checkAlphaNumericSpace(event)"
+														disabled="#{productVarietyMasterBean.action eq 'VIEW'}">
+														<p:ajax event="keyup" update="yu" />
+													</p:inputText>
+												</div>
+												<h:message for="vcode" id="yu"
+													class="validation-error-label" />
+												<p:tooltip for="vcode" rendered="true"
+													value="#{msg['product_variety_code_valid_msg']}"></p:tooltip>
+											</div>
+										</div>
+
+										<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+											<div class="form-group">
+												<p:outputLabel class="fa-input" value="#{msg['item_code']}" />
+												<p:outputLabel rendered="true" class="mand-red" value="*"></p:outputLabel>
+												<div class="input-group">
+													<span class="input-group-addon"><i class="icon-hash"></i></span>
+													<p:inputText id="mobnumber" class="form-control"
+														autocomplete="off" maxlength="10"
+														required="#{not empty param[submit.clientId]}"
+														requiredMessage="#{msg['product_variety_code_req']}"
+														value="#{productVarietyMasterBean.productVarietyMasterDTO.code}"
+														onkeypress="return checkAlphaNumericSpace(event)"
+														disabled="#{productVarietyMasterBean.action eq 'VIEW'}">
+														<p:ajax event="keyup" update="mobnumber" />
+													</p:inputText>
+												</div>
+												<h:message for="mobnumber" id="dd"
+													class="validation-error-label" />
+												<p:tooltip for="mobnumber" rendered="true"
+													value="#{msg['product_variety_code_valid_msg']}"></p:tooltip>
+											</div>
+										</div>
+									</div>
+
+								</p:outputPanel>
+
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="table-responsive m-b-10 footer-pad-0 p-t-10">
+											<p:outputPanel id="itemTablePanel">
+												<!-- ItemInward  -->
+												<p:outputPanel
+													styleClass="#{stockItemInwardBean.stockTransferItemsInwardUpdateList.size() gt 5 ? 'overflow-table':'col-lg-12 ph0'}">
+													<p:dataTable
+														value="#{stockItemInwardBean.stockTransferItemsInwardUpdateList}"
+														var="item" id="itemListTableIntenInward"
+														rowIndexVar="index" scrollable="true"
+														styleClass="report-table" editable="true"
+														widgetVar="itemListTableIntenInwardWdgr"
+														scrollHeight="#{stockItemInwardBean.stockTransferItemsInwardUpdateList.size() eq 0 ? '34' : 
+							  				 stockItemInwardBean.stockTransferItemsInwardUpdateList.size() eq 1 ? '38': 
+							  				 stockItemInwardBean.stockTransferItemsInwardUpdateList.size() eq 2 ? '75':
+											 stockItemInwardBean.stockTransferItemsInwardUpdateList.size() eq 3 ? '112':
+											 stockItemInwardBean.stockTransferItemsInwardUpdateList.size() eq 4 ? '149':
+											 stockItemInwardBean.stockTransferItemsInwardUpdateList.size() gt 4 and stockItemInwardBean.stockTransferItemsInwardUpdateList.size() lt 6 ? '186' :'205'}">
+
+														<p:ajax event="rowEdit"
+															listener="#{stockItemInwardBean.onRowEdit}"
+															update="growls,itemListTableIntenInward" />
+														<p:ajax event="rowEditCancel"
+															listener="#{stockItemInwardBean.onRowCancel}"
+															update="growls,itemListTableIntenInward" />
+
+														<p:column headerText="#" styleClass="text-center width-3">
+															<h:outputText value="#{index +1 }" />
+														</p:column>
+
+														<p:column
+															headerText="#{msg['item_code']} / #{msg['name']}"
+															styleClass="width-15">
+															<h:outputText
+																value="#{item.productVarietyMaster.code}/ #{item.productVarietyMaster.name}" />
+														</p:column>
+
+														<p:column headerText="#{msg['hsn_code']}"
+															styleClass="width-8">
+															<h:outputText
+																value="#{item.productVarietyMaster.hsnCode}" />
+														</p:column>
+														<p:column headerText="#{msg['uom']}" styleClass="width-6">
+															<h:outputText value="#{item.uomMaster.name}" />
+														</p:column>
+														<p:column headerText="#{msg['qty']}" styleClass="width-6">
+															<p:cellEditor>
+																<f:facet name="output">
+																	<h:outputText value="#{item.orderedQty}" />
+																</f:facet>
+																<f:facet name="input">
+																	<p:inputText styleClass="fa-input" id="orderedQtyInput"
+																		value="#{item.orderedQty}" style="width:100%" />
+																</f:facet>
+															</p:cellEditor>
+														</p:column>
+
+														<p:column
+															headerText="#{msg['unit_rate']} &lt;br/&gt;(&#xf156;)"
+															styleClass="fa-input text-right width-9">
+															<p:cellEditor>
+																<f:facet name="output">
+																	<h:outputText value="#{item.unitRate}"
+																		styleClass="fa-input" />
+																</f:facet>
+																<f:facet name="input">
+																	<p:inputText styleClass="fa-input" id="unitRateInput"
+																		value="#{item.unitRate}" style="width:100%" />
+																</f:facet>
+															</p:cellEditor>
+														</p:column>
+
+														<p:column
+															headerText="#{msg['total_rate']} &lt;br/&gt;(&#xf156;)"
+															styleClass="fa-input text-right width-10">
+															<h:outputText value="#{item.itemTotal}"
+																styleClass="fa-input">
+																<f:convertNumber type="currency"></f:convertNumber>
+															</h:outputText>
+														</p:column>
+
+														<p:column
+															headerText="#{msg['dis_master']} &lt;br/&gt;(&#xf295;)"
+															styleClass="fa-input text-right width-7">
+															<p:cellEditor>
+																<f:facet name="output">
+																	<h:outputText value="#{item.discountPercent}"
+																		styleClass="fa-input" />
+																</f:facet>
+																<f:facet name="input">
+																	<p:inputText styleClass="fa-input"
+																		id="discountPercentInput"
+																		value="#{item.discountPercent}" style="width:100%" />
+																</f:facet>
+															</p:cellEditor>
+														</p:column>
+
+														<p:column
+															headerText="#{msg['dis_value']} &lt;br/&gt; (&#xf156;)"
+															styleClass="fa-input text-right width-9">
+															<h:outputText value="#{item.discountValue}"
+																styleClass="fa-input" />
+														</p:column>
+
+														<p:column headerText="#{msg['tax']} &lt;br/&gt;(&#xf295;)"
+															styleClass="fa-input text-right width-6">
+															<p:cellEditor>
+																<f:facet name="output">
+																	<h:outputText value="#{item.taxPercent}"
+																		styleClass="fa-input" />
+																</f:facet>
+																<f:facet name="input">
+																	<p:inputText styleClass="fa-input" id="taxPercentInput"
+																		value="#{item.taxPercent}" style="width:100%" />
+																</f:facet>
+															</p:cellEditor>
+														</p:column>
+
+														<p:column
+															headerText="#{msg['tax_value']} &lt;br/&gt;(&#xf156;)"
+															styleClass="fa-input text-right width-8">
+															<h:outputText value="#{item.taxValue}"
+																styleClass="fa-input" />
+														</p:column>
+
+														<p:column
+															headerText="#{msg['nt_price']} &lt;br/&gt; (&#xf156;)"
+															styleClass="fa-input text-right width-8">
+															<h:outputText value="#{item.itemNetTotal}"
+																styleClass="fa-input">
+																<f:convertNumber type="currency"></f:convertNumber>
+															</h:outputText>
+														</p:column>
+
+														<p:column headerText="#{msg['action']}"
+															styleClass="width-6 text-center">
+															<p:commandButton value="&#xe99e;"
+																update=":itemPNS:itemListTableIntenInward"
+																class="btn bg-danger font-iconmoon btn-xs"
+																title="#{msg['delete']}">
+																<p:collector value="#{item}"
+																	removeFrom="#{stockItemInwardBean.stockTransferItemsInwardUpdateList}"
+																	unique="true" />
+															</p:commandButton>
+														</p:column>
+
+														<p:columnGroup type="footer">
+															<p:row>
+																<p:column colspan="5" styleClass="width-38"
+																	footerText="#{msg['tot']}" />
+																<p:column class="width-9" />
+																<p:column class="width-10" />
+																<p:column class="width-7" footerText="" />
+																<p:column class="width-9" />
+																<p:column class="width-6" footerText="" />
+																<p:column class="width-8" />
+																<p:column class="width-8" />
+																<p:column class="width-6" footerText="" />
+															</p:row>
+														</p:columnGroup>
+													</p:dataTable>
+												</p:outputPanel>
+											</p:outputPanel>
+										</div>
+									</div>
+								</div>
+
+
+								<div class="row">
+									<div class="col-lg-12">
+										<h5 class="bord_bot m-t-0">
+											<span class="iform-title"><i
+												class="fa fa-th-large m-r-5"></i>#{msg['inv_dtl']}</span>
+										</h5>
+									</div>
+								</div>
+								<p:outputPanel id="invoiceDetailsPanel">
+									<div class="row custom-form-1 label-form ">
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<div class="form-group">
+												<p:outputLabel value="#{msg['invoice_number']}" />
+												<div class="input-group">
+													<span class="input-group-addon"><i class="icon-hash"></i></span>
+													<p:inputText styleClass="form-control"
+														value="#{stockItemInwardBean.purchaseInvoice.invoiceNumber}"
+														id="input_InvoiceNumber">
+														<p:keyFilter regEx="/[0-9]/i" />
+													</p:inputText>
+													<h:message for="input_InvoiceNumber"
+														class="validation-error-label" id="msg_invoiceNumber"
+														style="margin-top:28px;" />
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<p:outputLabel value="#{msg['invoice_date']}" />
+											<div class="form-group form-group_calend">
+												<p:calendar id="invoice_Date" placeholder="dd-mmm-yyyy"
+													value="#{stockItemInwardBean.purchaseInvoice.invoiceDate}"
+													maxdate="new Date()"
+													pattern="#{loginBean.userInfoDTO.dateFormat}" mask="true"
+													navigator="true" styleClass="form-control-1 calend-icon-1">
+													<p:ajax event="dateSelect" />
+												</p:calendar>
+												<h:message for="invoice_Date" class="validation-error-label"
+													id="msg_invoice_Date" />
+											</div>
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-6">
+											<p:outputLabel value="#{msg['payment_due_date']}" />
+											<div class="form-group form-group_calend">
+												<p:calendar id="duedate" placeholder="dd-mmm-yyyy"
+													value="#{stockItemInwardBean.purchaseInvoice.paymentDuedate}"
+													mindate="new Date()" pattern="dd-MMM-yyyy" mask="true"
+													navigator="true" styleClass="form-control-1 calend-icon-1">
+													<p:ajax event="dateSelect" />
+												</p:calendar>
+												<h:message for="duedate" class="validation-error-label"
+													id="msg_duedate" style="margin-top:28px;" />
+											</div>
+										</div>
+									</div>
+
+								</p:outputPanel>
+								<div class="text-right">
+									<p:commandButton update="growls"
+										value="&#xed6a;&nbsp;#{msg['cancel']}"
+										title="#{msg['cancel']}"
+										class="btn bg-slate font-iconmoon m-r-0"
+										action="#{stockItemInwardBean.backStockItemInward}">
+									</p:commandButton>
+									<p:commandButton update="growls"
+										value="&#xed6e;&nbsp;#{msg['submit']}"
+										title="#{msg['submit']}"
+										class="btn bg-success heading-btn  font-iconmoon"
+										action="#{stockItemInwardBean.submitData}"
+										onclick="PF('statusDialog').show();"
+										oncomplete="PF('statusDialog').hide();">
+									</p:commandButton>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<p:dialog widgetVar="statusMediaView" modal="false" draggable="true"
+				closable="true" resizable="false" showHeader="false" width="500"
+				height="400">
+				<p:outputPanel id="mediaViewPanel">
+					<p:overlayPanel>
+						<h3>PDF</h3>
+						<object type="application/pdf"
+							data="/resources/bin/main/invoiceFiles/in001.pdf?pfdrid_c=true"
+							width="100%" height="300px">
+							Your browser can't display pdf, <a
+								href="/bin/main/invoiceFiles/in001.pdf">click</a> to download
+							pdf instead.
+						</object>
+					</p:overlayPanel>
+					<p:commandButton value="Close"
+						onclick="PF('statusMediaView').hide();"></p:commandButton>
+				</p:outputPanel>
+			</p:dialog>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
