@@ -1,0 +1,2 @@
+include ':ORFFOSOFT_CORE'
+project(':ORFFOSOFT_CORE').projectDir = new File(settingsDir, '../ORFFOSOFT_CORE')
