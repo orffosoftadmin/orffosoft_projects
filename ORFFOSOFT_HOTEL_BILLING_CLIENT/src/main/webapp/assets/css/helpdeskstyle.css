@@ -1,0 +1,260 @@
+
+.ticketid{background-color: #fff;
+padding: 1px 5px;
+font-weight: 600;
+Color: #333;
+color: #337ab7;}
+
+
+.table-bor{border: 1px solid #bdd0d8;}
+.table-bor thead th{border: 1px solid #bdd0d8; font-size: 13px;}
+.table-bor tbody td{border: 1px solid #bdd0d8; padding: 8px 8px !important;}
+.table-head{font-weight: bold;
+padding-bottom: 13px;
+font-size: 15px;}
+.table-head-data{background-color: #e47100;
+padding: 2px 8px;
+color: #fff;
+border-radius: 3px;}
+.icon-primary{padding: 5px;
+background-color: #3f9dfb;
+
+border-radius: 4px;
+color: white;
+font-size: 12px;margin-right: 1px;}
+.icon-warning{padding: 5px 6px;
+background-color: #fb7b3f;
+
+border-radius: 4px;
+color: white;
+font-size: 12px;margin-right: 1px;}
+.icon-view{padding: 5px;
+background-color: #666;
+
+border-radius: 4px;
+color: white;
+font-size: 12px;}
+
+
+.pad1015{padding:10px 15px}
+.pad510{padding:5px 10px}
+.pad30{padding:30px}
+.pad20{padding:20px}
+.pad10{padding:10px}
+.m-r-10{margin-right:10px}
+.m-l-10{margin-leftt:10px}
+.m-r-5{margin-right:5px}
+.p-l-0{padding-left:0px}
+.p-r-0{padding-right:0px}
+.m-l-25{margin-left: 25px;}
+.m-l-15{margin-left: 15px;}
+.p-r-10{padding-right:10px}
+.p-r-5{padding-right:5px}
+.m-t-10{margin-top:10px}
+.m-t-20{margin-top:20px}
+.m-t-5{margin-top:5px}
+.m-t-15{margin-top:15px}
+.no-padding{padding:0px !important}
+.p-b-0{padding-bottom:0px}
+.m-b-0{margin-bottom:0px}
+.m-b-10{margin-bottom:10px}
+.whiteback {
+    background-color: #fff;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .08);
+    
+    padding:10px
+}
+.idstyle{  text-transform:uppercase; font-size: 12px; color: #004c71 !important; background-color: #d9edf7 !important;
+border-color: #bce8f1 !important; padding: 10px 15px;}
+.panel-col-color{color: #333;
+background-color: #f5f5f5 !important;;
+border-color: #ddd !important;;}
+.lastdate{    font-size: 13px;
+    text-transform: capitalize;
+    color: #000;
+}
+.viewbut{padding: 3px 10px;}
+.sta-close{background-color: #ed7b00;
+padding: 4px 7px;
+font-size: 12px;
+font-weight: bold;
+color: #fff;}
+.idst{background-color: #565656;
+padding: 4px 6px;
+color: #fff;}
+.list-head{border-bottom: 1px solid #e6e6e6;
+padding-bottom: 10px;}
+.border {border:1px solid #d8d8d8}
+.text-summary{padding: 5px 10px;
+font-size: 13px;
+font-style: inherit;
+text-decoration: darkgrey;
+color: #545454;}
+.panelhover:hover{ cursor:pointer}
+
+
+.panel-text{font-weight:600}
+.loginback {
+    background-color: #fff;
+    box-shadow: 0 1px 7px 0 rgba(0, 0, 0, 0.1);
+}
+
+.ststus-back{ width: 100%;
+text-align: center;
+text-transform: uppercase;
+font-size: 11px;
+font-weight: 600;
+padding: 2px; color:#fff}
+.new{ background-color:#F90}
+.Resolved{ background-color:#0C6}
+
+
+.width-custom100{width:100% !important}
+
+
+
+
+
+
+
+/* Responsive Full Background Image Using CSS
+ * Tutorial URL: http://sixrevisions.com/css/responsive-background-image/
+*/
+.background-image {
+  /* Location of the image */
+  background-image:url(../images/logo/login-dsf.jpg);
+  
+  /* Image is centered vertically and horizontally at all times */
+  background-position: center center;
+  
+  /* Image doesn't repeat */
+  background-repeat: no-repeat;
+  
+  /* Makes the image fixed in the viewport so that it doesn't move when 
+     the content height is greater than the image height */
+  background-attachment: fixed;
+  
+  /* This is what makes the background image rescale based on its container's size */
+  background-size: cover;
+  
+  /* Pick a solid background color that will be displayed while the background image is loading */
+  background-color:#464646;
+  
+  /* SHORTHAND CSS NOTATION
+   * background: url(background-photo.jpg) center center cover no-repeat fixed;
+   */
+}
+
+/* For mobile devices */
+@media only screen and (max-width: 767px) {
+  body {
+    /* The file size of this background image is 93% smaller
+     * to improve page load speed on mobile internet connections */
+    background-image: url(images/background-photo-mobile-devices.jpg);
+  }
+	}
+	
+	.btn-default {
+ background-color: #fff;
+border: 1px solid #acacac;
+padding: 4px 14px;
+color:#333
+}
+.support-desk{font-size: 26px;
+font-weight: 600;
+color: #3c3c3c;
+}
+
+.pagination {
+    display: inline-block;
+	margin:0px
+}
+
+.pagination a {
+color: #323232;
+float: left;
+padding: 5px 11px;
+text-decoration: none;
+transition: background-color .3s;
+border: 1px solid #ddd;
+font-size: 14px;
+}
+
+.pagination a.active {
+    background-color: #00608A;
+    color: white;
+    border: 1px solid #4CAF50;
+}
+
+.pagination a:hover:not(.active) {background-color: #ddd;}
+
+.data-head{background-color: #f3f3f3;
+padding: 5px 10px;
+margin-bottom: 5px;
+border-bottom: 1px solid #337ab7;font-size: 13px;}
+.data-value{font-weight: 600;
+color: #025fae;
+padding: 0px 10px; font-size: 13px;}
+.lastdate-ticket{font-size: 13px;
+
+color: #333;}
+.idst-resolved{background-color: #007a28;
+padding: 4px 6px;
+color: #fff;
+font-weight: bold;
+font-size: 13px;}
+.idst-open{background-color: #f20000;
+padding: 4px 6px;
+color: #fff;
+font-weight: bold;
+font-size: 13px;}
+.idst-update{background-color: #cc7504;
+padding: 4px 6px;
+color: #fff;
+font-weight: bold;
+font-size: 13px;}
+.font-13{font-size:13px}
+.dat{color: #025fae; font-weight:600}
+.ticket-his{font-size: 16px;
+font-weight: 600;
+}
+
+
+.menu-icon{position: relative;
+display: table-cell;
+width: 60px;
+text-align: center;
+vertical-align: middle;
+font-size: 18px !important;
+padding: .7em 0;}
+
+
+.pading-cus-creat{padding: 8px 10px !important;}
+
+.btn-info {
+    color: #fff;
+    background-color: #00c0ff;}
+	
+	.custom-pag a{color: #323232;
+float: left;
+padding: 1px 6px;
+text-decoration: none;
+transition: background-color .3s;
+border: 1px solid #ddd;
+font-size: 14px;}
+
+.width100{width:100%}
+.col-panel-border{border: 1px solid #d1d1d1; border-bottom:0px}
+
+.ticketlistpad{padding: 4px 11px;}
+
+.searchbut{border-radius: 0px !important; padding: 3px 5px !important; font-size: 12.5px !important;}
+
+.sea-bot-bor{border-bottom: 1px solid #e1e1e1; padding-bottom: 21px;}
+.bg-brown:hover {
+
+    background-color: #795548;
+   
+
+}
+

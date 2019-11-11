@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	template="/pages/template/layout.xhtml">
+	<ui:define name="content">
+		<title>InfoTex | Menu List</title>
+		
+		<div class="row">
+			<div class="col-lg-6 col-md-6 col-sm-6">
+				<h4 class="page-title">Menu List</h4>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-6">
+				<div class="text-right">
+					<ol class="breadcrumb mt text12 ph0">
+						<li><i class="fa fa-home mr-sm"></i><a href="#">#{msg['home']}</a></li>
+						<li class="active">Master</li>
+						<li class="active">Menu List</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+		
+		<div class="panel panel-color panel-top-bor">
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-lg-4 col-md-4 col-sm-4">
+						<div class="form-group">
+							<p:outputLabel value="Module" />
+							<h:selectOneMenu class="form-control">
+								<f:selectItem itemLabel="Select" />
+							</h:selectOneMenu>
+						</div>
+					</div>
+					
+					<div class="col-lg-4 col-md-4 col-sm-4">
+						<div class="form-group">
+							<p:outputLabel value="Menu Code" />
+							<p:inputText value="" class="form-control" />
+						</div>
+					</div>
+				</div>
+				
+				<div class="text-right m-b-20">
+					<p:commandButton value=" &nbsp; #{msg['clear']}"
+						class="btn btn-cancel waves-effect w-md waves-light fa-input" />
+					<p:commandButton
+						value="&#xf002;&nbsp; #{msg['search']}"
+						class="btn btn-info waves-effect w-md waves-light fa-input m-l-10" />
+				</div>
+				
+				
+				<div class="portlet m-b-0">
+					<div class="panel-grey">
+						<h3 class="portlet-title">Menu List</h3>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+				<table class="table table-bordered m-b-20">
+					<thead>
+						<tr>
+							<th class="text-center">S.No</th>
+							<th>Module</th>
+							<th>Menu Code</th>
+							<th>Menu Name</th>
+							<th>Menu Name (Tamil)</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td colspan="6" class="text-center">
+								No records found.
+							</td>
+							</tr>
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+	</ui:define>
+	</ui:composition>

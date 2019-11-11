@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	template="/pages/template/layoutWithIndividualForm.xhtml">
+	<ui:define name="content">
+		<h:form id="dashboardform">
+			<ui:param name="dbDTO" value="#{dashboardBean.headerDTO}"></ui:param>
+			<style>
+.purchase-popup {
+	height: 530px;
+	overflow: auto;
+}
+</style>
+			<title>Orffosoft | Dashboard</title>
+			<!-- Page Header -->
+			<div class="page-header page-header-default">
+				<div class="page-header-content">
+					<div class="page-title">
+						<h4>#{msg['dashboard']}</h4>
+						<ul class="breadcrumb">
+							<li><a href="#{request.contextPath}/pages/home.xhtml"><i
+									class="icon-home2 position-left"></i>#{msg['home']}</a></li>
+							<li class="active">#{msg['dashboard']}</li>
+						</ul>
+						<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+					</div>
+					<ui:include src="/pages/pageHeadingElements.xhtml" />
+				</div>
+			</div>
+			<!-- Page Header End -->
+
+
+			<!-- Page content -->
+			<div class="content page-scroll-hp no-padding-bottom">
+				<div class="panel panel-flat">
+					<div class="panel-body no-padding-bottom">
+						<p:outputPanel id="showroompnl">
+							<div class="row">
+								<div class="col-lg-8">
+									<div class="form-group">
+										<button type="button"
+											class="btn bg-brown-400 btn-labeled btn-rounded"
+											style="min-width: 700px">
+											<b><i class="icon-reading"></i></b> Big Bazar Store , Triplicane , Chennai
+										</button>
+									</div>
+								</div>
+								<ui:remove>
+									<div class="col-lg-3 col-md-3 col-sm-6">
+										<div class="form-group">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="icon-tree6"></i></span>
+												<h:selectOneMenu id="regionEntityMaster"
+													converter="#{entityConverter}"
+													value="#{dashboardBean.selectedRegion}"
+													class="form-control select2">
+													<f:selectItem itemLabel="#{msg['select']}"
+														noSelectionOption="true" />
+													<f:selectItems value="#{dashboardBean.regionList}"
+														var="entityMaster"
+														itemLabel="#{entityMaster.code} / #{entityMaster.name}"
+														itemValue="#{entityMaster}" />
+													<p:ajax event="change" onstart="PF('statusDialog').show()"
+														onsuccess="PF('statusDialog').hide()"
+														listener="#{dashboardBean.onchangeRegion}"
+														update="showroom" />
+												</h:selectOneMenu>
+											</div>
+										</div>
+									</div>
+
+								<div class="col-lg-3 col-md-3 col-sm-6">
+									<div class="form-group">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="icon-store "></i></span>
+											<h:selectOneMenu id="showroom"
+												value="#{dashboardBean.selectedShowroom}"
+												class="form-control select2" converter="#{entityConverter}">
+												<f:selectItem itemLabel="#{msg['select']}"
+													noSelectionOption="true" />
+												<f:selectItems value="#{dashboardBean.showroomList}"
+													var="showroom"
+													itemLabel="#{showroom.code} / #{showroom.name}"
+													itemValue="#{showroom}" />
+												<p:ajax event="change" onstart="PF('statusDialog').show()"
+													onsuccess="PF('statusDialog').hide()"
+													listener="#{dashboardBean.loadShowroomData}"
+													updtae="showroomdatapnl" />
+											</h:selectOneMenu>
+										</div>
+									</div>
+								</div>
+								</ui:remove>
+							</div>
+							<p:outputPanel id="showroomdatapnl">
+								<div class="card-block feature-card-box"
+									style="border: 1px solid #ddd; margin-bottom: 20px;">
+									<div class="row">
+										<div class="col-sm-2 b-r-default text-center">
+											<i class="icon-arrow-right7" style="font-size: 32px"></i>
+											<h4>
+												Sales For The Day (
+												<h:outputText value="#{session.lastAccessedTime}">
+													<f:convertDateTime pattern="dd-MMM-yyyy" type="date" />
+												</h:outputText>
+												)
+											</h4>
+										</div>
+										<div class="col-sm-10 personal-profile m-t-10 dash-home">
+											<div class="row">
+												<div
+													class="col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center width-20">
+													<div class="form-group">
+														<div class="feature-icon bg-slate">
+															<i class="icon-cart5"></i>
+														</div>
+														<h4 class="f-w-400 m-b-5 m-t-5">
+															<i class="fa fa-inr"></i>
+															#{dashboardBean.formatDecimalNumber(dashboardBean.showroomInfoDTO.totalSaleAmount)} 0
+														</h4>
+														<p class="text-muted f-15 m-b-0">#{msg['sales_amount']}</p>
+													</div>
+												</div>
+
+												<div
+													class="col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center width-20">
+													<div class="form-group">
+														<div class="feature-icon bg-primary">
+															<i class="icon-certificate"></i>
+														</div>
+														<h4 class="f-w-400 m-b-5 m-t-5">#{dashboardBean.showroomInfoDTO.totalBillCompleted} 0</h4>
+														<p class="text-muted f-15 m-b-0">#{msg['bill_completed']}</p>
+													</div>
+												</div>
+												<div
+													class="col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center width-20">
+													<div class="form-group">
+														<div class="feature-icon bg-purple">
+															<i class="icon-arrow-left16"></i>
+														</div>
+														<h4 class="f-w-400 m-b-5 m-t-5">
+															<i class="fa fa-inr"></i>
+															#{dashboardBean.formatDecimalNumber(dashboardBean.showroomInfoDTO.totalSaleReturn)} 0
+														</h4>
+														<p class="text-muted f-15 m-b-0">#{msg['sales_exchange']}</p>
+													</div>
+												</div>
+												<div
+													class="col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center width-20">
+													<div class="form-group">
+														<div class="feature-icon bg-brown" style="min-width: auto">
+															<i class="icon-user-plus"></i>
+														</div>
+														<h4 class="f-w-400 m-b-5 m-t-5">#{dashboardBean.showroomInfoDTO.totalNewCustomer} 0</h4>
+														<p class="text-muted f-15 m-b-0">#{msg['new_customers']}</p>
+													</div>
+												</div>
+
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="panel panel-info" style="border: none">
+											<div class="panel-heading" style="margin: 0">
+												<h6 class="panel-title">
+													#{msg['top_5_fast_moving_pdt']} (#{msg['qty']})<span
+														class="pull-right">#{dashboardBean.showroomInfoDTO.currentMonth}
+														- #{dashboardBean.showroomInfoDTO.currentYear} </span>
+												</h6>
+											</div>
+
+											<div class="panel-body p-0">
+												<div class="table-responsive">
+													<p:dataTable id="productquantbl" var="product"
+														rowIndexVar="index" styleClass="report-table" rows="5"
+														value="#{loginBean.sellingProductList}">
+														<p:column headerText="#" styleClass="text-center width-3">
+															<h:outputText value="#{index +1}" />
+														</p:column>
+														<p:column headerText="#{msg['pro_name']}">
+															<h:outputText value="#{product.itemName}" />
+														</p:column>
+														<p:column headerText="#{msg['unit_sold']}"
+															styleClass="text-right">
+															<h:outputText value="#{product.soldQuantity}" />
+														</p:column>
+													</p:dataTable>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</p:outputPanel>
+						</p:outputPanel>
+					</div>
+				</div>
+			</div>
+
+			<script type="text/javascript"
+				src="#{request.contextPath}/assets/js/loader.js"></script>
+			<script type="text/javascript">
+			google.charts.load('current', {
+				'packages' : [ 'corechart' ]
+			});
+			google.charts.setOnLoadCallback(drawVisualization);
+
+			function drawVisualization() {
+				// Some raw data (not necessarily accurate)
+				var data = google.visualization.arrayToDataTable([
+					${dashboardBean.yearval},
+					${dashboardBean.janval},
+					${dashboardBean.febval},
+					${dashboardBean.marval},
+					${dashboardBean.aprval},
+					${dashboardBean.mayval},
+					${dashboardBean.junval},
+					${dashboardBean.julval},
+					${dashboardBean.augval},
+					${dashboardBean.sepval},
+					${dashboardBean.octval},
+					${dashboardBean.novval},
+					${dashboardBean.decval},
+					]);
+
+				var options = {
+					title : 'Sales Progress :- Year wise Comparison',
+
+					hAxis : {
+						title : 'Month',
+						fontName : 'roboto'
+					},
+					vAxis : {
+						title : 'Sales Value in lakhs',
+						fontName : 'roboto'
+					},
+					seriesType : 'bars',
+					fontName : 'roboto',
+					height : '350',
+					width : '550',
+					chartArea : {
+						left : '15%',
+						right : '5%',
+						width : '100%'
+					},
+					legend : {
+						position : 'top',
+						alignment : 'start',
+						textStyle : {
+							fontSize : 12,
+							fontName : 'roboto'
+						}
+
+					}
+				};
+
+				var chart = new google.visualization.ComboChart(document
+						.getElementById('chart_div'));
+				chart.draw(data, options);
+			}
+		</script>
+
+
+			<script type="text/javascript">
+			google.charts.load('current', {
+				'packages' : [ 'corechart' ]
+			});
+			google.charts.setOnLoadCallback(drawVisualization);
+
+			function drawVisualization() {
+				// Some raw data (not necessarily accurate)
+				var data = google.visualization.arrayToDataTable([
+						[ 'Month', 'Target', 'Sales' ],
+						${dashboardBean.janProgressval},
+						${dashboardBean.febProgressval},
+						${dashboardBean.marProgressval},
+						${dashboardBean.aprProgressval},
+						${dashboardBean.mayProgressval},
+						${dashboardBean.junProgressval},
+						${dashboardBean.julProgressval},
+						${dashboardBean.augProgressval},
+						${dashboardBean.sepProgressval},
+						${dashboardBean.octProgressval},
+						${dashboardBean.novProgressval},
+						${dashboardBean.decProgressval},
+						]);
+
+				var options = {
+					title : 'Target / Sales Progress for the Current year',
+
+					hAxis : {
+						title : 'Month',
+						fontName : 'roboto'
+					},
+
+					vAxis : {
+						title : 'Sales Value in lakhs',
+						fontName : 'roboto'
+					},
+					seriesType : 'bars',
+					fontName : 'roboto',
+					height : '350',
+					width : '550',
+					chartArea : {
+						right : '5%',
+						left : '15%',
+						width : '100%'
+					},
+					legend : {
+						position : 'top',
+						alignment : 'center',
+						textStyle : {
+							fontSize : 12,
+							fontName : 'roboto'
+						}
+
+					}
+				};
+
+				var chart = new google.visualization.ComboChart(document
+						.getElementById('chart_div1'));
+				chart.draw(data, options);
+			}
+		</script>
+
+
+
+			<script type="text/javascript">
+			google.charts.load('current', {
+				'packages' : [ 'corechart' ]
+			});
+			
+			var activities = [];
+			  <c:forEach items="${dashboardBean.dailyActivities}" var="activity">
+			  activities.push(['${activity.name}',${activity.price}])  	
+	        </c:forEach>
+			
+	        	
+			console.log("DATA::: ",activities)
+			
+			google.charts.setOnLoadCallback(drawChart);
+
+			function drawChart() {
+
+				var data =new  google.visualization.DataTable();
+				data.addColumn('string',"name");
+				data.addColumn('number','price');
+	
+				 data.addRows(activities);
+
+				// Options
+				var options = {
+					title : 'My Daily Activities',
+					fontName : 'Roboto',
+					height : 220,
+					width : 550,
+					chartArea : {
+						left : 120,
+						width : '90%',
+						height : '80%'
+					}
+				};
+
+				var chart = new google.visualization.PieChart(document
+						.getElementById('piechart'));
+
+				chart.draw(data, options);
+			}
+		</script>
+
+			<script type="text/javascript">
+			google.charts.load('current', {
+				'packages' : [ 'corechart' ]
+			});
+			google.charts.setOnLoadCallback(drawChart);
+
+			function drawChart() {
+				var data = google.visualization
+						.arrayToDataTable([ [ 'Year', 'On-hearing', 'Field' ],
+								[ '2', 160, 120 ], [ '4', 180, 100 ],
+								[ '6', 150, 195 ], [ '8', 150, 200 ] ]);
+
+				var options = {
+					title : 'Legal Cases Status for the year',
+					curveType : 'function',
+					fontName : 'roboto',
+					height : '350',
+					width : '600',
+					legend : {
+						position : 'top',
+						left : 10,
+						width : '90%',
+						height : '80%'
+					}
+				};
+
+				var chart = new google.visualization.LineChart(document
+						.getElementById('curve_chart'));
+
+				chart.draw(data, options);
+			}
+		</script>
+
+
+			<script type="text/javascript">
+			google.charts.load('current', {
+				'packages' : [ 'bar' ]
+			});
+			google.charts.setOnLoadCallback(drawChart);
+		
+			function drawChart() {
+				var data = google.visualization.arrayToDataTable(#{dashboardBean.showroomInfoDTO.salesBarGraph});
+		
+				var options = {
+					chart : {
+						title : ' ',
+						subtitle : '',
+					}
+				};
+		
+				var chart = new google.charts.Bar(document
+						.getElementById('month_sales'));
+		
+				chart.draw(data, google.charts.Bar.convertOptions(options));
+			}
+		</script>
+		</h:form>
+	</ui:define>
+</ui:composition>

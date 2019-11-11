@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	template="/pages/template/layoutWithIndividualForm.xhtml">
+	<ui:define name="content">
+		<style>
+.purchase-popup {
+	height: 530px;
+	overflow: auto;
+}
+</style>
+		<title>Welcome InfoTex</title>
+		<!-- Page Header -->
+		<div class="page-header page-header-default">
+			<div class="page-header-content">
+				<div class="page-title">
+					<h4>#{msg['welcome_infotex']}</h4>
+					<ul class="breadcrumb">
+						<li><a href="#{request.contextPath}/pages/home.xhtml"><i
+								class="icon-home2 position-left"></i>#{msg['home']}</a></li>
+						<li class="active">#{msg['welcome_infotex']}</li>
+					</ul>
+					<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+				</div>
+				<ui:include src="/pages/pageHeadingElements.xhtml" />
+			</div>
+		</div>
+		<!-- Page Header End -->
+
+
+		<!-- Page content -->
+		<div class="content page-scroll-hp no-padding-bottom">
+			<div class="row">
+				<div class="col-lg-4">
+					<div class="panel panel-body text-center">
+						<div class="media no-margin stack-media-on-mobile">
+							<div class="media-body">
+								<div class="media-middle">
+									<i
+										class="icon-clipboard3 icon-2x text-muted no-edge-top text-primary"></i>
+								</div>
+								<h5 class="text-semibold no-margin-bottom mt-5">#{msg['circular']}</h5>
+							</div>
+						</div>
+						<div class="list-group-divider"></div>
+						<div class="row">
+							<div class="col-xs-4">
+								<div class="text-uppercase text-size-mini text-muted">#{msg['received']}</div>
+								<h5 class="text-semibold no-margin">2,483</h5>
+							</div>
+
+							<div class="col-xs-4">
+								<div class="text-uppercase text-size-mini text-muted">#{msg['viewed']}</div>
+								<h5 class="text-semibold no-margin">1,257</h5>
+							</div>
+
+							<div class="col-xs-4">
+								<div class="text-uppercase text-size-mini text-muted">#{msg['pending']}</div>
+								<h5 class="text-semibold no-margin">1,257</h5>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="col-lg-4">
+					<div class="panel panel-body text-center">
+						<div class="media no-margin stack-media-on-mobile">
+							<div class="media-body">
+								<div class="media-middle">
+									<i
+										class="icon-file-upload icon-2x text-muted no-edge-top text-success"></i>
+								</div>
+								<h5 class="text-semibold no-margin-bottom mt-5">#{msg['file_movmnt']}</h5>
+							</div>
+						</div>
+
+						<div class="list-group-divider"></div>
+						<div class="row">
+							<div class="col-xs-4">
+								<div class="text-uppercase text-size-mini text-muted">#{msg['received']}</div>
+								<h5 class="text-semibold no-margin">2,483</h5>
+							</div>
+
+							<div class="col-xs-4">
+								<div class="text-uppercase text-size-mini text-muted">#{msg['viewed']}</div>
+								<h5 class="text-semibold no-margin">1,257</h5>
+							</div>
+
+							<div class="col-xs-4">
+								<div class="text-uppercase text-size-mini text-muted">#{msg['pending']}</div>
+								<h5 class="text-semibold no-margin">1,257</h5>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-4">
+					<div class="panel panel-body text-center">
+						<div class="media no-margin stack-media-on-mobile">
+							<div class="media-body">
+								<div class="media-middle">
+									<i
+										class="icon-bell3 icon-2x text-muted no-edge-top text-warning"></i>
+								</div>
+								<h5 class="text-semibold no-margin-bottom mt-5">#{msg['notification']}</h5>
+							</div>
+						</div>
+
+						<div class="list-group-divider"></div>
+						<div class="row">
+							<div class="col-xs-4">
+								<div class="text-uppercase text-size-mini text-muted">#{msg['received']}</div>
+								<h5 class="text-semibold no-margin">2,483</h5>
+							</div>
+
+							<div class="col-xs-4">
+								<div class="text-uppercase text-size-mini text-muted">#{msg['viewed']}</div>
+								<h5 class="text-semibold no-margin">1,257</h5>
+							</div>
+
+							<div class="col-xs-4">
+								<div class="text-uppercase text-size-mini text-muted">#{msg['pending']}</div>
+								<h5 class="text-semibold no-margin">1,257</h5>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,526 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	template="/pages/template/layoutWithIndividualForm.xhtml">
+	<ui:define name="content">
+	<f:event listener="#{dashboardBean.salesValueSummary}"
+			type="preRenderView" />
+		<style>
+.purchase-popup {
+	height: 530px;
+	overflow: auto;
+}
+</style>
+		<title>InfoTex | Dashboard</title>
+		<!-- Page Header -->
+		<div class="page-header page-header-default">
+			<div class="page-header-content">
+				<div class="page-title">
+					<h4>#{msg['dashboard']}</h4>
+					<ul class="breadcrumb">
+						<li><a href="#{request.contextPath}/pages/home.xhtml"><i
+								class="icon-home2 position-left"></i>#{msg['home']}</a></li>
+						<li class="active">#{msg['dashboard']}</li>
+					</ul>
+					<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+				</div>
+				<ui:include src="/pages/pageHeadingElements.xhtml" />
+			</div>
+		</div>
+		<!-- Page Header End -->
+
+
+
+		<!-- Page content -->
+		<div class="content page-scroll">
+			<ul class="nav nav-tabs nav-tabs-bottom m-b-5"
+				style="background: #fff">
+				<li class="active"><a href="#general"
+					class="text-size-small text-uppercase" data-toggle="tab"
+					id="click2"> <i class="icon-menu7 position-left"></i>General
+				</a></li>
+				<li><a href="#technical" class="text-size-small text-uppercase"
+					data-toggle="tab"> <i class="icon-gear position-left"></i>
+						Technical
+				</a></li>
+
+				<li><a href="#marketing" class="text-size-small text-uppercase"
+					data-toggle="tab" id="click1"> <i
+						class="icon-cart5 position-left"></i> Marketing
+				</a></li>
+
+				<li><a href="#admin" class="text-size-small text-uppercase"
+					data-toggle="tab" id="click"><i class="icon-user position-left"></i>
+						Admin </a></li>
+			</ul>
+
+			<div class="panel panel-flat">
+				<div class="panel-body no-padding-bottom">
+					<div class="row m-b-5">
+						<div class="col-lg-12">
+							<button type="button"
+								class="btn bg-teal-400 btn-labeled btn-rounded"
+								style="min-width: 148px">
+								<b><i class="icon-reading"></i></b> Sales Progress
+							</button>
+
+							<button type="button"
+								class="btn bg-brown-400 btn-labeled btn-rounded"
+								style="min-width: 148px">
+								<b><i class="icon-reading"></i></b> Showroom
+							</button>
+
+							<button type="button"
+								class="btn bg-slate-400 btn-labeled btn-rounded"
+								style="min-width: 148px">
+								<b><i class="icon-reading"></i></b> KNT Sales
+							</button>
+						</div>
+					</div>
+
+					<!-- <div class="row">
+						<div class="col-sm-6 col-md-2">
+							<div class="panel panel-body panel-body-accent"
+								style="padding: 6px">
+								<div class="media no-margin">
+									<div class="media-left media-middle">
+										<i class="icon-pointer icon-2x text-success-400"></i>
+									</div>
+
+									<div class="media-body text-right">
+										<h5 class="no-margin text-semibold">652,549</h5>
+										<span class="text-uppercase text-size-mini text-muted">Total
+											Active Showroom</span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-6 col-md-2">
+							<div class="panel panel-body" style="padding: 6px">
+								<div class="media no-margin">
+									<div class="media-left media-middle">
+										<i class="icon-enter6 icon-2x text-indigo-400"></i>
+									</div>
+
+									<div class="media-body text-right">
+										<h5 class="no-margin text-semibold">245,382</h5>
+										<span class="text-uppercase text-size-mini text-muted">Top
+											5 Product Sales </span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="col-sm-6 col-md-2">
+							<div class="panel panel-body" style="padding: 6px">
+								<div class="media no-margin">
+									<div class="media-left media-middle">
+										<i class="icon-bubbles4 icon-2x text-blue-400"></i>
+									</div>
+
+									<div class="media-body text-right">
+										<h5 class="no-margin text-semibold">245,382</h5>
+										<span class="text-uppercase text-size-mini text-muted">Notification
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div> -->
+
+
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="panel panel-flat m-b-10">
+								<div id="chart_div"></div>
+							</div>
+						</div>
+
+						<div class="col-lg-6">
+							<div class="panel panel-flat m-b-10">
+								<div id="chart_div1"></div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-lg-4">
+							<div class="panel panel-flat m-b-10">
+								<div id="piechart"></div>
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="panel panel-flat m-b-10">
+								<div class="panel-heading" style="padding: 5px 10px">
+									<h5 class="panel-title">Top 5 Fast Moving Products</h5>
+								</div>
+								<div class="table-responsive">
+									<table class="table">
+										<tbody>
+											<tr class="success">
+												<td>Salem Cotton Sarees</td>
+												<td align="right">1,254</td>
+											</tr>
+											<tr>
+												<td>Kanchipuram</td>
+												<td align="right">1,254</td>
+											</tr>
+											<tr class="danger">
+												<td>Salem Cotton Sarees</td>
+												<td align="right">1,254</td>
+											</tr>
+											<tr>
+												<td>Kanchipuram</td>
+												<td align="right">1,254</td>
+											</tr>
+
+											<tr class="warning">
+												<td>Salem Cotton Sarees</td>
+												<td align="right">1,254</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Tabs -->
+			</div>
+
+
+
+			<div class="panel panel-flat">
+				<div class="panel-body no-padding-bottom">
+					<div class="row m-b-5">
+						<div class="col-lg-12">
+							<button type="button"
+								class="btn bg-purple-400 btn-labeled btn-rounded"
+								style="min-width: 148px">
+								<b><i class="icon-user"></i></b> Admin
+							</button>
+
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6 cust-wid">
+							<div class="panel panel-body bg-blue-400 has-bg-image"
+								style="padding: 6px">
+								<div class="media no-margin">
+									<div class="media-body">
+										<h3 class="no-margin text-semibold">150</h3>
+										<span class="text-uppercase text-size-mini text-muted">Employee
+											on Leave for the Day</span>
+									</div>
+
+									<div class="media-right media-middle">
+										<i class="icon-user icon-3x opacity-75"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="col-sm-6 cust-wid">
+							<div class="panel panel-body bg-purple-400 has-bg-image"
+								style="padding: 6px">
+								<div class="media no-margin">
+									<div class="media-body">
+										<h3 class="no-margin text-semibold">150</h3>
+										<span class="text-uppercase text-size-mini text-muted">Total
+											Number of Vacancies</span>
+									</div>
+
+									<div class="media-right media-middle">
+										<i class="icon-furniture icon-3x opacity-75"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-6 cust-wid">
+							<div class="panel panel-body bg-brown-400 has-bg-image"
+								style="padding: 6px">
+								<div class="media no-margin">
+									<div class="media-body">
+										<h3 class="no-margin text-semibold">150</h3>
+										<span class="text-uppercase text-size-mini text-muted">No.
+											of Promotion for the Month</span>
+									</div>
+
+									<div class="media-right media-middle">
+										<i class="icon-medal icon-3x opacity-75"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="col-sm-6 cust-wid">
+							<div class="panel panel-body bg-teal-400 has-bg-image"
+								style="padding: 6px">
+								<div class="media no-margin">
+									<div class="media-body">
+										<h3 class="no-margin text-semibold">03</h3>
+										<span class="text-uppercase text-size-mini text-muted">Legal
+											Cases on Hearing for the Month </span>
+									</div>
+
+									<div class="media-right media-middle">
+										<i class="icon-balance icon-3x opacity-75"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-6 cust-wid">
+							<div class="panel panel-body bg-info-400 has-bg-image"
+								style="padding: 6px">
+								<div class="media no-margin">
+									<div class="media-body">
+										<h3 class="no-margin text-semibold">03</h3>
+										<span class="text-uppercase text-size-mini text-muted">Legal
+											Cases on Filed for the Month</span>
+									</div>
+
+									<div class="media-right media-middle">
+										<i class="icon-balance icon-3x opacity-75"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="panel panel-flat m-b-10">
+								<div id="curve_chart"></div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<!-- Tabs -->
+			</div>
+
+
+
+		</div>
+
+		<!-- <script type="text/javascript">
+			$(function() {
+				$("#click").click(function() {
+					$('#admin').show();
+					$('#marketing').hide();
+					return false;
+				});
+				$("#click1").click(function() {
+					$('#admin').hide();
+					$('#marketing').show();
+					return false;
+				});
+				$("#click2").click(function() {
+					$('#admin').show();
+					$('#marketing').show();
+					return false;
+				});
+			});
+		</script> -->
+
+
+		<script type="text/javascript"
+			src="#{request.contextPath}/assets/js/loader.js"></script>
+		<script type="text/javascript">
+			google.charts.load('current', {
+				'packages' : [ 'corechart' ]
+			});
+			google.charts.setOnLoadCallback(drawVisualization);
+
+			function drawVisualization() {
+				// Some raw data (not necessarily accurate)
+				var data = google.visualization.arrayToDataTable([
+					${misDashboardBean.yearval},
+					${misDashboardBean.janval},
+					${misDashboardBean.febval},
+					${misDashboardBean.marval},
+					${misDashboardBean.aprval},
+					${misDashboardBean.mayval},
+					${misDashboardBean.junval},
+					${misDashboardBean.julval},
+					${misDashboardBean.augval},
+					${misDashboardBean.sepval},
+					${misDashboardBean.octval},
+					${misDashboardBean.novval},
+					${misDashboardBean.decval},
+					]);
+
+				var options = {
+					title : 'Sales Progress :- Year wise Comparison',
+
+					hAxis : {
+						title : 'Month',
+						fontName : 'roboto'
+					},
+					vAxis : {
+						title : 'Sales Value in lakhs',
+						fontName : 'roboto'
+					},
+					seriesType : 'bars',
+					fontName : 'roboto',
+					height : '350',
+					width : '600',
+					chartArea : {
+						left : '15%',
+						right : '5%',
+						width : '100%'
+					},
+					legend : {
+						position : 'top',
+						alignment : 'start',
+						textStyle : {
+							fontSize : 12,
+							fontName : 'roboto'
+						}
+
+					}
+				};
+
+				var chart = new google.visualization.ComboChart(document
+						.getElementById('chart_div'));
+				chart.draw(data, options);
+			}
+		</script>
+
+
+		<script type="text/javascript">
+			google.charts.load('current', {
+				'packages' : [ 'corechart' ]
+			});
+			google.charts.setOnLoadCallback(drawVisualization);
+
+			function drawVisualization() {
+				// Some raw data (not necessarily accurate)
+				var data = google.visualization.arrayToDataTable([
+						[ 'Month', 'Sales', 'Target' ], [ 'Jan', 165, 938 ],
+						[ 'Feb', 135, 1120 ], [ 'Mar', 157, 1167 ],
+						[ 'Apr', 139, 1110 ], [ 'May', 136, 691 ] ]);
+
+				var options = {
+					title : 'Target / Sales Progress for the Current year',
+
+					hAxis : {
+						title : 'Month',
+						fontName : 'roboto'
+					},
+
+					vAxis : {
+						title : 'Sales Value in lakhs',
+						fontName : 'roboto'
+					},
+					seriesType : 'bars',
+					fontName : 'roboto',
+					height : '350',
+					width : '600',
+					chartArea : {
+						right : '5%',
+						left : '15%',
+						width : '100%'
+					},
+					legend : {
+						position : 'top',
+						alignment : 'center',
+						textStyle : {
+							fontSize : 12,
+							fontName : 'roboto'
+						}
+
+					}
+				};
+
+				var chart = new google.visualization.ComboChart(document
+						.getElementById('chart_div1'));
+				chart.draw(data, options);
+			}
+		</script>
+
+
+
+		<script type="text/javascript">
+			google.charts.load('current', {
+				'packages' : [ 'corechart' ]
+			});
+			google.charts.setOnLoadCallback(drawChart);
+
+			function drawChart() {
+
+				var data = google.visualization.arrayToDataTable([
+						[ 'Task', 'Hours per Day' ], [ 'Knt Sales', 11 ],
+						[ 'Credit Sales', 2 ], [ 'General sales', 2 ] ]);
+
+				// Options
+				var options = {
+					title : 'My Daily Activities',
+					fontName : 'Roboto',
+					height : 266,
+					width : 350,
+					chartArea : {
+						left : 40,
+						width : '90%',
+						height : '80%'
+					}
+				};
+
+				var chart = new google.visualization.PieChart(document
+						.getElementById('piechart'));
+
+				chart.draw(data, options);
+			}
+		</script>
+
+		<script type="text/javascript">
+			google.charts.load('current', {
+				'packages' : [ 'corechart' ]
+			});
+			google.charts.setOnLoadCallback(drawChart);
+
+			function drawChart() {
+				var data = google.visualization
+						.arrayToDataTable([ [ 'Year', 'On-hearing', 'Field' ],
+								[ '2', 160, 120 ], [ '4', 180, 100 ],
+								[ '6', 150, 195 ], [ '8', 150, 200 ] ]);
+
+				var options = {
+					title : 'Legal Cases Status for the year',
+					curveType : 'function',
+					fontName : 'roboto',
+					height : '350',
+					width : '600',
+					legend : {
+						position : 'top',
+						left : 10,
+						width : '90%',
+						height : '80%'
+					}
+				};
+
+				var chart = new google.visualization.LineChart(document
+						.getElementById('curve_chart'));
+
+				chart.draw(data, options);
+			}
+		</script>
+
+
+
+	</ui:define>
+</ui:composition>

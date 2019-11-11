@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/pages/template/layout.xhtml">
+	<ui:define name="content">
+
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="clearfix">
+					<div class="pull-left">
+						<h4 class="page-title">#{msg['sup_msrt']}</h4>
+					</div>
+					<div class="pull-right">
+						<ol class="breadcrumb mt text12 ph0">
+							<li><i class="fa fa-home mr-sm"></i><a href="#">Home</a></li>
+							<li><a href="#">Master</a></li>
+							<li class="active">#{msg['sup_msrt']}r</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+
+				<div class="panel panel-default">
+
+					<div class="panel-body">
+
+						<div class="row">
+
+							<div class="col-sm-3">
+								<div class="form-group">
+									<p:outputLabel for="untname" value="#{msg['u_name']}" />
+									<span class="mand-sign">*</span>
+									<p:inputText id="untname" maxlength="100" class="form-control" />
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="form-group">
+									<label class="control-label">#{msg['typ']}</label><span
+										class="mand-sign">*</span> <select class="form-control">
+										<option>---Select---</option>
+										<option>1</option>
+										<option>2</option>
+										<option>3</option>
+
+
+
+
+									</select>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="form-group">
+										<p:outputLabel for="untname1" value="#{msg['cod']}" />
+										<span class="mand-sign">*</span>
+										<p:inputText id="untname1" maxlength="15" class="form-control" />
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="form-group">
+									<label class="control-label">#{msg['usr_id']}</label> <select
+										class="form-control">
+										<option>---Select---</option>
+										<option>1</option>
+										<option>2</option>
+										<option>3</option>
+
+
+
+
+									</select>
+								</div>
+							</div>
+
+
+						</div>
+
+						<div class="row">
+
+							<div class="col-sm-3">
+								<div class="form-group">
+									<p:outputLabel for="ttl" value="#{msg['ttl']}" />
+									<p:inputText id="ttl" maxlength="10" class="form-control" />
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="form-group">
+									<p:outputLabel for="fname" value="#{msg['fname']}" />
+									<p:inputText id="fname" maxlength="30" class="form-control" />
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="form-group">
+										<p:outputLabel for="lname" value="#{msg['lname']}" />
+										<p:inputText id="lname" maxlength="30" class="form-control" />
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="form-group">
+									<label class="control-label">#{msg['gdr']}</label> <select
+										class="form-control">
+										<option>---Select---</option>
+										<option>M</option>
+										<option>F</option>
+
+
+
+
+
+									</select>
+								</div>
+							</div>
+
+
+						</div>
+
+						<div class="row">
+
+							<div class="col-sm-3">
+								<div class="form-group">
+									<p:outputLabel for="cntnum" value="#{msg['cnum']}" />
+									<p:inputText id="cntnum" maxlength="15" class="form-control" />
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="form-group">
+									<p:outputLabel for="email" value="#{msg['email']}" />
+									<p:inputText id="email" maxlength="50" class="form-control" />
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="form-group">
+									<label class="control-label">#{msg['bil_add']}</label> <select
+										class="form-control">
+										<option>---Select---</option>
+										<option>1</option>
+										<option>2</option>
+
+
+
+
+
+									</select>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="form-group">
+									<label class="control-label">#{msg['sip_add']}</label> <select
+										class="form-control">
+										<option>---Select---</option>
+										<option>1</option>
+										<option>2</option>
+
+
+
+
+
+									</select>
+								</div>
+							</div>
+
+
+						</div>
+
+						<div class="row">
+
+							<div class="col-sm-3">
+								<div class="form-group">
+									<p:outputLabel for="gstnum" value="#{msg['gstnum']}" />
+									<p:inputText id="gstnum" maxlength="30" class="form-control" />
+								</div>
+							</div>
+							<div class="col-sm-3"></div>
+							<div class="col-sm-3"></div>
+							<div class="col-sm-3"></div>
+
+
+						</div>
+
+
+						<div class="row">
+							<div class="col-sm-3"></div>
+							<div class="col-sm-3"></div>
+							<div class="col-sm-3"></div>
+							<div class="col-sm-3 text-right">
+								<div class="form-group">
+									<button type="button"
+										class="btn btn-success waves-effect waves-light m-r-10">#{msg['cancel']}</button>
+									<button type="button"
+										class="btn btn-danger waves-effect waves-light">#{msg['submit']}</button>
+								</div>
+							</div>
+
+						</div>
+
+
+
+
+
+
+
+
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+	</ui:define>
+</ui:composition>

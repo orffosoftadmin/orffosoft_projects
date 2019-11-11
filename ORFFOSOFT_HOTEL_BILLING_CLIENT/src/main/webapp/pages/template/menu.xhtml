@@ -1,0 +1,2676 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+	<!-- ========== Left Sidebar Start =========== -->
+	<!--- Sidemenu -->
+
+	<div class="sidebar sidebar-main sidebar-fixed">
+		<div class="sidebar-content">
+			<!-- Main navigation -->
+			<div class="sidebar-category sidebar-category-visible">
+				<div class="category-content no-padding">
+					<ul class="navigation navigation-main navigation-accordion">
+
+						<!-- Setting Menu Start -->
+						<li><p:commandLink
+								rendered="#{loginBean.userFeatures['SETTINGS']}">
+								<i class="icon-cog4"></i>
+								<span>#{msg['settings']}</span>
+							</p:commandLink>
+
+							<ul>
+								<li><p:commandLink class="fa-input"
+										rendered="#{loginBean.userFeatures['FILE_MOVEMENT_CONFIG']}"
+										onclick="PF('progressDlg').show();"
+										oncomplete="PF('progressDlg').hide();"
+										action="#{fileMovementConfigBean.loadFileMovementListPage}">
+										<span>&#xf192;&nbsp;&nbsp;#{msg['file_movement_config']}</span>
+									</p:commandLink></li>
+
+								<li><p:commandLink
+										rendered="#{loginBean.userFeatures['APP_CONFIG']}"
+										class="fa-input"
+										onclick="window.location.href='#{request.contextPath}/pages/masters/config/listAppConfig.xhtml'">
+										<span>&#xf192;&nbsp;&nbsp;#{msg['app_config']}</span>
+									</p:commandLink></li>
+
+								<li><p:commandLink
+										rendered="#{loginBean.userFeatures['SERVICE_REGISTER']}"
+										class="fa-input"
+										onclick="location.href='#{request.contextPath}/pages/personnelHR/serviceRegister.xhtml'">
+										<span>&#xf192;&nbsp;&nbsp;#{msg['service_register']}</span>
+									</p:commandLink></li>
+							</ul></li>
+
+						<!-- Setting Menu End -->
+
+
+
+
+						<!-- Online Billing Menu -->
+
+						<li><p:commandLink
+								rendered="#{loginBean.userFeatures['BILLING_MASTERS']}">
+								<i class="icon-server"> </i>
+								<span>#{msg['online_master_menu']}</span>
+							</p:commandLink>
+
+
+							<ul class="m-l-5">
+								<li><p:commandLink
+										value="&#xf192;&nbsp;&nbsp;#{msg['item_master']}"
+										styleClass="fa-input" immediate="true"
+										action="#{productVarietyMasterBean.getVarityList}">
+									</p:commandLink></li>
+								<li><p:commandLink
+										rendered="#{loginBean.userFeatures['SUPPLIER_MASTER_LIST']}"
+										action="#{supplierMasterBean.showList()}">
+										<h:outputText value="&#xf192;&nbsp;&nbsp;#{msg['sup']}"
+											styleClass="fa-input"></h:outputText>
+									</p:commandLink></li>
+								<li><p:commandLink action="#{userManagementBean.showList}"
+										rendered="#{loginBean.userFeatures['USER_MASTER_LIST']}"
+										onclick="PF('progressDlg').show();"
+										oncomplete="PF('progressDlg').hide();">
+										<h:outputText value="&#xf192;&nbsp;&nbsp;#{msg['user']}"
+											class="fa-input"></h:outputText>
+									</p:commandLink></li>
+								<li><p:commandLink
+										action="#{stockItemUploadBean.showListPage}"
+										rendered="#{loginBean.userFeatures['STOCK_UPLOAD_LIST']}"
+										onclick="PF('progressDlg').show();"
+										oncomplete="PF('progressDlg').hide();">
+										<h:outputText value="&#xf192;&nbsp;Stock Upload"
+											class="fa-input"></h:outputText>
+									</p:commandLink></li>
+
+								<li><p:commandLink
+										action="#{customerBillingBean.showBillingPage}"
+										rendered="#{loginBean.userFeatures['CUSTOMER_BILLING']}"
+										onclick="PF('progressDlg').show();"
+										oncomplete="PF('progressDlg').hide();">
+										<h:outputText value="&#xf192;&nbsp;Customer Billing"
+											class="fa-input"></h:outputText>
+										<f:setPropertyActionListener value="CB"
+											target="#{customerBillingBean.pageAction}"></f:setPropertyActionListener>
+									</p:commandLink></li>
+
+								<li><p:commandLink
+										action="#{initialStockUploadBean.showListPage}"
+										rendered="#{loginBean.userFeatures['STOCK_UPLOAD_LIST(EXCEL)']}"
+										onclick="PF('progressDlg').show();"
+										oncomplete="PF('progressDlg').hide();">
+										<h:outputText
+											value="&#xf192;&nbsp;Initial Stock Upload (Excel Sheet)"
+											class="fa-input"></h:outputText>
+									</p:commandLink></li>
+
+								<li><p:commandLink action="#{salesReturnBean.loadListPage}"
+										rendered="#{loginBean.userFeatures['CUSTOMER_BILLING']}"
+										onclick="PF('progressDlg').show();"
+										oncomplete="PF('progressDlg').hide();">
+										<h:outputText value="&#xf192;&nbsp;Sales Return"
+											class="fa-input"></h:outputText>
+									</p:commandLink></li>
+
+								<li><p:commandLink
+										action="#{stockAdjustmentBean.loadListPage}"
+										rendered="#{loginBean.userFeatures['STOCK_UPLOAD_LIST(EXCEL)']}"
+										onclick="PF('progressDlg').show();"
+										oncomplete="PF('progressDlg').hide();">
+										<h:outputText value="&#xf192;&nbsp;Stock Adjustment"
+											class="fa-input"></h:outputText>
+									</p:commandLink></li>
+
+
+							</ul></li>
+
+						<!-- Online Billing Menu End -->
+
+
+
+						<!--  Online Billing Report Start -->
+						<li><p:commandLink
+								rendered="#{loginBean.userFeatures['REPORTS']}">
+								<i class="icon-users4"></i>
+								<span>Report Cabinate</span>
+							</p:commandLink>
+							<ul class="m-l-5">
+								<li><p:commandLink
+										rendered="#{loginBean.userFeatures['DAILY_TRANSACTION_REPORT']}"
+										update="growls" immediate="true"
+										action="#{dailyTransactionReportBean.loadListPage}">
+										<i class="icon-make-group"></i>
+										<span>Daily Billing Report</span>
+									</p:commandLink></li>
+								<li><p:commandLink
+										rendered="#{loginBean.userFeatures['STOCK_TRANSACTION_REPORT']}"
+										update="growls" immediate="true"
+										action="#{dailyStockTransactionReportBean.loadListPage}">
+										<i class="icon-file-text3"></i>
+										<span>Stock Transaction Report</span>
+									</p:commandLink></li>
+							</ul></li>
+
+						<!-- Online Billing Report End -->
+
+						<ui:remove>
+							<!-- Master Menu Start -->
+							<li><p:commandLink
+									rendered="#{loginBean.userFeatures['MASTERS']}">
+									<i class="icon-server"> </i>
+									<span>#{msg['masters']}</span>
+								</p:commandLink>
+								<ul>
+									<li><p:commandLink
+											rendered="#{loginBean.userFeatures['ASSET_MASTERS']}">
+											<i class="icon-furniture"></i>
+											<span>#{msg['asset_master']}</span>
+										</p:commandLink>
+										<ul class="m-l-5">
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['ASSET_CATEGORY']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['asset_cate']}"
+													styleClass="fa-input" immediate="true"
+													action="#{assetCategoryBean.showAssetCategoryListPage}">
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['ASSET_REGISTER']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['asset_regis']}"
+													styleClass="fa-input"
+													action="#{assetRegisterBean.showAssetRegisterListPage}">
+												</p:commandLink></li>
+										</ul></li>
+									<li><p:commandLink
+											rendered="#{loginBean.userFeatures['FINANCE_MASTERS']}">
+											<i class="icon-stats-growth"></i>
+											<span>#{msg['finance_master']}</span>
+										</p:commandLink>
+										<ul class="m-l-5">
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['ACCOUNT_CATEGORY']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['acc_cate']}"
+													action="#{glAccountCategoryBean.showGlAccountCategoryListPage}"
+													styleClass="fa-input" immediate="true"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();">
+												</p:commandLink></li>
+
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['ACCOUNT_GROUP']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['acc_group']}"
+													action="#{accountGroupBean.showListAccountGroupPage}"
+													styleClass="fa-input" immediate="true"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();">
+												</p:commandLink></li>
+
+											<li><p:commandLink
+													value="&#xf192;&nbsp;&nbsp;#{msg['acc_head']}"
+													styleClass="fa-input" immediate="true"
+													rendered="#{loginBean.userFeatures['ACCOUNT_HEAD']}"
+													action="#{glAccountHeadMasterBean.getAccountHeadMasterList}">
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['BANK_MASTER']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['bank']}"
+													styleClass="fa-input" immediate="true"
+													action="#{bankMasterBean.showBankMasterListPage}">
+												</p:commandLink></li>
+											<li><p:commandLink
+													value="&#xf192;&nbsp;&nbsp;#{msg['bank_account_type']}"
+													styleClass="fa-input" immediate="true"
+													rendered="#{loginBean.userFeatures['BANK_ACCOUNT_TYPE']}"
+													action="#{bankAccountTypeBean.showBankAccountTypeListPage}">
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['BANK_BRANCH']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['bank_branch']}"
+													styleClass="fa-input" immediate="true"
+													action="#{bankBranchMasterBean.showListBankBrancgPage}">
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['INVESTMENT_CATEGORY']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['investment_category']}"
+													styleClass="fa-input" immediate="true"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();"
+													action="#{investmentCategoryMasterBean.showInvestmentCategoryMasterListPage}">
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['INVESTMENT_TYPE']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['invest_type']}"
+													styleClass="fa-input" immediate="true"
+													onclick="window.location.href='#{request.contextPath}/pages/masters/listInvestmentType.xhtml'">
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['INCOME_TAX_SAVING_SCHEME']}"
+													onclick="window.location.href='#{request.contextPath}/pages/masters/incometaxsavingscheme/listIncometaxSavingScheme.xhtml'">
+													<h:outputText
+														value="&#xf192;&nbsp;&nbsp;#{msg['intax_saving']}"
+														styleClass="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													onclick="window.location.href='#{request.contextPath}/pages/masters/texConfig/listTaxConfig.xhtml'">
+													<h:outputText
+														value="&#xf192;&nbsp;&nbsp;#{msg['tax_config']}"
+														styleClass="fa-input"></h:outputText>
+												</p:commandLink></li>
+										</ul></li>
+
+									<li><p:commandLink
+											rendered="#{loginBean.userFeatures['GENERAL_MASTERS']}">
+											<i class="icon-user"></i>
+											<span>#{msg['general_master']}</span>
+										</p:commandLink>
+										<ul class="m-l-5">
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['APP_CONFIG']}"
+													onclick="window.location.href='#{request.contextPath}/pages/masters/config/listAppConfig.xhtml'"
+													value="&#xf192;&nbsp;&nbsp;#{msg['app_config_master']}"
+													styleClass="fa-input" immediate="true">
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['AREA_MASTER']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['area']}"
+													styleClass="fa-input" immediate="true"
+													action="#{areaMasterBean.showAreaMasterListPage}">
+												</p:commandLink></li>
+											<li><p:commandLink
+													value="&#xf192;&nbsp;&nbsp;#{msg['gdr']}"
+													rendered="#{loginBean.userFeatures['GENDER']}"
+													styleClass="fa-input" immediate="true"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();"
+													action="#{genderMasterBean.showList}">
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['CITY']}"
+													onclick="window.location.href='#{request.contextPath}/pages/masters/listCityMaster.xhtml'">
+													<h:outputText value="&#xf192;&nbsp;&nbsp;#{msg['city']}"
+														styleClass="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['COUNTRY']}"
+													onclick="window.location.href='#{request.contextPath}/pages/masters/listCountryMaster.xhtml'">
+													<h:outputText value="&#xf192;&nbsp;&nbsp;#{msg['country']}"
+														styleClass="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['DISTRICT']}"
+													action="#{districtMasterBean.gotoPage('LIST')}">
+													<h:outputText value="&#xf192;&nbsp; #{msg['district']}"
+														styleClass="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['E-MAIL_TEMPLATE']}"
+													onclick="window.location.href='#{request.contextPath}/pages/masters/listTemplateDetails.xhtml'"
+													value="&#xf192;&nbsp;&nbsp;#{msg['email_template']}"
+													styleClass="fa-input" immediate="true">
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['NATIONALITY_MASTER']}"
+													action="#{nationalityMasterBean.showNationalityMasterListPage}">
+													<h:outputText
+														value="&#xf192;&nbsp;&nbsp;#{msg['nationality']}"
+														styleClass="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['STATE']}"
+													onclick="window.location.href='#{request.contextPath}/pages/masters/listStateMaster.xhtml'">
+													<h:outputText value="&#xf192;&nbsp;&nbsp;#{msg['state']}"
+														styleClass="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['TALUK']}"
+													action="#{talukMasterBean.gotoPage('LIST')}">
+													<h:outputText value="&#xf192;&nbsp;&nbsp;#{msg['taluk']}"
+														styleClass="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['TICKET_CATEGORY']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['parent_category']}"
+													action="#{helpdeskTicketCategoryBean.showHelpdeskTicketTicketCategoryPage}"
+													styleClass="fa-input"></p:commandLink></li>
+										</ul></li>
+
+									<li><p:commandLink
+											rendered="#{loginBean.userFeatures['OPERATIONAL_MASTERS']}">
+											<i class="icon-grid"></i>
+											<span>#{msg['oper_master']}</span>
+										</p:commandLink>
+										<ul class="m-l-5">
+											<li><p:commandLink
+													value="&#xf192;&nbsp;&nbsp;#{msg['business_type']}"
+													rendered="#{loginBean.userFeatures['BUSINESS_TYPE_MASTER']}"
+													styleClass="fa-input" immediate="true"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();"
+													action="#{businessTypeMasterBean.showBusinessTypeMasterListPage}">
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['CIRCLE']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['circle']}"
+													styleClass="fa-input" immediate="true"
+													action="#{circleMasterBean.gotoPage('LIST')}">
+												</p:commandLink></li>
+											<li><p:commandLink
+													action="#{couponRegisterMasterBean.callCouponRegisterPage}"
+													rendered="#{loginBean.userFeatures['COUPON_REGISTER']}"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();">
+													<f:setPropertyActionListener value="LIST"
+														target="#{couponRegisterMasterBean.pageAction}"></f:setPropertyActionListener>
+													<h:outputText
+														value="&#xf192;&nbsp;&nbsp;#{msg['coupn_reg']}"
+														class="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['CREDIT_SALES_REQUEST']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['credit_sales_req']}"
+													styleClass="fa-input" immediate="true"
+													onclick="window.location.href='#{request.contextPath}/pages/masters/creditSalesRequest/listCreditSalesRequest.xhtml'">
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['CUSTOMER_MASTER']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['customer']}"
+													styleClass="fa-input" immediate="true"
+													action="#{customerMasterBean.showList}">
+												</p:commandLink></li>
+											<li><p:commandLink
+													value="&#xf192;&nbsp;&nbsp;#{msg['cust_type']}"
+													rendered="#{loginBean.userFeatures['CUSTOMER_TYPE_MASTER']}"
+													styleClass="fa-input" immediate="true"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();"
+													action="#{customerTypeMasterBean.showCustomerTypeMasterListPage}">
+												</p:commandLink></li>
+											<li><p:commandLink
+													action="#{discountMasterBean.loadDiscountMasterPage}"
+													rendered="#{loginBean.userFeatures['DISCOUNT_OR_REBATE']}"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();">
+													<f:setPropertyActionListener value="LIST"
+														target="#{discountMasterBean.pageAction}"></f:setPropertyActionListener>
+													<h:outputText
+														value="&#xf192;&nbsp;&nbsp;#{msg['dis_master']} / #{msg['rebate']}"
+														class="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['ENTITY_SUPPLIER_PRODUCT_LINK']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['ent_sup_pro_link']}"
+													action="#{entitySupplierProductLinkBean.showEntitySupplierProductLinkPage}"
+													styleClass="fa-input"></p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['EXHIBITION']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['exhibition']}"
+													action="#{exhibitionMasterBean.showAllExhibitionMasterList}"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();"
+													styleClass="fa-input" immediate="true"></p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['FESTIVAL']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['festival']}"
+													styleClass="fa-input" immediate="true"
+													onclick="window.location.href='#{request.contextPath}/pages/masters/listFestivalMaster.xhtml'">
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['FESTIVAL_PERIOD']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['festival_period']}"
+													styleClass="fa-input" immediate="true"
+													action="#{festivalMasterBean.showfestivalMasterListPage}">
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['INVENTORY_CONTROL']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['inventory_control']}"
+													action="#{inventoryConfigBean.showInventoryConfigListPage}"
+													styleClass="fa-input"></p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['KNT_PLAN']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['knt_pln_frm']}"
+													styleClass="fa-input" immediate="true"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();"
+													action="#{kNTPlanMasterBean.gotoListPage()}">
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['KNT_PLAN']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['knt_plan_denom']}"
+													styleClass="fa-input" immediate="true"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();"
+													action="#{kntPlanDenominationMasterBean.showKntPlanDenominationListPage()}">
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['LOOM_TYPE']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['loom_type']}"
+													styleClass="fa-input" immediate="true"
+													action="#{loomTypeMasterBean.loadLoomList}">
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['MEDIA']}"
+													action="#{mediaMasterBean.showMediaMasterListPage}">
+													<h:outputText value="&#xf192;&nbsp;&nbsp;#{msg['media']}"
+														styleClass="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['MODE_OF_ENQUIRY']}"
+													action="#{modeOfEnquiryBean.showModeOfEnquiryListPage}"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();">
+													<h:outputText
+														value="&#xf192;&nbsp;&nbsp;#{msg['mod_of_enq']}"
+														class="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['ORGANIZATION']}"
+													action="#{organizationMasterBean.showOrganizationMasterListPage}">
+													<h:outputText
+														value="&#xf192;&nbsp;&nbsp;#{msg['organization']}"
+														styleClass="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['ORGANIZATION_TYPE']}"
+													onclick="window.location.href='#{request.contextPath}/pages/masters/listOrganizationTypeMaster.xhtml'">
+													<h:outputText
+														value="&#xf192;&nbsp;&nbsp;#{msg['organ_type']}"
+														styleClass="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													value="&#xf192;&nbsp;&nbsp;#{msg['pro_cat']}"
+													styleClass="fa-input" immediate="true"
+													rendered="#{loginBean.userFeatures['PRODUCT_CATEGORY']}"
+													action="#{productCatBean.showListProductCategoryPage}">
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['PRODUCT_CATEGORY_GROUP']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['PNS_product_category_Group']}"
+													action="#{productCategoryGroupBean.showProductCategoryGroupListPage}"
+													styleClass="fa-input"></p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['PRODUCT_DESIGN']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['prod_design']}"
+													styleClass="fa-input" immediate="true"
+													onclick="window.location.href='#{request.contextPath}/pages/masters/productDesign/listProductDesign.xhtml'">
+												</p:commandLink></li>
+											<li><p:commandLink
+													value="&#xf192;&nbsp;&nbsp;#{msg['product_group']}"
+													styleClass="fa-input" immediate="true"
+													rendered="#{loginBean.userFeatures['PRODUCT_GROUP']}"
+													action="#{productGroupMasterBean.showProductGroup}">
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['PRODUCT_OFFER']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['prod_offer']}"
+													styleClass="fa-input" immediate="true"
+													onclick="window.location.href='#{request.contextPath}/pages/masters/listProductOfferMaster.xhtml'">
+												</p:commandLink></li>
+											<li><p:commandLink
+													value="&#xf192;&nbsp;&nbsp;#{msg['item_master']}"
+													styleClass="fa-input" immediate="true"
+													rendered="#{loginBean.userFeatures['PRODUCT_VARIETY']}"
+													action="#{productVarietyMasterBean.getVarityList}">
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['PRODUCT_VARIETY_TAX']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['pdt_variety_tax']}"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();"
+													action="#{productVarietyTaxBean.goToListPageOfProductVarietyTax}"
+													styleClass="fa-input"></p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['PROFILE']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['profile']}"
+													styleClass="fa-input" immediate="true"
+													action="#{profileMasterBean.showListPage}">
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['PROFIT']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['profit_master']}"
+													styleClass="fa-input"
+													onclick="window.location.href='#{request.contextPath}/pages/masters/listProfitMargin.xhtml'">
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['SALES_TYPE_MASTER']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['sales_type_master']}"
+													styleClass="fa-input" immediate="true"
+													action="#{salesTypeMasterBean.showSalesTypeListPage}">
+												</p:commandLink></li>
+											<li><p:commandLink immediate="true"
+													rendered="#{loginBean.userFeatures['SILK_PRODUCT_COSTING']}"
+													onclick="window.location.href='#{request.contextPath}/pages/masters/listSilkProductCostingMaster.xhtml'"
+													value="&#xf192;&nbsp;&nbsp;#{msg['silk_prod_cost']}"
+													class="fa-input">
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['SOCIETY_CLASS']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['society_class']}"
+													styleClass="fa-input" immediate="true"
+													action="#{societyClassMasterBean.showSocietyClassListPage}">
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['SUPPLIER_MASTER']}"
+													action="#{supplierMasterBean.showList()}">
+													<h:outputText value="&#xf192;&nbsp;&nbsp;#{msg['sup']}"
+														styleClass="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['SUPPLIER_TYPE_MASTER']}"
+													action="#{supplierTypeMasterBean.showSupplierTypeMasterListPage}">
+													<h:outputText
+														value="&#xf192;&nbsp;&nbsp;#{msg['sup_type']}"
+														styleClass="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['TENDER_CATEGORY']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['tender_category']}"
+													styleClass="fa-input" immediate="true"
+													action="#{tenderCategoryBean.showList}">
+												</p:commandLink></li>
+
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['TENDER_TYPE']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['tender_type']}"
+													styleClass="fa-input" immediate="true"
+													action="#{tenderTypeBean.showList}">
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['UOM_MASTER']}"
+													action="#{uomMasterBean.showUomMasterListPage}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['uom']}"
+													styleClass="fa-input" immediate="true">
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['WEAVER_BENEFIT_SCHEME']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['weaver_benefit_scheme']}"
+													styleClass="fa-input" immediate="true"
+													action="#{weaversBenefitSchemeBean.showWeaversBenefitSchemeListPage}">
+												</p:commandLink></li>
+
+										</ul></li>
+
+									<li><p:commandLink
+											rendered="#{loginBean.userFeatures['PERSONNEL_MASTERS']}">
+											<i class="icon-users2"></i>
+											<span>#{msg['personnel_master']}</span>
+										</p:commandLink>
+										<ul class="m-l-5">
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['ADVANCE_TYPE']}"
+													value=" &#xf192;&nbsp;&nbsp;#{msg['adv_type']}"
+													styleClass="fa-input" immediate="true"
+													action="#{advanceTypeMasterBean.showAdvanceTypeMasterListPage}">
+												</p:commandLink></li>
+
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['ALLOWANCE_GRADE']}"
+													onclick="window.location.href='#{request.contextPath}/pages/masters/listAllowanceGradeMaster.xhtml'"
+													value="&#xf192;&nbsp;&nbsp;#{msg['allowance_grade']}"
+													styleClass="fa-input" immediate="true">
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['BIOMETRIC_DEVICE']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['biometric_device']}"
+													styleClass="fa-input" immediate="true"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();"
+													action="#{biometricDeviceRegisterBean.showListPage}">
+												</p:commandLink></li>
+
+											<li><p:commandLink
+													value="&#xf192;&nbsp;&nbsp;#{msg['bld_grp']}"
+													rendered="#{loginBean.userFeatures['BLOOD_GROUP']}"
+													styleClass="fa-input" immediate="true"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();"
+													action="#{bloodGroupMasterBean.showBloodGroupListPage}">
+													<f:setPropertyActionListener value="LIST"
+														target="#{bloodGroupMasterBean.action}"></f:setPropertyActionListener>
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['CADRE']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['cadre']}"
+													styleClass="fa-input" immediate="true"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();"
+													action="#{cadreBean.init}">
+												</p:commandLink></li>
+
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['CASTE']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['caste']}"
+													styleClass="fa-input" immediate="true"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();"
+													action="#{casteMasterBean.showListCasteMasterPage}">
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['COMMUNAL_ROSTER_REGISTER']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['comm_roster_reg_master']}"
+													styleClass="fa-input" immediate="true"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();"
+													action="#{communalRosterResisterBean.init}">
+												</p:commandLink></li>
+											<li><p:commandLink
+													value="&#xf192;&nbsp;&nbsp;#{msg['community']}"
+													rendered="#{loginBean.userFeatures['COMMUNITY']}"
+													styleClass="fa-input" immediate="true"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();"
+													action="#{communityMasterBean.showCommunityListPage}">
+													<f:setPropertyActionListener value="LIST"
+														target="#{bloodGroupMasterBean.action}"></f:setPropertyActionListener>
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['COURT']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['court']}"
+													styleClass="fa-input" immediate="true"
+													action="#{courtMasterBean.showList}">
+												</p:commandLink></li>
+
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['CHECKLIST']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['checklist']}"
+													styleClass="fa-input"
+													onclick="window.location.href='#{request.contextPath}/pages/masters/checkList/listCheckList.xhtml'">
+												</p:commandLink></li>
+
+											<li><p:commandLink
+													onclick="window.location.href='#{request.contextPath}/pages/masters/listDaEmiConfig.xhtml'"
+													value="&#xf192;&nbsp; #{msg['da_emi_config']}"
+													class="fa-input">
+												</p:commandLink></li>
+
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['DELIVERY_TYPE']}"
+													onclick="window.location.href='#{request.contextPath}/pages/masters/listDeliveryType.xhtml'"
+													value="&#xf192;&nbsp;&nbsp;#{msg['delivery_type']}"
+													styleClass="fa-input" immediate="true">
+												</p:commandLink></li>
+
+											<li><p:commandLink
+													value="&#xf192;&nbsp;&nbsp;#{msg['dept']}"
+													rendered="#{loginBean.userFeatures['DEPARTMENT']}"
+													action="#{departmentBean.showListDepartmentPage}"
+													styleClass="fa-input" immediate="true"></p:commandLink></li>
+
+											<li><p:commandLink
+													value="&#xf192;&nbsp;&nbsp;#{msg['desgn']}"
+													rendered="#{loginBean.userFeatures['DESIGNATION']}"
+													action="#{designationBean.showListDesignationPage}"
+													styleClass="fa-input" immediate="true"></p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['EDUCATIONAL_QUALIFICATION']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['eductnl_qualifctn']}"
+													action="#{educationQualificationBean.showListQualificationPage}"
+													styleClass="fa-input" immediate="true"></p:commandLink></li>
+											<li><p:commandLink
+													value="&#xf192;&nbsp;&nbsp;#{msg['emp_type']}"
+													rendered="#{loginBean.userFeatures['EMPLOYMENT_TYPE']}"
+													action="#{employmentTypeBean.showListEmploymentTypePage}"
+													styleClass="fa-input" immediate="true"></p:commandLink></li>
+
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['ENQUIRY_OFFICE']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['enquiry_Office']}"
+													styleClass="fa-input" immediate="true"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();"
+													action="#{enquiryOfficerBean.init}">
+												</p:commandLink></li>
+
+
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['FUEL_COUPON']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['fuel_coupon']}"
+													styleClass="fa-input" immediate="true"
+													action="#{fuelCouponBean.showFuelCouponListPage}">
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['HOLIDAY']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['hol']}"
+													styleClass="fa-input" immediate="true"
+													action="#{holidayMasterBean.showHolidayListPage}">
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['INSURANCE']}"
+													action="#{insuranceMasterBean.showInsuranceListPage}"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();">
+													<h:outputText value="&#xf192;&nbsp;&nbsp;#{msg['insu']}"
+														styleClass="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['LEAVE_ELIGIBILITY']}"
+													action="#{leaveEligibilityMasterBean.showLeaveEligibilityMasterListPage}"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();">
+													<f:setPropertyActionListener value="LIST"
+														target="#{leaveEligibilityMasterBean.action}"></f:setPropertyActionListener>
+													<h:outputText
+														value="&#xf192;&nbsp;&nbsp;#{msg['leave_elig']}"
+														class="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['LEAVE_TYPE']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['leave_type']}"
+													styleClass="fa-input" immediate="true"
+													onclick="location.href='#{request.contextPath}/pages/masters/listLeaveTypeMaster.xhtml'">
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['LOAN']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['loan']}"
+													action="#{loanMasterBean.showListLoanPage}"
+													styleClass="fa-input" immediate="true"></p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['MARITAL_STATUS']}"
+													action="#{maritalStatusBean.showMaritalStatusListPage}"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();">
+													<f:setPropertyActionListener value="LIST"
+														target="#{maritalStatusBean.action}"></f:setPropertyActionListener>
+													<h:outputText
+														value="&#xf192;&nbsp;&nbsp;#{msg['marital_status']}"
+														class="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['PAY_SCALE']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['pay_scale']}"
+													styleClass="fa-input" immediate="true"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();"
+													action="#{payScaleBean.showPayScaleForm}">
+													<f:setPropertyActionListener value="LIST"
+														target="#{payScaleBean.action}"></f:setPropertyActionListener>
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['PETITIONER_TYPE']}"
+													onclick="window.location.href='#{request.contextPath}/pages/masters/petitionerType/listPetitionerType.xhtml'"
+													value="&#xf192;&nbsp;&nbsp;#{msg['petitioner_type']}"
+													styleClass="fa-input" immediate="true">
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['PETITION_SOURCE']}"
+													onclick="window.location.href='#{request.contextPath}/pages/masters/petitionSource/listPetitionSource.xhtml'"
+													value="&#xf192;&nbsp;&nbsp;#{msg['pet_sou']}"
+													styleClass="fa-input" immediate="true">
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['PETITION_TYPE']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['pet_type']}"
+													styleClass="fa-input" immediate="true"
+													action="#{petitionTypeBean.showpetitionTypeListPage}">
+												</p:commandLink></li>
+											<li><p:commandLink
+													value="&#xf192;&nbsp;&nbsp;#{msg['priority']}"
+													rendered="#{loginBean.userFeatures['PRIORITY']}"
+													action="#{priorityMasterBean.showPriorityListPage}"
+													styleClass="fa-input" immediate="true"></p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['RELIGION']}"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();"
+													value="&#xf192;&nbsp;&nbsp;#{msg['religion']}"
+													styleClass="fa-input" immediate="true"
+													action="#{religionBean.showReligionListPage}">
+												</p:commandLink></li>
+
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['SANCTIONED_STRENGTH']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['sanctioned_strength']}"
+													styleClass="fa-input" immediate="true"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();"
+													action="#{sanctionedStaffEligibilityBean.init}">
+												</p:commandLink></li>
+											<li><p:commandLink immediate="true"
+													rendered="#{loginBean.userFeatures['SECTION']}"
+													action="#{sectionMasterBean.showListSectionMasterPage}"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();"
+													value="&#xf192;&nbsp;&nbsp;#{msg['sec']}" class="fa-input">
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['STAFF_ELIGIBILITY_MASTER']}"
+													onclick="window.location.href='#{request.contextPath}/pages/masters/listStaffEligibilityMaster.xhtml'">
+													<h:outputText
+														value="&#xf192;&nbsp;&nbsp;#{msg['staff_elg']}"
+														styleClass="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['TAPAL_DELIVERY_TYPE']}"
+													onclick="window.location.href='#{request.contextPath}/pages/masters/tapaldeliverytype/listTapalDeliveryType.xhtml'">
+													<h:outputText
+														value="&#xf192;&nbsp;&nbsp;#{msg['tapal_delivery_type']}"
+														styleClass="fa-input"></h:outputText>
+												</p:commandLink></li>
+
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['TAPAL_FOR']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['tapal_for']}"
+													action="#{tapalForBean.showTapalForListPage}"
+													styleClass="fa-input"></p:commandLink></li>
+
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['TAPAL_SENDER_TYPE']}"
+													onclick="window.location.href='#{request.contextPath}/pages/masters/tapalsendertype/listTapalSenderType.xhtml'">
+													<h:outputText
+														value="&#xf192;&nbsp;&nbsp;#{msg['tapal_sender_type']}"
+														styleClass="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['TRAINING_TYPE']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['create_training_type']}"
+													styleClass="fa-input" immediate="true"
+													action="#{trainingTypeMasterBean.gotoListPage()}">
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['VEHICLE']}"
+													onclick="window.location.href='#{request.contextPath}/pages/masters/vehicle/listVehicleRegister.xhtml'">
+													<h:outputText value="&#xf192;&nbsp;&nbsp;#{msg['vehicle']}"
+														styleClass="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['VENUE']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['venue']}"
+													action="#{venueBean.gotoListPage}" styleClass="fa-input"></p:commandLink>
+											</li>
+
+										</ul></li>
+								</ul>
+								<ul>
+								</ul></li>
+							<!-- Master Menu End -->
+
+							<!-- User Management Menu Start -->
+							<li><p:commandLink
+									rendered="#{loginBean.userFeatures['USER_MANAGEMENT']}">
+									<i class="icon-user"></i>
+									<span>#{msg['user_management']}</span>
+								</p:commandLink>
+								<ul>
+									<li><p:commandLink action="#{userManagementBean.showList}"
+											rendered="#{loginBean.userFeatures['USER_MANAGEMENT_USER']}"
+											onclick="PF('progressDlg').show();"
+											oncomplete="PF('progressDlg').hide();">
+											<h:outputText value="&#xf192;&nbsp;&nbsp;#{msg['user']}"
+												class="fa-input"></h:outputText>
+										</p:commandLink></li>
+
+									<li><p:commandLink action="#{roleBean.loadRoleListPage}"
+											rendered="#{loginBean.userFeatures['USER_MANAGEMENT_ROLE']}"
+											onclick="PF('progressDlg').show();"
+											oncomplete="PF('progressDlg').hide();">
+											<h:outputText value="&#xf192;&nbsp;&nbsp;#{msg['role']}"
+												class="fa-input"></h:outputText>
+										</p:commandLink></li>
+
+									<li><p:commandLink action="#{regionBean.showList}"
+											rendered="#{loginBean.userFeatures['USER_MANAGEMENT_REGION']}"
+											onclick="PF('progressDlg').show();"
+											oncomplete="PF('progressDlg').hide();">
+											<h:outputText value="&#xf192;&nbsp;&nbsp;#{msg['region']}"
+												class="fa-input"></h:outputText>
+										</p:commandLink></li>
+
+									<li><p:commandLink action="#{groupBean.showList}"
+											rendered="#{loginBean.userFeatures['USER_MANAGEMENT_GROUP']}"
+											onclick="PF('progressDlg').show();"
+											oncomplete="PF('progressDlg').hide();">
+											<h:outputText value="&#xf192;&nbsp;&nbsp;#{msg['group']}"
+												class="fa-input"></h:outputText>
+										</p:commandLink></li>
+								</ul></li>
+							<!-- User Management Menu End -->
+
+							<!-- Personnel Menu Start -->
+							<li><p:commandLink
+									rendered="#{loginBean.userFeatures['PERSONAL']}">
+									<i class="icon-users2"></i>
+									<span>#{msg['personnel']}</span>
+								</p:commandLink>
+								<ul>
+									<li><p:commandLink
+											rendered="#{loginBean.userFeatures['HR_MANAGEMENT']}"
+											styleClass="font-iconmoon">
+											<span>&#xeb45; #{msg['human_resource']}</span>
+										</p:commandLink>
+										<ul>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['RECRUITMENT_PROCESS']}"
+													styleClass="font-iconmoon" immediate="true">
+													<i class="icon-user-plus"></i>
+													<h:outputText value=" #{msg['recruit_pro']}"></h:outputText>
+												</p:commandLink>
+												<ul>
+													<li><p:commandLink
+															rendered="#{loginBean.userFeatures['PERMANENT_RECRUITMENT_PROCESS']}"
+															immediate="true">
+															<i class="icon-user-check"></i>
+															<h:outputText value=" #{msg['per_recui']}"></h:outputText>
+														</p:commandLink>
+														<ul>
+															<li><p:commandLink
+																	onclick="PF('progressDlg').show();"
+																	value="&#xf192;&nbsp;&nbsp;#{msg['staff_elg_stmt']}"
+																	rendered="#{loginBean.userFeatures['STAFF_ELIGIBILITY_PROCESS']}"
+																	styleClass="fa-input" immediate="true"
+																	action="#{staffEligibilityBean.loadStaffEligibility}">
+																</p:commandLink></li>
+
+															<li><p:commandLink
+																	onclick="PF('progressDlg').show();"
+																	value="&#xf192;&nbsp;&nbsp;#{msg['roster_reservation']}"
+																	rendered="#{loginBean.userFeatures['ROSTER_RESERVATION']}"
+																	styleClass="fa-input" immediate="true"
+																	action="#{rosterReservationBean.loadReservationList}">
+																</p:commandLink></li>
+
+															<li><p:commandLink
+																	rendered="#{loginBean.userFeatures['JOB_APPLICATION']}"
+																	onclick="PF('progressDlg').show();"
+																	oncomplete="PF('progressDlg').hide();"
+																	value="&#xf192;&nbsp;&nbsp;#{msg['job_ad']}"
+																	styleClass="fa-input" immediate="true"
+																	action="#{jobAdvertisementBean.showPage}">
+																	<f:setPropertyActionListener value="JOBLIST"
+																		target="#{jobAdvertisementBean.action}" />
+																</p:commandLink></li>
+
+															<li><p:commandLink
+																	rendered="#{loginBean.userFeatures['JOB_APPLICATION']}"
+																	onclick="PF('progressDlg').show();"
+																	oncomplete="PF('progressDlg').hide();"
+																	value="&#xf192;&nbsp;&nbsp;#{msg['job_app']}"
+																	styleClass="fa-input" immediate="true"
+																	action="#{jobApplicationBean.showJobApplication}">
+																	<f:setPropertyActionListener value="LISTPAGE"
+																		target="#{jobApplicationBean.action}" />
+																</p:commandLink></li>
+
+															<li><p:commandLink
+																	rendered="#{loginBean.userFeatures['EXAM_CENTER']}"
+																	onclick="PF('progressDlg').show();"
+																	oncomplete="PF('progressDlg').hide();"
+																	value="&#xf192;&nbsp;&nbsp;#{msg['exam_centre']}"
+																	styleClass="fa-input" immediate="true"
+																	action="#{examCentreBean.showPage}">
+																	<f:setPropertyActionListener value="EXAMLIST"
+																		target="#{examCentreBean.action}" />
+																</p:commandLink></li>
+
+															<li><p:commandLink
+																	rendered="#{loginBean.userFeatures['NOMINAL_DETAILS']}"
+																	onclick="PF('progressDlg').show();"
+																	oncomplete="PF('progressDlg').hide();"
+																	value="&#xf192;&nbsp;&nbsp;#{msg['nominal_list']}"
+																	styleClass="fa-input" immediate="true"
+																	action="#{nominalDetailsBean.loadNominalList}">
+																</p:commandLink></li>
+
+															<li><p:commandLink
+																	rendered="#{loginBean.userFeatures['HALL_TICKET']}"
+																	onclick="PF('progressDlg').show();"
+																	oncomplete="PF('progressDlg').hide();"
+																	value="&#xf192;&nbsp;&nbsp;#{msg['hall_ticket']}"
+																	styleClass="fa-input" immediate="true"
+																	action="#{hallTicketBean.loadHallTicketList}">
+																</p:commandLink></li>
+
+															<li><p:commandLink
+																	rendered="#{loginBean.userFeatures['WRITTEN_EXAMINATION']}"
+																	onclick="PF('progressDlg').show();"
+																	oncomplete="PF('progressDlg').hide();"
+																	value="&#xf192;&nbsp;&nbsp;#{msg['written_examination']}"
+																	styleClass="fa-input" immediate="true"
+																	action="#{writtenExaminationBean.loadWrittenExamMarkLists}">
+																</p:commandLink></li>
+
+															<li><p:commandLink
+																	rendered="#{loginBean.userFeatures['ORAL_TEST_SELECTION']}"
+																	onclick="PF('progressDlg').show();"
+																	oncomplete="PF('progressDlg').hide();"
+																	value="&#xf192;&nbsp;&nbsp;#{msg['oral_test_sec']}"
+																	styleClass="fa-input" immediate="true"
+																	action="#{oralTestSelectionBean.loadOralTestSelectionList}">
+																</p:commandLink></li>
+
+															<li><p:commandLink styleClass="fa-input"
+																	rendered="#{loginBean.userFeatures['ORAL_EXAM_VENUE']}"
+																	title="#{msg['oral_exam_venue']}"
+																	onclick="PF('progressDlg').show();"
+																	oncomplete="PF('progressDlg').hide();" immediate="true"
+																	value="&#xf192;&nbsp;&nbsp;#{msg['oral_exam_venue']}"
+																	action="#{oralExamVenueBean.showPage}">
+																	<f:setPropertyActionListener value="list"
+																		target="#{oralExamVenueBean.page}" />
+																</p:commandLink></li>
+
+															<li><p:commandLink
+																	rendered="#{loginBean.userFeatures['NOMINAL_DETAILS']}"
+																	onclick="PF('progressDlg').show();"
+																	oncomplete="PF('progressDlg').hide();"
+																	value="&#xf192;&nbsp;&nbsp;#{msg['cal_let']}"
+																	styleClass="fa-input" immediate="true"
+																	action="#{oralTestCallLetterBean.showPage}">
+																	<f:setPropertyActionListener value="CALL_LETTER_LIST"
+																		target="#{oralTestCallLetterBean.action}" />
+																</p:commandLink></li>
+
+															<li><p:commandLink
+																	rendered="#{loginBean.userFeatures['ORAL_TEST_MARK']}"
+																	onclick="PF('progressDlg').show();"
+																	oncomplete="PF('progressDlg').hide();"
+																	value="&#xf192;&nbsp;&nbsp;#{msg['oral_exam_mark']}"
+																	styleClass="fa-input" immediate="true"
+																	action="#{oralTestMarkBean.showPage}">
+																	<f:setPropertyActionListener value="ORALTESTMARKLIST"
+																		target="#{oralTestMarkBean.action}" />
+																</p:commandLink></li>
+
+															<li><p:commandLink
+																	rendered="#{loginBean.userFeatures['CONSOLIDATED_MARKS_LIST']}"
+																	onclick="PF('progressDlg').show();"
+																	oncomplete="PF('progressDlg').hide();"
+																	value="&#xf192;&nbsp;&nbsp;#{msg['con_mark_list']}"
+																	styleClass="fa-input" immediate="true"
+																	action="#{consolidatedMarksBean.showPage}">
+																	<f:setPropertyActionListener value="LISTPAGE"
+																		target="#{consolidatedMarksBean.action}" />
+																</p:commandLink></li>
+
+															<li><p:commandLink
+																	rendered="#{loginBean.userFeatures['APPOINTMENT_ORDER']}"
+																	onclick="PF('progressDlg').show();"
+																	oncomplete="PF('progressDlg').hide();"
+																	value="&#xf192;&nbsp;&nbsp;#{msg['appointment_order']}"
+																	styleClass="fa-input" immediate="true"
+																	action="#{appointmentOrderBean.loadAppointmentOrderList}">
+																</p:commandLink></li>
+
+														</ul></li>
+													<li><p:commandLink
+															rendered="#{loginBean.userFeatures['TEMPORARY_ENGAGEMENT']}"
+															onclick="PF('progressDlg').show();"
+															oncomplete="PF('progressDlg').hide();"
+															styleClass="fa-input" immediate="true"
+															action="#{temporaryEngagementBean.loadTemporaryEngagementList}">
+															<i class="icon-file-text"></i>
+															<h:outputText value="#{msg['temp_eng']}"></h:outputText>
+														</p:commandLink></li>
+
+													<li><p:commandLink
+															rendered="#{loginBean.userFeatures['COMPASSIONATE_APPOINTMENT']}"
+															onclick="PF('progressDlg').show();"
+															oncomplete="PF('progressDlg').hide();"
+															styleClass="fa-input" immediate="true"
+															action="#{compassionateAppointmentBean.loadCompasionateAppointmentList}">
+															<i class="icon-file-text"></i>
+															<h:outputText value="#{msg['comp_app']}"></h:outputText>
+														</p:commandLink></li>
+
+												</ul></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['EMP_SERVICE_REGISTER']}"
+													onclick="PF('progressDlg').show();" immediate="true"
+													update="growls"
+													action="#{employeeMasterBean.showEmployeeForm}">
+													<f:setPropertyActionListener value="EMPLIST"
+														target="#{employeeMasterBean.action}" />
+													<i class="icon-profile"></i>
+													<h:outputText value=" #{msg['employee_service_regd']}"></h:outputText>
+												</p:commandLink></li>
+
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['RECRUITMENT_PROCESS']}"
+													immediate="true">
+													<i class="icon-pen"></i>
+													<h:outputText value=" #{msg['attend']}"></h:outputText>
+												</p:commandLink>
+												<ul>
+													<li><p:commandLink
+															rendered="#{loginBean.userFeatures['BIOMETRIC_ATTENDENCE']}"
+															value="&#xf192;&nbsp;&nbsp;#{msg['bio_att']}"
+															styleClass="fa-input">
+														</p:commandLink></li>
+
+													<li><p:commandLink
+															rendered="#{loginBean.userFeatures['BIOMETRIC_DEVICE_REGISTER']}"
+															onclick="PF('progressDlg').show();"
+															oncomplete="PF('progressDlg').hide();"
+															value="&#xf192;&nbsp;&nbsp;#{msg['biometric_device_reg']}"
+															styleClass="fa-input" immediate="true"
+															action="#{biometricDeviceRegisterBean.goToPage}">
+															<f:setPropertyActionListener value="LIST"
+																target="#{biometricDeviceRegisterBean.pageAction}" />
+														</p:commandLink></li>
+
+													<li><p:commandLink
+															rendered="#{loginBean.userFeatures['MANUAL_ATTENDANCE']}"
+															onclick="PF('progressDlg').show();"
+															value="&#xf192;&nbsp;&nbsp;#{msg['man_att']}"
+															styleClass="fa-input" immediate="true"
+															action="#{manualAttendanceBean.loadManualAttendanceList}">
+														</p:commandLink></li>
+
+													<li><p:commandLink
+															rendered="#{loginBean.userFeatures['VIEW_BIOMETRIC_ATTENDANCE']}"
+															onclick="PF('progressDlg').show();"
+															value="&#xf192;&nbsp;&nbsp;#{msg['view_biometric_attendance']}"
+															styleClass="fa-input" immediate="true"
+															action="#{biometricAttendanceBean.goToViewBiometricPage}">
+														</p:commandLink></li>
+												</ul></li>
+
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['LEAVE_MANAGEMENT']}">
+													<i class="icon-pencil5"></i>
+													<h:outputText value=" #{msg['leave_mangmnt']}"></h:outputText>
+												</p:commandLink>
+												<ul>
+													<li><p:commandLink immediate="true"
+															rendered="#{loginBean.userFeatures['LEAVE_REQUEST']}"
+															action="#{leaveRequestBean.showPage('LIST')}"
+															onclick="PF('progressDlg').show();"
+															oncomplete="PF('progressDlg').hide();"
+															value="&#xf192;&nbsp;&nbsp;#{msg['leave_req']}"
+															class="fa-input">
+														</p:commandLink></li>
+												</ul></li>
+											<li><p:commandLink styleClass="fa-input"
+													rendered="#{loginBean.userFeatures['WORKING_DAYS_CONFIG']}">
+													<i class="icon-hammer-wrench"></i>
+													<h:outputText value="#{msg['work_days_config']}"></h:outputText>
+												</p:commandLink>
+												<ul>
+													<li><p:commandLink
+															rendered="#{loginBean.userFeatures['ENTITY_WORKING_DAYS_CONFIG']}"
+															value="&#xf192;&nbsp;&nbsp;#{msg['entity_work_days_config']}"
+															onclick="window.location.href='#{request.contextPath}/pages/personnelHR/workingDayConfig/listEntityWorkingDayConfig.xhtml'"
+															class="fa-input">
+														</p:commandLink></li>
+												</ul></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['PAY_ROLE']}"
+													styleClass="fa-input">
+													<i class="icon-cash3"></i>
+													<h:outputText value=" #{msg['pay_roll']}"></h:outputText>
+												</p:commandLink>
+												<ul>
+													<li><p:commandLink immediate="true"
+															rendered="#{loginBean.userFeatures['EMPLOYEE_PAYMENT_DETAILS']}"
+															action="#{employeePaymentDetailsBean.loadEmployeePaymentDetails}"
+															onclick="PF('progressDlg').show();"
+															oncomplete="PF('progressDlg').hide();"
+															value="&#xf192;&nbsp;&nbsp;#{msg['emp_payment_details']}"
+															class="fa-input">
+														</p:commandLink></li>
+
+													<li><p:commandLink
+															rendered="#{loginBean.userFeatures['EMPLOYEE_PAY_ROLE']}"
+															value="&#xf192;&nbsp;&nbsp;#{msg['emp_pay_roll']}"
+															class="fa-input">
+														</p:commandLink></li>
+													<li><p:commandLink
+															rendered="#{loginBean.userFeatures['INCOMETAX_WORKSHEET_DESIGN1']}"
+															value="&#xf192;&nbsp;&nbsp;Income Tax Worksheet Design1"
+															onclick="window.location.href='#{request.contextPath}/pages/personnelHR/payRoll/listItWorksheetDesign1.xhtml'"
+															class="fa-input">
+														</p:commandLink></li>
+													<li><p:commandLink
+															rendered="#{loginBean.userFeatures['INCOMETAX_WORKSHEET_DESIGN2']}"
+															value="&#xf192;&nbsp;&nbsp;Income Tax Worksheet Design2"
+															onclick="window.location.href='#{request.contextPath}/pages/personnelHR/payRoll/listItWorksheetDesign2.xhtml'"
+															class="fa-input">
+														</p:commandLink></li>
+													<li><p:commandLink immediate="true"
+															rendered="#{loginBean.userFeatures['PAYSLIP_GENERATION']}"
+															action="#{employeePayRollBean.loadEmployeePayroll}"
+															onclick="PF('progressDlg').show();"
+															oncomplete="PF('progressDlg').hide();"
+															value="&#xf192;&nbsp;&nbsp;#{msg['payslip_gen']}"
+															class="fa-input">
+														</p:commandLink></li>
+													<li><p:commandLink
+															rendered="#{loginBean.userFeatures['DA_ARREAR_DETAILS']}"
+															value="&#xf192;&nbsp;&nbsp;DA Arrear Details"
+															onclick="window.location.href='#{request.contextPath}/pages/personnelHR/payRoll/viewDAArrearDetails.xhtml'"
+															class="fa-input">
+														</p:commandLink></li>
+													<li><p:commandLink
+															rendered="#{loginBean.userFeatures['PAY_MASTER']}"
+															onclick="window.location.href='#{request.contextPath}/pages/personnelHR/payRoll/payMasterAdmin.xhtml'"
+															value="&#xf192;&nbsp; #{msg['pay_master']}"
+															class="fa-input">
+														</p:commandLink></li>
+
+													<li><p:commandLink value="#{msg['pay_roll_config']}"
+															rendered="#{loginBean.userFeatures['PAY_ROLE_CONFIG']}"
+															styleClass="fa-input">
+														</p:commandLink>
+														<ul>
+															<li><p:commandLink immediate="true"
+																	rendered="#{loginBean.userFeatures['CADREWISE_PAYHEAD_CONFIG']}"
+																	action="#{cradeWisePayHeadConfigBean.cadrewisePayHeadConfig}"
+																	onclick="PF('progressDlg').show();"
+																	oncomplete="PF('progressDlg').hide();"
+																	value="&#xf192;&nbsp;&nbsp;#{msg['Cadrewise_payHead_config']}"
+																	class="fa-input">
+																</p:commandLink></li>
+
+															<li><p:commandLink
+																	rendered="#{loginBean.userFeatures['GRADEWISE_PAY_ALLOWANCE']}"
+																	action="#{cityCompensatoryAllowanceBean.showCityCompensatoryAllowanceListPage}"
+																	onclick="PF('progressDlg').show();"
+																	oncomplete="PF('progressDlg').hide();">
+																	<f:setPropertyActionListener value="LIST"
+																		target="#{leaveEligibilityMasterBean.action}"></f:setPropertyActionListener>
+																	<h:outputText
+																		value="&#xf192;&nbsp;&nbsp;#{msg['gra_pay_allo']}"
+																		class="fa-input"></h:outputText>
+																</p:commandLink></li>
+
+															<li><p:commandLink
+																	rendered="#{loginBean.userFeatures['EMPLOYEE_OT_PAYMENT']}"
+																	onclick="window.location.href='#{request.contextPath}/pages/personnelHR/payRoll/createEmployeeOtPayment.xhtml'"
+																	value="&#xf192;&nbsp;&nbsp;#{msg['employee_ot_payment']}"
+																	class="fa-input">
+																</p:commandLink></li>
+
+															<li><p:commandLink
+																	rendered="#{loginBean.userFeatures['EMPLOYEE_OT_REGISTER']}"
+																	action="#{otRegisterBean.loadOTRegister}"
+																	onclick="PF('progressDlg').show();"
+																	oncomplete="PF('progressDlg').hide();">
+																	<f:setPropertyActionListener value="LIST"
+																		target="#{otRegisterBean.pageAction}"></f:setPropertyActionListener>
+																	<h:outputText
+																		value="&#xf192;&nbsp;&nbsp;#{msg['ot_register']}"
+																		class="fa-input"></h:outputText>
+																</p:commandLink></li>
+
+															<li><p:commandLink
+																	rendered="#{loginBean.userFeatures['GRADEWISE_PAY_CONFIG']}"
+																	onclick="window.location.href='#{request.contextPath}/pages/masters/listGradewisePayConfig.xhtml'"
+																	value="&#xf192;&nbsp;&nbsp;#{msg['gradewise_pay_config']}"
+																	class="fa-input">
+																</p:commandLink></li>
+
+															<li><p:commandLink
+																	rendered="#{loginBean.userFeatures['CITY_COMPENSATION_ALLOWANCE']}"
+																	onclick="window.location.href='#{request.contextPath}/pages/personnelHR/payRoll/listCityCompenAllowance.xhtml'"
+																	value="&#xf192;&nbsp;&nbsp;#{msg['city_Compen_allowance']}"
+																	class="fa-input">
+																</p:commandLink></li>
+
+															<li><p:commandLink
+																	rendered="#{loginBean.userFeatures['GRADEWISE_CITY_CONFIG']}"
+																	action="#{gradewiseCityConfigBean.showGradewiseCityConfigListPage}"
+																	value="&#xf192;&nbsp;&nbsp;#{msg['gradewise_city_config']}"
+																	onstart="PF('statusDialog').show()"
+																	onsuccess="PF('statusDialog').hide()" class="fa-input">
+																</p:commandLink></li>
+
+														</ul></li>
+
+													<li><p:commandLink immediate="true"
+															rendered="#{loginBean.userFeatures['ADDITIONAL_EARNING_DEDUCTIONS']}"
+															action="#{empAddnlEarningDeductionBean.showEmpAddnlEarningDeductionPage}"
+															onstart="PF('statusDialog').show()"
+															onsuccess="PF('statusDialog').hide()"
+															value="&#xf192;&nbsp;&nbsp;#{msg['additional_earnings']} / #{msg['deduction']}"
+															class="fa-input">
+														</p:commandLink></li>
+
+													<li><p:commandLink immediate="true"
+															rendered="#{loginBean.userFeatures['EMP_LOAN_DISBURSEMENT']}"
+															action="#{empLoanDisbursementBean.showLoanDisbursementListPage}"
+															onstart="PF('statusDialog').show()"
+															onsuccess="PF('statusDialog').hide()"
+															value="&#xf192;&nbsp;&nbsp;#{msg['loan_disburse']}"
+															class="fa-input">
+														</p:commandLink></li>
+
+												</ul></li>
+
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['EMP_PROMOTION']}">
+													<i class="icon-medal"></i>
+													<h:outputText value="#{msg['promotion']}"></h:outputText>
+												</p:commandLink>
+												<ul>
+													<li><p:commandLink
+															rendered="#{loginBean.userFeatures['PAYROLL_EMP_PROMOTION']}"
+															onclick="PF('progressDlg').show();"
+															oncomplete="PF('progressDlg').hide();" class="fa-input"
+															value="&#xf192;&nbsp;&nbsp;#{msg['promotion']}"
+															immediate="true"
+															action="#{adminPromotionBean.promotionPages}">
+															<f:setPropertyActionListener value="LIST"
+																target="#{adminPromotionBean.pagePromotion}" />
+														</p:commandLink></li>
+
+													<li>
+														<!-- <p:commandLink value="&#xf192;&nbsp; Promotion Approval" class="fa-input"></p:commandLink> -->
+														<p:commandLink
+															rendered="#{loginBean.userFeatures['PROMOTION_APPROVAL']}"
+															onclick="PF('progressDlg').show();"
+															oncomplete="PF('progressDlg').hide();" class="fa-input"
+															value="&#xf192;&nbsp;&nbsp;#{msg['promotion_approval']}"
+															immediate="true"
+															action="#{adminPromotionBean.promotionPages}">
+															<f:setPropertyActionListener value="FINALAPPROVAL"
+																target="#{adminPromotionBean.pagePromotion}" />
+														</p:commandLink>
+													</li>
+													<li>
+														<!-- <p:commandLink value="&#xf192;&nbsp; Promotion Approval" class="fa-input"></p:commandLink> -->
+														<p:commandLink
+															rendered="#{loginBean.userFeatures['EMP_PROMOTION_REQUEST']}"
+															onclick="PF('progressDlg').show();"
+															oncomplete="PF('progressDlg').hide();" class="fa-input"
+															value="&#xf192;&nbsp;&nbsp;Employee Promotion Request"
+															immediate="true"
+															action="#{empPromotionRequestBean.showEmployeePromotionRequestListPage}">
+														</p:commandLink>
+													</li>
+
+												</ul></li>
+
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['LOAN_AND_ADVANCE']}"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();" immediate="true"
+													action="#{employeeLoanAndAdvanceBean.showPage('LIST')}">
+													<i class="icon-cash"></i>
+													<h:outputText value="#{msg['loan_and_advance']}"></h:outputText>
+												</p:commandLink></li>
+
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['TRANSFER']}"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();" immediate="true"
+													action="#{employeeTransferDetailsBean.showPage('LIST')}">
+													<i class="icon-transmission"></i>
+													<h:outputText value="#{msg['transfer']} "></h:outputText>
+												</p:commandLink></li>
+
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['ADDITIONAL_CHARGE']}"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();" immediate="true"
+													action="#{employeeAdditionalChargeBean.showListPage}">
+													<i class="icon-office"></i>
+													<h:outputText value="Employee Additional Charge"></h:outputText>
+												</p:commandLink></li>
+
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['INSURENCE']}"
+													action="#{employeeInsuranceBean.showInsuranceListPage}"
+													onclick="PF('progressDlg').show();" immediate="true"
+													oncomplete="PF('progressDlg').hide();">
+													<i class="icon-umbrella"></i>
+													<h:outputText value="#{msg['insu']}"></h:outputText>
+												</p:commandLink></li>
+
+											<li><p:commandLink immediate="true"
+													rendered="#{loginBean.userFeatures['JOINING_CHECKLISTS']}"
+													onclick="window.location.href='#{request.contextPath}/pages/personnelHR/joiningChecklist/listJoiningChecklist.xhtml'"
+													oncomplete="PF('progressDlg').hide();" class="fa-input">
+													<i class="icon-file-check"></i>
+													<h:outputText value=" #{msg['joining_Checklist']}"></h:outputText>
+												</p:commandLink></li>
+
+											<li><p:commandLink immediate="true"
+													rendered="#{loginBean.userFeatures['INTERCHANGE']}"
+													onclick="window.location.href='#{request.contextPath}/pages/personnelHR/listInterchange.xhtml'"
+													oncomplete="PF('progressDlg').hide();" class="fa-input">
+													<i class="icon-make-group"></i>
+													<h:outputText value=" #{msg['interchange']}"></h:outputText>
+												</p:commandLink></li>
+
+											<li><p:commandLink immediate="true"
+													rendered="#{loginBean.userFeatures['LEAVE_TRAVEL_CONCESSION']}"
+													onclick="window.location.href='#{request.contextPath}/pages/personnelHR/listLeaveTravelConcession.xhtml'"
+													oncomplete="PF('progressDlg').hide();" class="fa-input">
+													<i class="fa fa-suitcase "></i>
+													<h:outputText value=" #{msg['leave_travel_concession']}"></h:outputText>
+												</p:commandLink></li>
+
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['EMPLOYEE_CONFIRMATION']}"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();" immediate="true"
+													action="#{employeeConfirmationBean.showEmployeeConfirmationListPage}">
+													<i class="icon-transmission"></i>
+													<h:outputText value=" #{msg['employee_confirm']}"></h:outputText>
+												</p:commandLink></li>
+
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['EMPLOYEE_POSTPONED']}"
+													action="#{confirmationPostponeBean.callConfirmationPage}"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();">
+													<f:setPropertyActionListener value="LIST"
+														target="#{confirmationPostponeBean.pageAction}"></f:setPropertyActionListener>
+													<h:outputText class="icon-file-text"></h:outputText>
+													<h:outputText value="&nbsp; #{msg['confirm_postpone']}"
+														class="fa-input"></h:outputText>
+												</p:commandLink></li>
+
+											<li><p:commandLink
+													action="#{incrementBean.callIncrementPages}"
+													rendered="#{loginBean.userFeatures['INCREMENT']}"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();">
+													<f:setPropertyActionListener value="LIST"
+														target="#{incrementBean.pageAction}"></f:setPropertyActionListener>
+													<h:outputText class="icon-file-text"></h:outputText>
+													<h:outputText value="&nbsp; #{msg['increment']}"
+														class="fa-input"></h:outputText>
+												</p:commandLink></li>
+
+											<ui:remove>
+												<li><p:commandLink>
+														<i class="icon-notification2"></i>
+														<h:outputText value=" Disciplinary Cases"></h:outputText>
+													</p:commandLink>
+													<ul>
+														<li><a class="fa-input"
+															onclick="location.href='listDiscipilinaryAction.xhtml'">
+																&#xf192;&nbsp; #{msg['discipilinary_action']} </a></li>
+													</ul></li>
+											</ui:remove>
+
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['INCREMENT']}"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();" immediate="true"
+													action="#{resignationBean.resignationPages}">
+													<i class="icon-user-minus"></i>
+													<h:outputText value=" #{msg['resign']}"></h:outputText>
+													<f:setPropertyActionListener value="LIST"
+														target="#{resignationBean.pageResignation}" />
+												</p:commandLink></li>
+											<ui:remove>
+												<li><p:commandLink rendered="true"
+														onclick="window.location.href='#{request.contextPath}/pages/personnelHR/individualPayslip.xhtml'"
+														class="fa-input">
+														<i class="icon-list3"></i>
+														<h:outputText value=" #{msg['ind_payslip']}"></h:outputText>
+													</p:commandLink></li>
+											</ui:remove>
+											<li><p:commandLink styleClass="fa-input"
+													rendered="#{loginBean.userFeatures['RETIREMENT']}">
+													<i class="icon-user-minus"></i>
+													<span>#{msg['retiremnt']}</span>
+												</p:commandLink>
+
+												<ul>
+													<li><p:commandLink immediate="true"
+															rendered="#{loginBean.userFeatures['NORMAL_RETIREMENT']}"
+															action="#{empRetirementRequestBean.showRetirementListPage}"
+															value="&#xf192;&nbsp;&nbsp;#{msg['normal_retire']}"
+															class="fa-input">
+															<f:setPropertyActionListener
+																value="NORMAL_RETIREMENT_LIST"
+																target="#{empRetirementRequestBean.action}" />
+														</p:commandLink></li>
+
+													<li><p:commandLink immediate="true"
+															rendered="#{loginBean.userFeatures['VOLUNTARY_RETIREMENT']}"
+															action="#{empRetirementRequestBean.showRetirementListPage}"
+															class="fa-input"
+															value="&#xf192;&nbsp;&nbsp;#{msg['voluntary_retire']}">
+															<f:setPropertyActionListener
+																value="VOLUNTARY_RETIREMENT_LIST"
+																target="#{empRetirementRequestBean.action}" />
+														</p:commandLink></li>
+
+													<li><p:commandLink immediate="true"
+															rendered="#{loginBean.userFeatures['COMPULSORY_RETIREMENT']}"
+															onclick="PF('progressDlg').show();"
+															action="#{empRetirementRequestBean.showRetirementListPage}"
+															oncomplete="PF('progressDlg').hide();"
+															value="&#xf192;&nbsp;&nbsp;#{msg['compulsory_retire']}"
+															class="fa-input">
+															<f:setPropertyActionListener
+																value="COMPULSORY_RETIREMENT_LIST"
+																target="#{empRetirementRequestBean.action}" />
+														</p:commandLink></li>
+
+													<li><p:commandLink
+															onclick="window.location.href='#{request.contextPath}/pages/personnelHR/retirement/listRetirement.xhtml'"
+															value="&#xf192;&nbsp;&nbsp;#{msg['retiremnt']}"
+															class="fa-input">
+														</p:commandLink></li>
+
+
+												</ul></li>
+										</ul></li>
+								</ul>
+
+								<ul>
+									<li><p:commandLink styleClass="font-icomoon"
+											rendered="#{loginBean.userFeatures['ADMIN']}">
+											<span><span class="icon-user"></span> #{msg['admin']}</span>
+										</p:commandLink>
+
+										<ul>
+											<li><p:commandLink styleClass="font-icomoon">
+													<span><span class="icon-envelop3"></span>&nbsp;
+														#{msg['tapal']}</span>
+												</p:commandLink>
+												<ul>
+													<li><p:commandLink onclick="PF('progressDlg').show();"
+															oncomplete="PF('progressDlg').hide();"
+															value="&#xf192;&nbsp;&nbsp;#{msg['incoming_tapal']}"
+															action="#{incomingTapalBean.showListPage}"
+															class="fa-input"></p:commandLink></li>
+
+													<li><p:commandLink onclick="PF('progressDlg').show();"
+															oncomplete="PF('progressDlg').hide();"
+															value="&#xf192;&nbsp;&nbsp;#{msg['outgoing_tapal']}"
+															action="#{outgoingTapalBean.showListPage}"
+															class="fa-input"></p:commandLink></li>
+
+													<li><p:commandLink onclick="PF('progressDlg').show();"
+															oncomplete="PF('progressDlg').hide();"
+															value="&#xf192;&nbsp;&nbsp;#{msg['file_numbering']}"
+															styleClass="fa-input" immediate="true"
+															action="#{fileNumberBean.showFileNumberListPage}">
+														</p:commandLink></li>
+												</ul></li>
+
+										</ul>
+
+										<ul>
+											<li><p:commandLink styleClass="font-icomoon">
+													<span><span class="icon-bus"></span>&nbsp;
+														#{msg['vcl_mng']}</span>
+												</p:commandLink>
+
+												<ul>
+													<li><p:commandLink
+															action="#{vehicleManagementBean.showList}"
+															onclick="PF('progressDlg').show();"
+															oncomplete="PF('progressDlg').hide();"
+															value="&#xf192;&nbsp;&nbsp;#{msg['vehicle_departure']}"
+															class="fa-input">
+														</p:commandLink></li>
+
+													<li><p:commandLink
+															onclick="window.location.href='#{request.contextPath}/pages/admin/vehicleManagement/listVehicleArrival.xhtml'"
+															value="&#xf192;&nbsp;&nbsp;#{msg['vehicle_arrival']}"
+															class="fa-input">
+														</p:commandLink></li>
+
+													<li><p:commandLink immediate="true"
+															action="#{fuelFillingRegisterBean.fuelFillingRegisterPage}"
+															onclick="PF('progressDlg').show();"
+															oncomplete="PF('progressDlg').hide();"
+															value="&#xf192;&nbsp;&nbsp;#{msg['fuel_filling_detail']}"
+															class="fa-input">
+														</p:commandLink></li>
+												</ul></li>
+										</ul>
+
+										<ul>
+											<li><p:commandLink styleClass="font-icomoon">
+													<span><span class="fa fa-group fa-menu"></span>&nbsp;
+														#{msg['training']} </span>
+												</p:commandLink>
+												<ul>
+													<li><a class="fa-input"
+														href="#{request.contextPath}/pages/admin/training/listStudentTraining.xhtml">
+															&#xf192;&nbsp; Student Training </a></li>
+													<li><p:commandLink styleClass="fa-input"
+															value="&#xf192;&nbsp; Internal / External Training"
+															onclick="PF('progressDlg').show();"
+															oncomplete="PF('progressDlg').hide();"
+															rendered="#{loginBean.userFeatures['INTERNAL_EXTERNAL_TRAINING']}"
+															action="#{empTrainingBean.showEmployeeTrainingListPage}">
+														</p:commandLink></li>
+												</ul></li>
+										</ul>
+										<ul>
+											<!-- <li><a class=""
+											href="#{request.contextPath}/pages/admin/sendFile.xhtml">
+												<span class="fa fa-paper-plane fa-menu"></span>&nbsp; Send
+												File
+										</a></li> -->
+
+											<li><p:commandLink immediate="true"
+													action="#{fileMovementBean.showListPage}"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();" update="growls">
+													<h:outputText class="fa fa-file-text fa-menu"></h:outputText>
+                        &nbsp;&nbsp; #{msg['file_movmnt']} </p:commandLink></li>
+											<li><p:commandLink immediate="true"
+													onclick="location.href='admin/scheduler/listSchedulers.xhtml';">
+													<h:outputText class="icon icon-alarm"></h:outputText>
+                        &nbsp;&nbsp; #{msg['scheduler']} </p:commandLink></li>
+											<li><p:commandLink styleClass="fa-input"
+													immediate="true"
+													action="#{disciplinaryActionBean.showDisciplinaryListPage}"
+													update="growls"
+													rendered="#{loginBean.userFeatures['DISCIPLINARY_ACTION']}">
+													<h:outputText class="icon-file-text2"></h:outputText>
+                        &nbsp; Disciplinary Action </p:commandLink></li>
+
+											<li><p:commandLink styleClass="fa-input"
+													immediate="true"
+													action="#{disciplinaryActionBean.showSuspensionDetails}"
+													update="growls" rendered="true">
+													<h:outputText class="icon-pencil-ruler"></h:outputText>
+                         &nbsp; #{msg['suspension_details']} </p:commandLink></li>
+
+											<!--<li><a class="fa-input"-->
+											<!--href="#{request.contextPath}/pages/admin/raisecomplaint/listRaiseComplaint.xhtml">-->
+											<!--Disciplinary Action </a></li>-->
+
+											<li><p:commandLink rendered="#{true}"
+													styleClass="fa-input"
+													action="#{courtCaseRegisterBean.showListCourtCaseRegisterPage}">
+													<h:outputText class="icon-law icon-menu"></h:outputText>
+                        &nbsp; Court Case </p:commandLink></li>
+											<li><p:commandLink styleClass="fa-input"
+													rendered="#{loginBean.userFeatures['CIRCULAR']}"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();"
+													action="#{circularBean.showCircularListPage}">
+													<h:outputText class="fa fa-circle fa-lg"></h:outputText>
+                        &nbsp; Circular </p:commandLink></li>
+											<li><p:commandLink rendered="#{true}"
+													styleClass="fa-input"
+													action="#{claimForExpoBean.showExhibitionClaimList}"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();">
+													<h:outputText class="icon-presentation"></h:outputText>
+                        &nbsp;Claim For Expo </p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['MEETING_REPORT']}"
+													action="#{meetingReportBean.showMeetingRepostList}">
+													<h:outputText class="fa fa-users"></h:outputText>
+													<h:outputText value="&nbsp;&nbsp; Meeting Report"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['MEETING_REQUEST']}"
+													action="#{meetingRequestBean.showMeetingList}"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();">
+													<h:outputText class="fa fa-users"></h:outputText>
+													<h:outputText value="&nbsp;&nbsp; Meeting Request"></h:outputText>
+												</p:commandLink></li>
+											<li><a class=""
+												href="#{request.contextPath}/pages/admin/petition/listPetition.xhtml">
+													<h:outputText class="icon-file-text2"></h:outputText>
+													&nbsp; Petition
+											</a></li>
+										</ul>
+										<ul>
+											<li><p:commandLink
+													action="#{policyNotesBean.loadPolicyNotes}"
+													rendered="#{loginBean.userFeatures['POLICY_NOTES']}"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();">
+													<f:setPropertyActionListener value="LIST"
+														target="#{policyNotesBean.pageAction}"></f:setPropertyActionListener>
+													<h:outputText class="icon-file-text"></h:outputText>
+													<h:outputText value="&nbsp; #{msg['plcy_note']}"
+														class="fa-input"></h:outputText>
+												</p:commandLink></li>
+										</ul></li>
+									<li><p:commandLink
+											rendered="#{loginBean.userFeatures['USER_MANAGEMENT']}">
+											<span><span class="icon-profile"></span>
+												#{msg['employee_self_service']}</span>
+										</p:commandLink>
+										<ul>
+											<li><p:commandLink
+													action="#{employeeProfileBean.loadEmployeeProfile}"
+													rendered="true" onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();">
+													<h:outputText value="&#xf192;&nbsp; General Information"
+														class="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													action="#{employeeLeaveRequestBean.showEmployeeLeaveRequestListPage}"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();">
+													<h:outputText value="&#xf192;&nbsp; #{msg['apply_leave']}"
+														class="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													action="#{employeeProfileBean.loadEmployeeInterchange}"
+													rendered="true" onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();">
+													<f:setPropertyActionListener value="LIST"
+														target="#{employeeProfileBean.pageAction}"></f:setPropertyActionListener>
+													<h:outputText value="&#xf192;&nbsp; Interchange"
+														class="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													onclick="window.location.href='#{request.contextPath}/pages/personnelHR/employeeProfile/listAdditionalCharge.xhtml'">
+													<h:outputText value="&#xf192;&nbsp; Additional Charge"
+														class="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													action="#{insuranceBean.showInsuranceListPage}"
+													rendered="true" onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();">
+													<h:outputText value="&#xf192;&nbsp; Insurance"
+														class="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink rendered="true"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();"
+													value="&#xf192;&nbsp; Loans &amp; Advance"
+													styleClass="fa-input" immediate="true"
+													action="#{employeeProfileBean.showLoanAndAdvance}">
+													<f:setPropertyActionListener value="list"
+														target="#{employeeProfileBean.action}" />
+												</p:commandLink></li>
+											<li><p:commandLink
+													action="#{loanInformationBean.listLoanInformation}"
+													rendered="true" onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();">
+													<h:outputText
+														value="&#xf192;&nbsp; #{msg['loan_information']}"
+														class="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													action="#{employeeProfileBean.loadEmployeeTransfer}"
+													rendered="true" onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();">
+													<h:outputText value="&#xf192;&nbsp; Transfer"
+														class="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													action="#{employeeProfileBean.findPromotionEmployee}"
+													rendered="true" onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();">
+													<h:outputText value="&#xf192;&nbsp; Promotion"
+														class="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													action="#{employeeProfileBean.loadTrainingRequest}"
+													rendered="true" onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();">
+													<f:setPropertyActionListener value="LIST"
+														target="#{employeeProfileBean.pageAction}"></f:setPropertyActionListener>
+													<h:outputText value="&#xf192;&nbsp; Training Request"
+														class="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink action="#{employeeLtcBean.showPage}"
+													rendered="true" onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();">
+													<f:setPropertyActionListener value="list"
+														target="#{employeeLtcBean.action}"></f:setPropertyActionListener>
+													<h:outputText value="&#xf192;&nbsp; LTC Request"
+														class="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink rendered="true"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();"
+													action="#{employeePayRollBean.loadEmployeePayroll}">
+													<h:outputText value="&#xf192;&nbsp; Pay Slip"
+														class="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													onclick="window.location.href='#{request.contextPath}/pages/personnelHR/employeeProfile/payMaster.xhtml'"
+													value="&#xf192;&nbsp; #{msg['pay_master']}"
+													class="fa-input">
+												</p:commandLink></li>
+											<!-- <li><p:commandLink
+										value="&#xf192;&nbsp; Resignation Request"
+										styleClass="fa-input" immediate="true"
+										onclick="location.href='listResignationRequest.xhtml'">
+									</p:commandLink></li> -->
+
+											<li><p:commandLink
+													action="#{employeeResignationBean.showResignationListPage}"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();">
+													<h:outputText
+														value="&#xf192;&nbsp; Apply Resignation Request"
+														class="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													onclick="window.location.href='#{request.contextPath}/pages/personnelHR/employeeProfile/listVoluntaryProvidentFundContribution.xhtml'"
+													value="&#xf192;&nbsp; #{msg['volun_pf_contrib']}"
+													class="fa-input">
+												</p:commandLink></li>
+											<li><p:commandLink immediate="true"
+													onclick="PF('progressDlg').show();"
+													action="#{employeeVoluntaryRetirementBean.showVoluntaryRetirementListPage}"
+													oncomplete="PF('progressDlg').hide();"
+													value="&#xf192;&nbsp; Voluntary Retirement Request"
+													class="fa-input">
+												</p:commandLink></li>
+										</ul></li>
+								</ul></li>
+
+							<!--Master-->
+
+							<li><p:commandLink
+									rendered="#{loginBean.userFeatures['OPERATION']}">
+									<i class="icon-grid"></i>
+									<span>#{msg['oper']}</span>
+								</p:commandLink>
+								<ul>
+									<li><p:commandLink>
+											<i class="icon-design"></i>
+											<span>#{msg['pdt_planning']}</span>
+										</p:commandLink>
+										<ul>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['RETAIL_PRODUCTION_PLAN']}">
+													<i class="icon-pencil-ruler"></i>
+													<span>#{msg['retail_pdt_plan']}</span>
+												</p:commandLink>
+												<ul class="m-l-5">
+													<li><p:commandLink
+															rendered="#{loginBean.userFeatures['INITIAL_RETAIL_PRODUCTION_PLAN']}"
+															value="&#xf192;&nbsp;&nbsp;#{msg['ini_pdt_plan']}"
+															styleClass="fa-input" immediate="true"
+															action="#{retailProductionPlanBean.getHeadOfficePlanList}">
+														</p:commandLink></li>
+
+													<li><p:commandLink
+															rendered="#{loginBean.userFeatures['MONTHWISE_RETAIL_PLAN']}"
+															value="&#xf192;&nbsp;&nbsp;#{msg['operation_retail_production_month_wise_procurement_plan']}"
+															styleClass="fa-input" immediate="true"
+															action="#{retailMonthWiseProcurementPlanBean.getMonthwisePlanList}">
+														</p:commandLink></li>
+
+													<li><p:commandLink
+															value="&#xf192;&nbsp;&nbsp;#{msg['pdt_plan_show']}"
+															rendered="#{loginBean.userFeatures['SHOWROOM_RETAIL_PLAN']}"
+															styleClass="fa-input" immediate="true"
+															action="#{retailProductionPlanShowroomBean.getShowroomPlanList}">
+														</p:commandLink></li>
+
+													<li><p:commandLink
+															rendered="#{loginBean.userFeatures['RO_RETAIL_PLAN']}"
+															value="&#xf192;&nbsp;&nbsp;#{msg['pdt_plan_reg_off']}"
+															styleClass="fa-input" immediate="true"
+															action="#{retailProductionRegionalOfficeBean.getRegionalOfficePlanList(null)}">
+														</p:commandLink></li>
+
+													<li><p:commandLink
+															rendered="#{loginBean.userFeatures['FINAL_RETAIL_PLAN']}"
+															value="&#xf192;&nbsp;&nbsp;#{msg['fin_pdt_plan']}"
+															styleClass="fa-input" immediate="true"
+															action="#{retailProductionHeadOfficeBean.getHeadOfficePlanList}">
+														</p:commandLink></li>
+
+												</ul></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['GOVT_SCHEME']}">
+													<i class="icon-sphere"></i>
+													<span>#{msg['govt_Scheme']}</span>
+												</p:commandLink>
+												<ul class="m-l-5">
+													<li><p:commandLink
+															rendered="#{loginBean.userFeatures['GOVT_SCHEME_PRODUCTION_PLAN']}"
+															action="#{freeDistributionSystemBean.showFdsList}">
+															<h:outputText
+																value="&#xf192;&nbsp;&nbsp;#{msg['production_plan']}"
+																styleClass="fa-input"></h:outputText>
+														</p:commandLink></li>
+
+													<li><p:commandLink
+															rendered="#{loginBean.userFeatures['DTW_REQUIREMENT']}"
+															action="#{govtSchemeDTWRequirementBean.getListPage}"
+															onstart="PF('statusDialog').show()"
+															onsuccess="PF('statusDialog').hide()">
+															<h:outputText
+																value="&#xf192;&nbsp;&nbsp;#{msg['dist_taluk_require']}"
+																styleClass="fa-input"></h:outputText>
+														</p:commandLink></li>
+
+												</ul></li>
+											<li><p:commandLink>
+													<i class="icon-price-tags"></i>
+													<span>#{msg['cont_export']}</span>
+												</p:commandLink>
+												<ul class="m-l-5">
+													<li><p:commandLink
+															action="#{contractProductionPlanBean.gotoPage('LIST')}">
+															<h:outputText
+																value="&#xf192;&nbsp;&nbsp;#{msg['production_plan']}"
+																styleClass="fa-input"></h:outputText>
+														</p:commandLink></li>
+
+												</ul></li>
+
+											<li><p:commandLink rendered="#{true}"
+													onstart="PF('statusDialog').show()"
+													onsuccess="PF('statusDialog').hide()"
+													action="#{additionalProductionPlanBean.getAdditionalPlanListPage}">
+													<i class="icon-pencil-ruler"></i>
+													<h:outputText value=" #{msg['additional_production_plan']}"></h:outputText>
+												</p:commandLink></li>
+
+										</ul></li>
+									<li><p:commandLink>
+											<i class="icon-cube"></i>
+											<span>#{msg['prcurmnt']}</span>
+										</p:commandLink>
+										<ul>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['PROCUREMENT_COSTING']}"
+													value="&#xf192;&nbsp;&nbsp;#{msg['prcurmnt_costg']}"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();"
+													styleClass="fa-input"
+													action="#{procurementCostingBean.showProcurementCostingListPage}">
+													<f:setPropertyActionListener value="LISTFORCOSTING"
+														target="#{procurementCostingBean.action}"></f:setPropertyActionListener>
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['RETAIL_PRODUCTION_PLAN']}">
+													<i class="icon-cart"></i>
+													<span>#{msg['retail_procure']}</span>
+												</p:commandLink>
+												<ul class="m-l-5">
+													<li><p:commandLink
+															rendered="#{loginBean.userFeatures['RETAIL_DANDP_PROCUREMENT_PLAN']}"
+															value=" &#xf192;&nbsp; D&amp;P Procurement Plan"
+															action="#{dandPProcurementPlanBean.getDnpList}"
+															styleClass="fa-input">
+														</p:commandLink></li>
+													<li><p:commandLink update="growls"
+															rendered="#{loginBean.userFeatures['RETAIL_SOCIETY_PLAN']}"
+															value=" &#xf192;&nbsp; Society Wise Production Plan"
+															styleClass="fa-input" immediate="true"
+															action="#{retailSocietywisePlanBean.showRetailSocietyPlanList}">
+														</p:commandLink></li>
+													<li><p:commandLink
+															rendered="#{loginBean.userFeatures['RETAIL_PROCUREMENT_ORDER']}"
+															value=" &#xf192;&nbsp; Procurement Order"
+															onstart="PF('progressDlg').show()"
+															onsuccess="PF('progressDlg').hide()"
+															styleClass="fa-input" immediate="true"
+															action="#{retailProcurementOrderBean.getProcurementOrderList}">
+														</p:commandLink></li>
+													<li><p:commandLink
+															rendered="#{loginBean.userFeatures['SUPPLIER_RATE_CONFIRMATION']}"
+															value=" &#xf192;&nbsp; Supply Rate Confirmation"
+															styleClass="fa-input" immediate="true"
+															action="#{supplyRateConfirmationBean.getQuotationList()}">
+														</p:commandLink></li>
+													<li><p:commandLink
+															rendered="#{loginBean.userFeatures['RETAIL_PURCHASE_ORDER']}"
+															value=" &#xf192;&nbsp; Retail Purchase Order"
+															styleClass="fa-input" immediate="true"
+															action="#{purchaseOrderBean.getPurchaseOrderListPage}">
+														</p:commandLink></li>
+													<li><p:commandLink
+															rendered="#{loginBean.userFeatures['SOCIETY_STOCK_OUTWARD']}"
+															value=" &#xf192;&nbsp; #{msg['stock_movement_list']}"
+															styleClass="fa-input" immediate="true"
+															action="#{stockOutwardBean.getStockOutwardPage}">
+														</p:commandLink></li>
+												</ul></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['OTHER_PROCUREMENT']}">
+													<i class="icon-file-text2"></i>
+													<span>Other Procurement</span>
+												</p:commandLink>
+												<ul>
+													<li><p:commandLink>
+															<i class="icon-office"></i>
+															<span>Society wise Production</span>
+														</p:commandLink>
+														<ul class="m-l-5">
+															<li><p:commandLink
+																	rendered="#{loginBean.userFeatures['GOVT_SOCIETY_WISE_PRODUCTION']}"
+																	action="#{govtSocietyWiseProductionPlanBean.showFdsList}">
+																	<h:outputText
+																		value="&#xf192;&nbsp;Gov Society wise Production"
+																		styleClass="fa-input"></h:outputText>
+																</p:commandLink></li>
+															<li><p:commandLink
+																	onstart="PF('statusDialog').show()"
+																	onsuccess="PF('statusDialog').hide()"
+																	action="#{govtSocietyWiseProductionPlanBean.showConExportList}">
+																	<h:outputText
+																		value="&#xf192;&nbsp;Contract / Export Society wise Production"
+																		styleClass="fa-input"></h:outputText>
+																</p:commandLink></li>
+															<li><p:commandLink
+																	action="#{govtSocietyWiseProductionPlanBean.showAdditionlProList}">
+																	<h:outputText
+																		value="&#xf192;&nbsp;Additional Production Society wise Production"
+																		styleClass="fa-input"></h:outputText>
+																</p:commandLink></li>
+														</ul></li>
+													<li><p:commandLink
+															rendered="#{loginBean.userFeatures['PROCUREMENT_ORDER']}"
+															action="#{procurementOrderBean.showProcurementList}">
+															<h:outputText value="&#xf192;&nbsp;Procurement Order"
+																styleClass="fa-input"></h:outputText>
+														</p:commandLink></li>
+													<ui:remove>
+														<li><p:commandLink immediate="true"
+																action="#{purchaseOrderItemBean.showAllListForPurchaseOrder}">
+																<h:outputText value="&#xf192;&nbsp;Purchase Order"
+																	styleClass="fa-input"></h:outputText>
+															</p:commandLink></li>
+													</ui:remove>
+													<li><p:commandLink immediate="true"
+															rendered="#{loginBean.userFeatures['PROCUREMENT_PURCHASE_ORDER']}"
+															action="#{govtPurchaseOrderBean.getPurchaseOrderListPage}">
+															<h:outputText value="&#xf192;&nbsp;Purchase Order"
+																styleClass="fa-input"></h:outputText>
+														</p:commandLink></li>
+												</ul></li>
+										</ul></li>
+									<li><p:commandLink>
+											<i class="icon-home7"></i>
+											<span>#{msg['warehouse_management']}</span>
+										</p:commandLink>
+										<ul>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['PRODUCT_WAREHOUSE']}">
+													<i class="icon-office"></i>
+													<span>#{msg['product_warehouse']}</span>
+												</p:commandLink>
+												<ul class="m-l-5">
+													<li><p:commandLink
+															value="&#xf192;&nbsp;&nbsp;#{msg['stock_inward']}"
+															rendered="#{loginBean.userFeatures['PWH_STOCK_INWARD']}"
+															styleClass="fa-input" immediate="true"
+															action="#{stockInwardPWHBean.getListPage}">
+														</p:commandLink></li>
+													<li><p:commandLink
+															rendered="#{loginBean.userFeatures['QUALITY_CHECKING']}"
+															value=" &#xf192;&nbsp;&nbsp;#{msg['qty_check']}"
+															styleClass="fa-input" immediate="true"
+															action="#{retailQualityCheckBean.getProductWarehouseQualityCheckList}">
+														</p:commandLink></li>
+													<li><p:commandLink
+															value=" &#xf192;&nbsp;&nbsp;#{msg['qr_cd']}"
+															rendered="#{loginBean.userFeatures['QR_CODE_PRICE_FIXATION']}"
+															styleClass="fa-input" immediate="true"
+															action="#{productQRCodeBean.getListPage}">
+														</p:commandLink></li>
+													<li><p:commandLink
+															value=" &#xf192;&nbsp;&nbsp;#{msg['stock_outward']}"
+															rendered="#{loginBean.userFeatures['PWH_STOCK_OUTWARD']}"
+															styleClass="fa-input" immediate="true"
+															action="#{stockOutwardPWHBean.gotoPage('LIST')}">
+														</p:commandLink></li>
+												</ul></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['DISTRIBUTION_WAREHOUSE']}">
+													<i class="icon-city"></i>
+													<span>#{msg['distribution_warehouse']}</span>
+												</p:commandLink>
+												<ul class="m-l-5">
+													<li><p:commandLink
+															value=" &#xf192;&nbsp;&nbsp;#{msg['stock_inward']}"
+															rendered="#{loginBean.userFeatures['DWH_STOCK_INWARD']}"
+															styleClass="fa-input" immediate="true"
+															action="#{stockInwardDWHBean.getListPage}"
+															update="growls">
+														</p:commandLink></li>
+													<li><p:commandLink
+															value=" &#xf192;&nbsp;&nbsp;#{msg['stock_outward']}"
+															rendered="#{loginBean.userFeatures['DWH_STOCK_OUTWARD']}"
+															styleClass="fa-input" immediate="true"
+															action="#{stockOutwardPWHBean.gotoPage('LIST')}"
+															update="growls">
+														</p:commandLink></li>
+												</ul></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['INSPECTION_CENTER']}">
+													<i class="icon-office"></i>
+													<span>#{msg['ins_cntr']}</span>
+												</p:commandLink>
+												<ul class="m-l-5">
+													<li><p:commandLink
+															rendered="#{loginBean.userFeatures['INSPECTION_CENTER_STOCK_INWARD']}"
+															value="&#xf192;&nbsp;&nbsp;#{msg['stock_inward']}"
+															styleClass="fa-input" immediate="true"
+															action="#{stockInwardISSRBean.gotoPage('LIST')}"
+															update="growls">
+														</p:commandLink></li>
+													<li><p:commandLink
+															rendered="#{loginBean.userFeatures['INSPECTION_CENTER_QC']}"
+															value=" &#xf192;&nbsp;&nbsp;#{msg['qty_check']}"
+															styleClass="fa-input" immediate="true"
+															action="#{retailQualityCheckICBean.getProductWarehouseQualityCheckList}"
+															update="growls">
+														</p:commandLink></li>
+													<li><p:commandLink
+															rendered="#{loginBean.userFeatures['INSPECTION_CENTER_STOCK_OUTWARD']}"
+															value=" &#xf192;&nbsp;&nbsp;#{msg['stock_outward']}"
+															styleClass="fa-input" immediate="true"
+															action="#{stockOutwardICBean.gotoPage('LIST')}"
+															update="growls">
+														</p:commandLink></li>
+												</ul></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['ISSR']}">
+													<i class="icon-office"></i>
+													<span>ISSR</span>
+												</p:commandLink>
+												<ul class="m-l-5">
+													<li><p:commandLink
+															rendered="#{loginBean.userFeatures['ISSR_STOCK_INWARD']}"
+															value="&#xf192;&nbsp;Stock Inward" styleClass="fa-input"
+															immediate="true"
+															action="#{stockInwardISSRBean.gotoPage('LIST')}"
+															update="growls">
+														</p:commandLink></li>
+													<li><p:commandLink
+															rendered="#{loginBean.userFeatures['ISSR_STOCK_OUTWARD']}"
+															value=" &#xf192;&nbsp;Stock Outward"
+															styleClass="fa-input" immediate="true"
+															action="#{stockOutwardICBean.gotoPage('LIST')}"
+															update="growls">
+														</p:commandLink></li>
+													<li><p:commandLink rendered="true"
+															onclick="PF('progressDlg').show();"
+															oncomplete="PF('progressDlg').hide();"
+															value="&#xf192;&nbsp;District/Taluk Distribution"
+															styleClass="fa-input" immediate="true"
+															action="#{distributionBean.showDistricTalukDistribution}">
+															<f:setPropertyActionListener value="LIST"
+																target="#{distributionBean.pageAction}" />
+														</p:commandLink></li>
+												</ul></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['EXPORT_WAREHOUSE']}">
+													<i class="icon-office"></i>
+													<span>Export Warehouse</span>
+												</p:commandLink>
+												<ul class="m-l-5">
+													<li><p:commandLink
+															rendered="#{loginBean.userFeatures['EXPORT_WAREHOUSE_STOCK_INWARD']}"
+															value="&#xf192;&nbsp;Stock Inward" styleClass="fa-input"
+															immediate="true"
+															action="#{stockInwardISSRBean.gotoPage('LIST')}"
+															update="growls">
+														</p:commandLink></li>
+													<li><p:commandLink
+															rendered="#{loginBean.userFeatures['EXPORT_WAREHOUSE_STOCK_OUTWARD']}"
+															value=" &#xf192;&nbsp;Stock Outward"
+															styleClass="fa-input" immediate="true"
+															action="#{stockOutwardICBean.gotoPage('LIST')}"
+															update="growls">
+														</p:commandLink></li>
+												</ul></li>
+										</ul></li>
+									<li><p:commandLink>
+											<i class="icon-files-empty2"></i>
+											<span>Quotation/Order/Invoice</span>
+										</p:commandLink>
+										<ul>
+											<li><p:commandLink>
+													<i class="icon-store"></i>
+													<span>Sales</span>
+												</p:commandLink>
+												<ul>
+													<li><p:commandLink
+															action="#{salesQuotationBean.getListPage}">
+															<h:outputText value="&#xf192;&nbsp;Sales Quotation"
+																styleClass="fa-input"></h:outputText>
+														</p:commandLink></li>
+													<li><p:commandLink rendered="#{true}"
+															onstart="PF('statusDialog').show()"
+															onsuccess="PF('statusDialog').hide()"
+															action="#{salesOrderBean.getSalesOrderLazyList}">
+															<h:outputText value="&#xf192;&nbsp;Sales Order"
+																styleClass="fa-input"></h:outputText>
+														</p:commandLink></li>
+													<li><p:commandLink rendered="#{true}"
+															onstart="PF('statusDialog').show()"
+															onsuccess="PF('statusDialog').hide()"
+															action="#{contractSalesInvoiceBean.showSalesInvioceListPage}">
+															<h:outputText value="&#xf192;&nbsp;Sales Invoice"
+																styleClass="fa-input"></h:outputText>
+														</p:commandLink></li>
+												</ul></li>
+											<li><p:commandLink>
+													<i class="icon-cart5"></i>
+													<span>Purchase</span>
+												</p:commandLink>
+												<ul>
+													<li><p:commandLink
+															value=" &#xf192;&nbsp;Purchase Quotation"
+															styleClass="fa-input" immediate="true"
+															onclick="PF('progressDlg').show();"
+															oncomplete="PF('progressDlg').hide();"
+															action="#{quotationBean.showAllListForQuotation}">
+														</p:commandLink></li>
+													<li><p:commandLink value="&#xf192;&nbsp;#{msg['po']}"
+															styleClass="fa-input"
+															onclick="location.href='#{request.contextPath}/pages/operation/listPurchaseOrderItem.xhtml'">> </p:commandLink>
+													</li>
+												</ul></li>
+										</ul></li>
+									<li><p:commandLink>
+											<i class="icon-grid6"></i>
+											<span>Stock Management</span>
+										</p:commandLink>
+										<ul class="m-l-5">
+											<li><p:commandLink
+													onclick="window.location.href='#{request.contextPath}/pages/printingAndStationary/listStockItemInwardPNS.xhtml'">
+													<span class="fa-input">&#xf192;&nbsp;Stock Upload</span>
+												</p:commandLink></li>
+											<li><p:commandLink rendered="true"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();"
+													value="&#xf192;&nbsp;Item Outward" styleClass="fa-input"
+													immediate="true"
+													action="#{stockOutwardBeanPNS.showItemOutward}">
+													<f:setPropertyActionListener value="LIST"
+														target="#{stockOutwardBeanPNS.pageAction}" />
+												</p:commandLink></li>
+											<li><p:commandLink
+													value=" &#xf192;&nbsp; #{msg['crt_stock_status']}"
+													styleClass="fa-input"
+													action="#{currentStockStatusBean.gotoPage}">
+												</p:commandLink></li>
+
+											<li><p:commandLink class="fa-input"
+													action="#{stockUploadBean.loadStockUploadPage}">
+													<span>&#xf192;&nbsp;&nbsp;#{msg['stock_upload']}</span>
+												</p:commandLink></li>
+
+										</ul></li>
+									<li><p:commandLink>
+											<i class="icon-lab"></i>
+											<span>Yarn</span>
+										</p:commandLink>
+										<ul class="m-l-5">
+											<li><p:commandLink onstart="PF('statusDialog').show()"
+													onsuccess="PF('statusDialog').hide()"
+													action="#{yarnRequirementBean.showYarnRequirementListPage}">
+													<h:outputText value="&#xf192;&nbsp;Yarn Requirement"
+														styleClass="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													action="#{yarnPurchaseOrderBean.getListPage}">
+													<h:outputText value="&#xf192;&nbsp;Yarn Purhcase Order"
+														styleClass="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													action="#{yarnRequirementConsolidationBean.showListPage}">
+													<h:outputText
+														value="&#xf192;&nbsp;Yarn Requirement Consolidation"
+														styleClass="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													action="#{yarnConsolidateFixationBean.showYarnPriceFixationList}">
+													<h:outputText value="&#xf192;&nbsp;PP Fixation"
+														styleClass="fa-input"></h:outputText>
+												</p:commandLink></li>
+										</ul></li>
+									<li><p:commandLink>
+											<i class=" icon-printer2"></i>
+											<span>#{msg['print_n_stationary']}</span>
+										</p:commandLink>
+										<ul class="m-l-5">
+											<li><p:commandLink
+													onclick="window.location.href='#{request.contextPath}/pages/printingAndStationary/listInitiateRequirementRequest.xhtml'">
+													<span class="fa-input">&#xf192;&nbsp;&nbsp;#{msg['request']}</span>
+												</p:commandLink></li>
+											<li><p:commandLink
+													action="#{intendDetailsBean.loadRequirementpage}">
+													<span class="fa-input">&#xf192;&nbsp;&nbsp;#{msg['requirement']}</span>
+												</p:commandLink></li>
+											<li><p:commandLink
+													action="#{intendConsolidatebean.consolidateListPage}">
+													<span class="fa-input">&#xf192;&nbsp;&nbsp;#{msg['console_requirement']}</span>
+												</p:commandLink></li>
+											<li><p:commandLink
+													onclick="window.location.href='#{request.contextPath}/pages/printingAndStationary/listPrintingandStationaryDisposal.xhtml'">
+													<span class="fa-input">&#xf192;&nbsp;&nbsp;#{msg['disposal']}</span>
+												</p:commandLink></li>
+										</ul></li>
+									<li><p:commandLink>
+											<i class="icon-lab"></i>
+											<span>#{msg['testing_lab']}</span>
+										</p:commandLink>
+										<ul class="m-l-5">
+											<li><p:commandLink
+													onclick="window.location.href='#{request.contextPath}/pages/inspectionCenter/TestingLab/listTestingLabStockInward.xhtml'">
+													<h:outputText
+														value="&#xf192;&nbsp;&nbsp;#{msg['stk_inrd']}"
+														styleClass="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													rendered="#{loginBean.userFeatures['TEST_REPORT']}"
+													action="#{testReportBean.showTestingLabReportListPage}">
+													<h:outputText
+														value="&#xf192;&nbsp;&nbsp;#{msg['test_report']}"
+														styleClass="fa-input"></h:outputText>
+												</p:commandLink></li>
+										</ul></li>
+									<li><p:commandLink>
+											<i class="icon-pencil-ruler"></i>
+											<span>#{msg['prod_dev_and_design']}</span>
+										</p:commandLink>
+										<ul class="m-l-5">
+											<li><p:commandLink
+													onclick="location.href='#{request.contextPath}/pages/operation/listProductDevelopmentAndDesign.xhtml'">
+													<h:outputText value="&#xf192;&nbsp;&nbsp;#{msg['target']}"
+														styleClass="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													onclick="location.href='#{request.contextPath}/pages/operation/listProductDevelopmentAndDesignNDR.xhtml'">
+													<h:outputText
+														value="&#xf192;&nbsp;&nbsp;#{msg['achievmnts']}"
+														styleClass="fa-input"></h:outputText>
+												</p:commandLink></li>
+										</ul></li>
+									<li><p:commandLink
+											action="#{advertisementBean.showListPage}">
+											<i class="icon-megaphone"></i>
+											<h:outputText value="#{msg['advrt']}"></h:outputText>
+										</p:commandLink></li>
+									<li><p:commandLink immediate="true"
+											action="#{libraryVisitorRegisterBean.showListPage}">
+											<i class="icon-folder-open"></i>
+											<h:outputText value="Textile Library"></h:outputText>
+										</p:commandLink></li>
+									<li><p:commandLink>
+											<i class="icon-box"></i>
+											<span>#{msg['tender']}</span>
+										</p:commandLink>
+										<ul class="m-l-5">
+											<li><p:commandLink rendered="true"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();"
+													value="&#xf192;&nbsp; Create Tender" styleClass="fa-input"
+													immediate="true" action="#{tenderBean.loadTenderListPage}">
+												</p:commandLink></li>
+											<li><p:commandLink rendered="true"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();"
+													value="&#xf192;&nbsp; Apply Tender" styleClass="fa-input"
+													immediate="true"
+													action="#{tenderApplyBean.loadTenderListPage}">
+												</p:commandLink></li>
+											<li><p:commandLink rendered="true"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();"
+													value="&#xf192;&nbsp; Tender Evaluation"
+													styleClass="fa-input" immediate="true"
+													action="#{tenderEvaluationBean.loadTenderListPage}">
+												</p:commandLink></li>
+											<li><p:commandLink rendered="true"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();"
+													value="&#xf192;&nbsp;  #{msg['ten_nego']}"
+													styleClass="fa-input" immediate="true"
+													action="#{tenderNegotiationBean.loadTenderListPage}">
+												</p:commandLink></li>
+											<li><p:commandLink rendered="true"
+													onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();"
+													value="&#xf192;&nbsp; Tender Awarding"
+													styleClass="fa-input" immediate="true"
+													action="#{tenderAwardingBean.loadTenderListPage}">
+												</p:commandLink></li>
+
+										</ul></li>
+									<li><p:commandLink immediate="true"
+											onstart="PF('statusDialog').show()"
+											onsuccess="PF('statusDialog').hide()"
+											action="#{giftCouponGenerationBean.showListPage}">
+											<i class="icon-gift"></i>
+											<h:outputText value="Gift Coupon"></h:outputText>
+										</p:commandLink></li>
+									<li><p:commandLink immediate="true">
+											<i class="icon-file-text3"></i>
+											<h:outputText value="Basic File Movement"></h:outputText>
+										</p:commandLink></li>
+									<li><p:commandLink>
+											<i class="icon-stack-empty"></i>
+											<span>Cluster Management</span>
+										</p:commandLink>
+										<ul class="m-l-5">
+											<li><p:commandLink
+													value="&#xf192;&nbsp; Baseline Survey"
+													styleClass="fa-input">
+												</p:commandLink>
+												<ul>
+													<li><p:commandLink
+															onclick="window.location.href='#{request.contextPath}/pages/operation/clusterManagement/createBaselineSurvey.xhtml'"
+															value="&#xf192;&nbsp; Indivitual Weaver" class="fa-input">
+														</p:commandLink></li>
+													<li><p:commandLink
+															onclick="window.location.href='#{request.contextPath}/pages/operation/clusterManagement/listMasterWeavers.xhtml'"
+															value="&#xf192;&nbsp; Master Weavers" class="fa-input">
+														</p:commandLink></li>
+												</ul></li>
+										</ul></li>
+									<li><p:commandLink immediate="true"
+											onclick="window.location.href='#{request.contextPath}/pages/operation/posterminal/listPOSTerminal.xhtml'">
+											<i class="icon-screen3"></i>
+											<h:outputText value="POS Terminal"></h:outputText>
+										</p:commandLink></li>
+									<ui:remove>
+										<li><p:commandLink
+												value="&#xea6d;&nbsp;Sales Purchase Order"
+												styleClass="font-iconmoon" immediate="true"
+												action="#{govtPurchaseOrderBean.getPurchaseOrderListPage}">
+											</p:commandLink></li>
+									</ui:remove>
+								</ul></li>
+							<li><p:commandLink
+									rendered="#{loginBean.userFeatures['WEAVERS']}">
+									<i class="icon-users4"></i>
+									<span>Weavers</span>
+								</p:commandLink>
+								<ul class="m-l-5">
+									<li><p:commandLink
+											rendered="#{loginBean.userFeatures['SOCIETY_INVOICE']}"
+											update="growls" immediate="true"
+											action="#{procurementCostingSocietyBean.showProcurementCostingSocietyListPage}">
+											<i class="icon-make-group"></i>
+											<span>Procurement Costing Society</span>
+										</p:commandLink></li>
+									<li><p:commandLink
+											rendered="#{loginBean.userFeatures['SOCIETY_INVOICE']}"
+											update="growls" immediate="true"
+											action="#{purchaseInvoiceBean.getSocietyInvoiceList}">
+											<i class="icon-file-text3"></i>
+											<span>Society Invoice</span>
+										</p:commandLink></li>
+									<li><p:commandLink onclick="PF('progressDlg').show();"
+											oncomplete="PF('progressDlg').hide();"
+											rendered="#{loginBean.userFeatures['SOCIETY_PRODUCT_APPRAISAL']}"
+											update="growls" styleClass="fa-input" immediate="true"
+											action="#{societyProductAppraisalBean.showSocietyProductAppraisalListPage}">
+											<i class="icon-collaboration"></i>
+											<span>Society Product Appraisal</span>
+										</p:commandLink></li>
+									<li><p:commandLink
+											rendered="#{loginBean.userFeatures['SOCIETY_ENROLLMENT']}">
+											<i class="icon-collaboration"></i>
+											<span>Society Enrollment</span>
+										</p:commandLink>
+										<ul class="m-l-5">
+											<li><p:commandLink
+													value=" &#xf192;&nbsp;Society Enrollment"
+													styleClass="fa-input" immediate="true"
+													rendered="#{loginBean.userFeatures['SOCIETY_ENROLLMENT_REGISTRATION']}"
+													action="#{societyEnrollmentBean.showSocietyEnrollmentListPage}">
+												</p:commandLink></li>
+											<li><p:commandLink
+													value=" &#xf192;&nbsp;Request for Society Enrollment"
+													styleClass="fa-input" immediate="true"
+													rendered="#{loginBean.userFeatures['REQUEST_FOR_SOCIETY_ENROLLMENT']}"
+													action="#{societyRegistrationRequestBean.showSocietyRequestListPage}">
+												</p:commandLink></li>
+											<li><p:commandLink
+													value=" &#xf192;&nbsp;Field Verification"
+													styleClass="fa-input" immediate="true"
+													rendered="#{loginBean.userFeatures['FIELD_VERIFICATION']}"
+													action="#{societyFieldVerificationBean.showSocietyFieldVerificationListPage}">
+												</p:commandLink></li>
+											<li><p:commandLink
+													value=" &#xf192;&nbsp;Department Approval"
+													styleClass="fa-input" immediate="true"
+													rendered="#{loginBean.userFeatures['DEPARTMENT_APPROVAL']}"
+													action="#{societyDepartmentApprovalBean.showsocietyDepartmentApprovalListPage}">
+												</p:commandLink></li>
+											<li><p:commandLink value=" &#xf192;&nbsp;Board Approval"
+													styleClass="fa-input" immediate="true"
+													rendered="#{loginBean.userFeatures['BOARD_APPROVAL']}"
+													action="#{societyBoardApprovalBean.showsocietyBoardApprovalListPage}">
+												</p:commandLink></li>
+											<li><p:commandLink value=" &#xf192;&nbsp;Code Allotment"
+													styleClass="fa-input" immediate="true"
+													rendered="#{loginBean.userFeatures['CODE_ALLOTMENT']}"
+													action="#{societyCodeAllotmentBean.showsocietyCodeAllotmentListPage}">
+												</p:commandLink></li>
+										</ul></li>
+								</ul></li>
+							<li><p:commandLink
+									rendered="#{loginBean.userFeatures['ASSET_MANAGEMENT']}">
+									<i class="icon-furniture" style="font-size: 17px;"></i>
+									<span>Asset Management</span>
+								</p:commandLink>
+								<ul>
+									<li><p:commandLink
+											rendered="#{loginBean.userFeatures['MODERNIZATION']}">
+											<i class="icon-hammer-wrench"></i>
+											<span>Modernization</span>
+										</p:commandLink>
+										<ul class="m-l-5">
+											<li><p:commandLink
+													action="#{modernizationBean.loadModernizationPage}"
+													rendered="true" onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();">
+													<f:setPropertyActionListener value="LIST"
+														target="#{modernizationBean.pageAction}"></f:setPropertyActionListener>
+													<h:outputText
+														value="&#xf192;&nbsp; Request For Modernization"
+														class="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													action="#{modernizationEstimationBean.showList}">
+													<h:outputText
+														value="&#xf192;&nbsp; Estimation Of Modernization "
+														class="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													action="#{modernizationReportBean.loadList}">
+													<h:outputText value="&#xf192;&nbsp; Submission Of Report "
+														class="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													onclick="window.location.href='#{request.contextPath}/pages/assetManagement/listMeasurementBookEntry.xhtml'">
+													<h:outputText
+														value="&#xf192;&nbsp; Measurement Book Entry "
+														class="fa-input"></h:outputText>
+												</p:commandLink></li>
+										</ul></li>
+									<li><p:commandLink value="&#xf192;&nbsp; Asset Details "
+											styleClass="fa-input"
+											action="#{assetRegisterBean.showAssetRegisterListPage}">
+										</p:commandLink></li>
+									<li><p:commandLink rendered="#{true}"
+											styleClass="fa-input"
+											action="#{assetRequestBean.showAssetList}">
+											<h:outputText value="&#xf192;&nbsp;Asset Request"></h:outputText>
+										</p:commandLink></li>
+									<li><p:commandLink
+											onclick="window.location.href='#{request.contextPath}/pages/assetManagement/listAssetTransfer.xhtml'">
+											<h:outputText value="&#xf192;&nbsp; Asset Transfer "
+												class="fa-input"></h:outputText>
+										</p:commandLink></li>
+									<li><p:commandLink
+											action="#{assetAllocationItemsBean.showassetAllocationListPage}">
+											<h:outputText value="&#xf192;&nbsp; Asset Allocation "
+												class="fa-input"></h:outputText>
+										</p:commandLink></li>
+									<li><p:commandLink rendered="#{true}"
+											styleClass="fa-input"
+											action="#{assetDepreciationBean.showAssetDepreciationPage}">
+											<h:outputText value="&#xf192;&nbsp;Asset Depreciation"></h:outputText>
+										</p:commandLink></li>
+									<li><p:commandLink
+											action="#{assetDisposalBean.callAssetDisposalPage}"
+											onclick="PF('progressDlg').show();"
+											oncomplete="PF('progressDlg').hide();">
+											<f:setPropertyActionListener value="LIST"
+												target="#{assetDisposalBean.pageAction}"></f:setPropertyActionListener>
+											<h:outputText value="&#xf192;&nbsp; Asset Disposal"
+												class="fa-input"></h:outputText>
+										</p:commandLink></li>
+								</ul></li>
+							<li><p:commandLink
+									rendered="#{loginBean.userFeatures['PERSONAL']}">
+									<i class="glyphicon glyphicon-shopping-cart"></i>
+									<span>E-Commerce</span>
+								</p:commandLink>
+								<ul>
+									<li><p:commandLink
+											rendered="#{loginBean.userFeatures['USER_MANAGEMENT']}">
+											<i class="icon-hammer-wrench" style="font-size: 17px;"></i>
+											<span>Admin</span>
+										</p:commandLink>
+										<ul>
+											<li><p:commandLink value=" &#xf192;&nbsp; Made To Order"
+													styleClass="fa-input" immediate="true"
+													action="#{madeToOrderBean.loadMadeToOrderList}">
+												</p:commandLink></li>
+											<li><p:commandLink
+													action="#{eCommerceViewOrderBean.showEcommerceViewOrderListPage}"
+													rendered="true" onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();" update="growls">
+													<h:outputText value="&#xf192;&nbsp;View Orders"
+														class="fa-input"></h:outputText>
+												</p:commandLink></li>
+											<li><p:commandLink
+													value=" &#xf192;&nbsp; E-Commerce Menu Master"
+													styleClass="fa-input" immediate="true"
+													onclick="window.location.href='#{request.contextPath}/pages/ecommerce/admin/listEcommerceMenuMaster.xhtml'">
+												</p:commandLink></li>
+											<li><p:commandLink
+													value=" &#xf192;&nbsp; E-Commerce Product Configuration"
+													styleClass="fa-input" immediate="true"
+													onclick="window.location.href='#{request.contextPath}/pages/ecommerce/admin/listEcommerceProductConfiguration.xhtml'">
+												</p:commandLink></li>
+											<li><p:commandLink
+													action="#{newItemAdditionBean.showEcommerceItemListPage}"
+													rendered="true" onclick="PF('progressDlg').show();"
+													oncomplete="PF('progressDlg').hide();" update="growls">
+													<h:outputText value="&#xf192;&nbsp;Item Add"
+														class="fa-input"></h:outputText>
+												</p:commandLink></li>
+										</ul></li>
+								</ul></li>
+						</ui:remove>
+					</ul>
+				</div>
+			</div>
+			<!-- /main navigation -->
+		</div>
+	</div>
+	<!-- /main sidebar -->
+	<div class="clearfix"></div>
+	<!-- Left Sidebar End -->
+	<p:dialog widgetVar="progressDlg" modal="true" draggable="false"
+		styleClass="pre-loader" closable="false" resizable="false"
+		showHeader="false">
+		<img src="#{request.contextPath}/assets/images/please-wait.gif" />
+	</p:dialog>
+</ui:composition>

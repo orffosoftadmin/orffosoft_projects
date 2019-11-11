@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/pages/template/layout.xhtml">
+	<ui:define name="content">
+	<f:metadata>
+				<f:event type="preRenderView"
+					listener="#{loginBean.checkPrivilege('ITEM_MASTER_LIST')}" />
+			</f:metadata>
+		<h:form id="varitylist">
+			<f:metadata>
+				<f:viewAction action="#{productVarietyMasterBean.onPageLoad}"
+					onPostBack="true" />
+			</f:metadata>
+			<title>MarkSolution | Item Master List</title>
+			<div class="page-header page-header-default">
+				<div class="page-header-content">
+					<div class="page-title">
+						<h4>#{msg['item_master_list']}</h4>
+						<ul class="breadcrumb">
+							<li><a href="#{request.contextPath}/pages/home.xhtml"><i
+									class="icon-home2 position-left"></i>#{msg['home']}</a></li>
+							<li>#{msg['online_master_menu']}</li>
+							<li class="active">#{msg['item_master']}</li>
+						</ul>
+						<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+					</div>
+					<ui:include src="/pages/pageHeadingElements.xhtml" />
+				</div>
+			</div>
+			<div class="content">
+				<div class="row">
+					<div class="col-lg-6">
+						<h6 class="panel-title">
+							<strong><h:panelGroup id="size">
+									<h:outputText value="#{productVarietyMasterBean.planSize}" />
+								</h:panelGroup></strong> - #{msg['item']}(s)<a class="heading-elements-toggle"><i
+								class="icon-more"></i></a>
+						</h6>
+					</div>
+					<div class="col-lg-6 text-right">
+						<div class="form-group m-b-10">
+							<p:commandButton value="&#xea0e; #{msg['add']}" update="growls"
+								rendered="#{loginBean.userFeatures['ITEM_MASTER_ADD']}"
+								action="#{productVarietyMasterBean.itemAddPage}"
+								class="btn bg-success font-iconmoon m-r-0" title="#{msg['add']}"
+								id="addButton" onstart="PF('statusDialog').show()"
+								onsuccess="PF('statusDialog').hide()">
+								<f:setPropertyActionListener value="ADD"
+									target="#{productVarietyMasterBean.action}"></f:setPropertyActionListener>
+							</p:commandButton>
+							<p:commandButton value="&#xe912; #{msg['edit']}"
+								rendered="#{loginBean.userFeatures['ITEM_MASTER_EDIT']}"
+								update="growls" id="editButton"
+								onstart="PF('statusDialog').show()"
+								onsuccess="PF('statusDialog').hide()"
+								class="btn bg-primary font-iconmoon" title="#{msg['edit']}"
+								action="#{productVarietyMasterBean.showEditForm}">
+								<f:setPropertyActionListener value="EDIT"
+									target="#{productVarietyMasterBean.action}"></f:setPropertyActionListener>
+							</p:commandButton>
+
+							<p:commandButton value="&#xea18; #{msg['view']}"
+								rendered="#{loginBean.userFeatures['ITEM_MASTER_VIEW']}"
+								class="btn bg-info heading-btn  font-iconmoon"
+								title="#{msg['view']}" update="growls" id="viewButton"
+								onstart="PF('statusDialog').show()"
+								onsuccess="PF('statusDialog').hide()"
+								action="#{productVarietyMasterBean.showViewForm}">
+								<f:setPropertyActionListener value="VIEW"
+									target="#{productVarietyMasterBean.action}"></f:setPropertyActionListener>
+							</p:commandButton>
+							<ui:remove>
+							<p:commandButton value="&#xe916; #{msg['clear']}" update="growls"
+								onstart="PF('statusDialog').show()"
+								onsuccess="PF('statusDialog').hide()"
+								action="#{productVarietyMasterBean.clear}"
+								onclick="location.reload();" class="btn bg-slate font-iconmoon"
+								title="#{msg['clear']}">
+							</p:commandButton>
+							</ui:remove>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-info ">
+					<div class="panel-body p-0">
+						<div class="table-responsive">
+							<p:outputPanel id="tablepanel">
+								<p:dataTable id="table" var="data" class="table"
+									widgetVar="table" tableStyleClass="" lazy="true"
+									selection="#{productVarietyMasterBean.productVarityMasterResponse}"
+									value="#{productVarietyMasterBean.productVarietyResponseLazyDTOList}"
+									rowKey="#{data.varityId}"
+									paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									paginator="true" paginatorPosition="bottom"
+									rowsPerPageTemplate="5,10,15" rows="10" rowIndexVar="idx"
+									emptyMessage="#{msg['no_record_found']}">
+									<p:ajax event="rowSelectRadio"
+										listener="#{productVarietyMasterBean.onRowSelect}"
+										update=":#{p:component('addButton')}" />
+									<p:ajax event="filter" oncomplete="updateFilterSelection()" />
+									<p:column headerText="#{msg['s_no']}" styleClass="text-center width-3">
+										<h:outputText value="#{idx+1}" />
+									</p:column>
+
+									<p:column filterable="true" filterBy="#{data.varityCodeOrName}" styleClass="width-17" 
+										sortBy="#{data.varityCodeOrName}" filterMatchMode="contains"
+										sortable="true" headerText="#{msg['item_code']}">
+										<h:outputText value="#{data.varitycode}"></h:outputText>
+									</p:column>
+									
+									<p:column filterable="true" filterBy="#{data.varityCodeOrName}" styleClass="width-17" 
+										sortBy="#{data.varityCodeOrName}" filterMatchMode="contains"
+										sortable="true" headerText="#{msg['item_name']}">
+										<h:outputText value="#{data.varityName}"></h:outputText>
+									</p:column>
+
+									<p:column headerText="#{msg['created_date']}"
+										filterBy="#{data.createdDate}"
+										styleClass="text-center form-group_calend width-11"
+										filterMatchMode="equals" sortBy="#{data.createdDate}"
+										sortable="true">
+										<f:facet name="filter">
+											<p:calendar onchange="PF('table').filter()" navigator="true"
+												id="planFrom" pattern="dd-MMM-yyyy" placeholder="dd-mmm-yyyy"
+												mask="true"
+												styleClass="form-control calend-icon text-center">
+												<p:ajax event="dateSelect" oncomplete="PF('table').filter()" />
+											</p:calendar>
+										</f:facet>
+										<h:outputText value="#{data.createdDate}">
+											<f:convertDateTime pattern="dd-MMM-yyyy"
+												timeZone="#{loginBean.timeZone}" />
+										</h:outputText>
+									</p:column>
+									<p:column filterBy=" #{data.activeStatus}" headerText="#{msg['status']}"
+										filterMatchMode="contains" filterable="true"
+										sortBy=" #{data.activeStatus}" sortable="true"
+										styleClass="text-center width-10">
+										<f:facet name="filter">
+											<h:selectOneMenu onchange="PF('table').filter()"
+												id="statusDropdown" class="form-control select2">
+												<f:selectItem itemLabel="#{msg['select']}"
+													itemValue="#{null}" noSelectionOption="true" />
+												<f:selectItem itemLabel="#{msg['active']}" itemValue="true" />
+												<f:selectItem itemLabel="#{msg['inactive']}"
+													itemValue="false" />
+											</h:selectOneMenu>
+										</f:facet>
+
+										<h:outputText value="#{msg['active']}"
+											styleClass="label label-success sts_shortl"
+											rendered="#{data.activeStatus eq true}" />
+
+										<h:outputText value="#{msg['inactive']}"
+											styleClass="label label-default sts_shortl"
+											rendered="#{data.activeStatus eq false}" />
+
+									</p:column>
+									<p:column headerText="#{msg['select']}" selectionMode="single"
+										styleClass="width-4 text-center">
+									</p:column>
+
+								</p:dataTable>
+
+							</p:outputPanel>
+							<p:remoteCommand name="updateFilterSelection"
+								update=":#{p:component('size')}" autoRun="true" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<p:dialog header="#{msg['confirmation_delete_title']}"
+				draggable="false" modal="true"
+				styleClass="p-0 overlay-pop modal-dialog" closable="true"
+				width="30%" widgetVar="dlg1" showEffect="fade" hideEffect="fade"
+				closeOnEscape="true" resizable="false">
+				<div class="modal-body">
+					<h:outputText value="#{msg['confirmation_delete']}" />
+				</div>
+				<div class="modal-footer m-t-10">
+					<p:commandButton value="&#xed6a;&nbsp;#{msg['no']}"
+						title="#{msg['no']}"
+						styleClass="btn bg-slate heading-btn font-iconmoon"
+						onclick="PF('dlg1').hide();" />
+					<p:commandButton ajax="false"
+						styleClass="btn bg-success heading-btn font-iconmoon"
+						value="&#xed6e;&nbsp;#{msg['yes']}" title="#{msg['yes']}"
+						action="#{productVarietyMasterBean.confirmDelete}"
+						onclick="PF('dlg1').hide();">
+					</p:commandButton>
+				</div>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

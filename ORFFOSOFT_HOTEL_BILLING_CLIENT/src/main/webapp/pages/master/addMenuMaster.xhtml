@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	template="/pages/template/layout.xhtml">
+
+	<ui:define name="content">
+		<title>InfoTex | Menu</title>
+		<h:form id="form1">
+			<div class="row">
+				<div class="col-lg-6 col-md-6 col-sm-6">
+					<h4 class="page-title">
+						<h:outputLabel rendered="#{menuMasterBean.action eq 'ADD'}">#{msg['add']} #{msg['menu']}</h:outputLabel>
+					</h4>
+					<h4 class="page-title">
+						<h:outputLabel rendered="#{menuMasterBean.action eq 'EDIT'}">#{msg['edit']} #{msg['menu']}</h:outputLabel>
+					</h4>
+					<!-- <h4 class="page-title">Add Menu</h4> -->
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-6">
+					<div class="text-right">
+						<ol class="breadcrumb mt text12 ph0">
+							<li><i class="fa fa-home mr-sm"></i><a href="#">#{msg['home']}</a></li>
+							<li class="active">#{msg['master']}</li>
+							<li class="active"><h:outputLabel rendered="#{menuMasterBean.action eq 'ADD'}">#{msg['add']} #{msg['menu']}</h:outputLabel>
+				
+					
+						<h:outputLabel rendered="#{menuMasterBean.action eq 'EDIT'}">#{msg['edit']} #{msg['menu']}</h:outputLabel>
+				
+							</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+
+			<div class="panel panel-color panel-top-bor">
+				<div class="panel-body">
+					<p:outputPanel id="mgroupadd">
+						<div class="row">
+							<div class="col-lg-6 col-md-6 col-sm-6">
+								<div class="form-group">
+									<p:outputLabel value="#{msg['module']}" />
+									<p:outputLabel class="mand-sign" value="*"></p:outputLabel>
+										 
+									<h:selectOneMenu id="menugroup" converter="#{entityConverter}"
+										value="#{menuMasterBean.menuMaster.menuGroup}"
+										required="#{not empty param[submit.clientId] || not empty param[update.clientId]}"
+										requiredMessage="#{msg['module_name_req'] }"
+										class="form-control selectOneMenuGrouped">
+										<p:ajax event="change" update="groupname" />
+										<f:selectItem itemLabel="#{msg['select']} " itemValue="#{null}" noSelectionOption="true" />
+										<f:selectItems itemValue="#{p}" var="p" itemLabel="#{languageBean.localeCode eq 'ta_IN' ? (p.lname ne null ? p.lname : '') : p.name}"
+											value="#{menuMasterBean.menuGroupList}" />
+									</h:selectOneMenu>
+									<p:message for="menugroup" id="groupname" />
+								</div>
+							</div>
+
+							<div class="col-lg-6 col-md-6 col-sm-6">
+								<div class="form-group">
+									<p:outputLabel value="#{msg['menu_code']}" />
+									<p:outputLabel class="mand-sign" value="*"></p:outputLabel>
+									<p:inputText id="menucaode" a:autofocus="true" autocomplete="off" maxlength="3"
+										value="#{menuMasterBean.menuMaster.code}"
+										required="#{not empty param[submit.clientId] || not empty param[update.clientId]}"
+										requiredMessage="#{msg['menu_code_req']}" class="form-control">
+										<p:ajax event="keyup" update="msgvcode" />
+									</p:inputText>
+									<p:message for="menucaode" id="msgvcode" />
+									 <p:tooltip for="menucaode" value="#{msg['menu_code_valid_msg']}"/>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-lg-6 col-md-6 col-sm-6">
+								<div class="form-group">
+									<p:outputLabel value="#{msg['menu_name']}" />
+									<p:outputLabel class="mand-sign" value="*"></p:outputLabel>
+									<p:inputText id="nenuname" maxlength="200" autocomplete="off"
+										value="#{menuMasterBean.menuMaster.name}" 
+										onkeypress="return onlyAlphabets(event)"
+										required="#{not empty param[submit.clientId] || not empty param[update.clientId]}"
+										requiredMessage="#{msg['menu_name_req']}" class="form-control">
+										<p:ajax event="keyup" update="msgvname" />
+									</p:inputText>
+									<p:message for="nenuname" id="msgvname" />
+									 <p:tooltip for="nenuname" value="#{msg['menu_name_tooltip_msg']}"/>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-sm-6">
+								<div class="form-group">
+									<p:outputLabel value="#{msg['menu_lname']}" />
+									<p:outputLabel class="mand-sign" value="*"></p:outputLabel>
+									<p:inputText id="menulname" maxlength="200" autocomplete="off"
+										value="#{menuMasterBean.menuMaster.lname}"
+										onkeypress="return onlyAlphabets(event)"
+										required="#{not empty param[submit.clientId] || not empty param[update.clientId]}"
+										requiredMessage="#{msg['menu_lname_req']}"
+										class="form-control">
+										<p:ajax event="keyup" update="msglname" />
+									</p:inputText>
+									<p:message for="menulname" id="msglname" />
+									 <p:tooltip for="menulname" value="#{msg['menu_lname_tooltip_msg']}"/>
+								</div>
+							</div>
+
+						</div>
+
+						<div class="row">
+							<div class="col-lg-12 col-md-12 col-sm-12">
+								<div class="form-group">
+									<p:outputLabel value="#{msg['file_path']}" />
+									<p:outputLabel class="mand-sign" value="*"></p:outputLabel>
+									<p:inputText id="path"
+										value="#{menuMasterBean.menuMaster.filePath}" autocomplete="off"
+										required="#{not empty param[submit.clientId] || not empty param[update.clientId]}"
+										requiredMessage="#{msg['menu_file_path_req']}"
+										class="form-control">
+										<p:ajax event="keyup" update="msgpath" />
+									</p:inputText>
+									<p:message for="path" id="msgpath" />
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-lg-3 col-md-3 col-sm-3">
+								<div class="form-group">
+									<p:outputLabel value="#{msg['status']}" />
+									<h:selectOneMenu id="city"
+										value="#{menuMasterBean.activeStatus}"
+										styleClass="form-control">
+										<f:selectItem itemLabel="#{msg['select']}  "
+											noSelectionOption="true" />
+										<f:selectItem itemLabel="#{msg['active']}" itemValue="true" />
+										<f:selectItem itemLabel="#{msg['inactive']}" itemValue="false" />
+									</h:selectOneMenu>
+								</div>
+							</div>
+						</div>
+
+						<div class="text-right">
+							<p:commandButton value="&#xf00d;&nbsp;#{msg['cancel']}"
+								action="#{menuMasterBean.cancelMenu}" update="mgroupadd"
+								class="btn btn-sm btn-cancel waves-effect waves-light fa-input m-r-10" />
+							<p:commandButton binding="#{submit}" id="submit"
+								update="mgroupadd growls "
+								class="btn btn-success fa-input waves-effect waves-light"
+								value="&#xf00c;&nbsp;#{msg['submit']}"
+								rendered="#{menuMasterBean.action eq 'ADD'}"
+								action="#{menuMasterBean.submitMenuMaster}">
+
+								<f:setPropertyActionListener value="ADD"
+									target="#{menuMasterBean.action}"></f:setPropertyActionListener>
+							</p:commandButton>
+							<p:commandButton binding="#{update}" id="update"
+								class="btn btn-success fa-input waves-effect waves-light"
+								value="&#xf021;&nbsp;#{msg['update']}" update="mgroupadd growls"
+								rendered="#{menuMasterBean.action eq 'EDIT'}"
+								action="#{menuMasterBean.submitMenuMaster}">
+								<f:setPropertyActionListener value="EDIT"
+									target="#{menuMasterBean.action}"></f:setPropertyActionListener>
+							</p:commandButton>
+						</div>
+					</p:outputPanel>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,733 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/template/layoutWithIndividualForm.xhtml">
+	<ui:define name="content">
+		<ui:param name="bean" value="#{fileMovementBean}"></ui:param>
+		<h:form>
+			<title>InfoTex | View File Movement</title>
+			<div class="page-header page-header-default">
+				<div class="page-header-content">
+					<div class="page-title">
+						<h4>#{msg['view_file_move']}</h4>
+						<ul class="breadcrumb">
+							<li><a href="#{request.contextPath}/pages/home.xhtml"><i
+									class="icon-home2 position-left"></i>#{msg['home']}</a></li>
+							<li>#{msg['personnel']}</li>
+							<li>#{msg['admin']}</li>
+
+							<li class="active">#{msg['view_file_move']}</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+
+
+			<div class="content m-b-0">
+				<div class="">
+					<div class="panel panel-info">
+						<div class="panel-heading ">
+							<h6 class="panel-title">
+								<a data-toggle="collapse" class="block"
+									data-parent="#accordion-control-right"
+									href="#accordion-control-right-group1">#{msg['file_movmnt']}
+								</a>
+
+							</h6>
+
+						</div>
+						<div class=" page-scroll-without-process x-hide">
+							<div class="panel-body ">
+								<div class="view-style">
+									<div class="row ">
+										<div class="col-lg-3 col-md-6 col-sm-6 ">
+											<div class="form-group">
+												<p:outputLabel value="#{msg['ho_ro']}" />
+												<div class="input-group">
+													<span class=""><h:outputText
+															value="#{bean.selectedFileMovement.entityMaster.name}" /></span>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-3 col-md-6 col-sm-6 ">
+											<div class="form-group">
+												<p:outputLabel value="#{msg['enty_typ']}" />
+												<div class="input-group">
+													<span class=""><h:outputText
+															value="#{bean.entityMaster.entityTypeMaster.entityName}" /></span>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-3 col-md-6 col-sm-6 ">
+											<div class="form-group">
+												<p:outputLabel value="#{msg['entity']}" />
+												<div class="input-group">
+													<span class=""><h:outputText
+															value="#{bean.selectedFileMovement.entityMaster.name}" /></span>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-3 col-md-6 col-sm-6 ">
+											<div class="form-group">
+												<p:outputLabel value="#{msg['dept']}" />
+												<div class="input-group">
+													<span class=""><h:outputText
+															value="#{bean.selectedFileMovement.departmentMaster.name}" /></span>
+												</div>
+											</div>
+										</div>
+
+									</div>
+
+
+
+									<div class="row custom-form-1">
+										<div class="col-lg-3 col-md-6 col-sm-6 ">
+											<div class="form-group">
+												<p:outputLabel value="#{msg['sec']}" />
+												<div class="input-group">
+													<span class=""><h:outputText
+															value="#{bean.selectedFileMovement.sectionMaster.name}" /></span>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-3 col-md-6 col-sm-6 ">
+											<div class="form-group">
+												<p:outputLabel value="#{msg['emp_name']}" />
+												<div class="input-group">
+													<span class=""><h:outputText
+															value="#{bean.selectedFileMovement.empMaster.firstName}" /></span>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-3 col-md-6 col-sm-6 ">
+											<div class="form-group">
+												<p:outputLabel value="#{msg['file_num']}" />
+												<div class="input-group">
+													<span class=""><h:outputText
+															value="#{bean.movementNumber}" /></span>
+												</div>
+											</div>
+										</div>
+
+
+									</div>
+									<div class="row">
+										<div class="col-lg-3">
+											<div class="form-group">
+												<p:outputLabel value="#{msg['sub']}" />
+
+												<h:outputText value="#{bean.selectedFileMovement.subject}"
+													class="" />
+											</div>
+										</div>
+
+									</div>
+									<div class="row ">
+										<div class="col-lg-12">
+											<p:outputLabel value="#{msg['context']}" />
+											<div class="panel-body p-0">
+												<div class="tabbable wysihtml5-tabc">
+													<div class="tab-content">
+														<div class="tab-pane active" id="large-tab1">
+															<!-- WYSIHTML5 basic -->
+															<div class="panel panel-flat">
+																<form>
+																	<div class="form-group text-wysihtml5-toolbar m-b-0">
+																		<p:editor value="#{bean.selectedFileMovement.content}"></p:editor>
+																	</div>
+																</form>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-12">
+											<h6 class="m-t-0 bord_bot m-b-0">
+												<span class="iform_title"> <i
+													class="fa fa-th-large m-r-5"></i> #{msg['uploaded_doc']}
+												</span>
+											</h6>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="panel-body p-0">
+								<div class="row">
+									<div class="col-lg-12 col-md-12 col-sm-12">
+										<div class="table-responsive cust-table2">
+											<p:dataTable id="filemovementFilelisttable" var="filelist"
+												class="table"
+												value="#{bean.selectedFileMovement.fileMovementFilesList}"
+												widgetVar="filemovementFiletablewdgt" rowIndexVar="idx">
+												
+												<p:column headerText="#" class="width-3 text-center">
+													<h:outputText value="#{idx+1}" />
+												</p:column>
+												
+												
+												<p:column headerText="#{msg['name']}">
+													<f:facet name="filter">
+														<p:inputText class="form-control " />
+													</f:facet>
+													<h:outputText value="#{filelist.fileName}" />
+												</p:column>
+												
+												<p:column headerText="#{msg['type']}">
+													<f:facet name="filter">
+														<p:inputText class="form-control " />
+													</f:facet>
+													<h:outputText value="#{filelist.fileType}" />
+												</p:column>
+												
+												<p:column headerText="#{msg['size']}">
+													<f:facet name="filter">
+														<p:inputText class="form-control " />
+													</f:facet>
+													<h:outputText value="#{filelist.fileSize}" />
+												</p:column>
+												
+												<p:column headerText="#{msg['action']}" styleClass="width-15 text-center">
+													<p:commandButton value="&#xf093; #{msg['download']}"
+														actionListener="#{bean.downloadfile(filelist)}"
+														ajax="false"
+														class="ui-button ui-widget ui-state-default fa-input ui-corner-all ui-button-text-only btn btn-sm bg-primary font-iconmoon m-l-5">
+														<p:fileDownload value="#{bean.file}"></p:fileDownload>
+													</p:commandButton>
+												</p:column>
+
+											</p:dataTable>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="panel-body">
+								<div class="row label-form">
+									<h:panelGroup rendered="#{bean.approvalFlag}">
+									<div class="col-lg-3 col-md-6 col-sm-6">
+										<div class="form-group">
+											<p:outputLabel class="" value="#{msg['frwd_to']}" />
+											<div class="input-group ui-outputlabel ui-widget">
+												<span class="input-group-addon"><i
+													class="icon-forward"></i></span>
+												<h:selectOneMenu id="forwardto" styleClass="form-control"
+													converter="#{entityConverter}"
+													disabled="#{bean.buttonFlag1}"
+													value="#{bean.filemovementNote.forwardTo}">
+													<f:selectItem itemLabel="Select" noSelectionOption="true" />
+													<f:selectItems value="#{bean.userMasters}" var="userinfo"
+														itemLabel="#{userinfo.empCode} / #{userinfo.empName}"  itemValue="#{userinfo}" />
+												</h:selectOneMenu>
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-3 col-md-6 col-sm-6">
+										<div class="form-group">
+											<p:outputLabel class="" value="#{msg['frwd_for']}" />
+											<div class="input-group ui-outputlabel ui-widget">
+												<span class="input-group-addon"><i
+													class="icon-forward"></i></span>
+												<h:selectOneMenu class="form-control select2" id="frwdFor"
+												     disabled="#{bean.buttonFlag1}"
+													value="#{bean.filemovementNote.finalApproval}">
+													<f:selectItem itemLabel="#{msg['select']}" />
+													<f:selectItem itemValue="#{false}" itemLabel="Approved" />
+													<f:selectItem itemValue="#{true}"
+														itemLabel="Final Approval" />
+												</h:selectOneMenu>
+											</div>
+										</div>
+									</div>
+									</h:panelGroup>
+									
+								</div>
+
+								<div class="row m-t-10">
+									<div class="col-lg-6 col-md-4 col-sm-4">
+										<p:commandButton value="&#xea18; #{msg['view_note']}"
+											title="#{msg['view_note']}"
+											styleClass="btn btn-sm bg-info font-iconmoon m-l-0"
+											onclick="PF('notedialog').show();"></p:commandButton>
+
+										<p:commandButton value="&#xeb0d;" title="#{msg['add']}"
+											style="min-width:32px;"
+											styleClass="btn btn-primary btn-md font-iconmoon"
+											onclick="PF('commentdialog').show();"></p:commandButton>
+									</div>
+
+									<div class="col-lg-6 col-md-8 col-sm-8 text-right">
+										<p:commandButton value="&#xeddf; #{msg['back']}"
+											action="#{bean.cancel}" title="#{msg['back']}"
+											class="btn btn-sm bg-info font-iconmoon" />
+								<h:panelGroup rendered="#{bean.approvalFlag}">
+										<p:commandButton update="growls" immediate="true"
+										    disabled="#{bean.buttonFlag}"
+											onstart="PF('statusDialog').show()"
+											onsuccess="PF('statusDialog').hide()"
+											value="&#xecf6;&nbsp;#{msg['reject']}"
+											title="#{msg['reject']}" class="btn bg-danger font-iconmoon"
+											onclick="PF('dlgComments2').show();" type="button">
+
+										</p:commandButton>
+
+										<p:commandButton onstart="PF('statusDialog').show()"
+											onsuccess="PF('statusDialog').hide()"
+											value="&#xecf5;&nbsp;#{ bean.lastApprovalStatus eq 'APPROVED' ? msg['final_approve'] : msg['approve']}"
+											title="#{msg['approve']}"  
+											disabled="#{bean.buttonFlag}"
+											class="btn bg-success font-iconmoon"
+											onclick="PF('dlgComments1').show();" type="button"
+											action="#{bean.approveFileMovement}">
+                                            
+										</p:commandButton>
+                                 </h:panelGroup>
+
+									</div>
+								</div>
+							</div>
+						</div>
+						<p:dialog modal="true" draggable="true" id="dlgComment"
+							showEffect="fade" hideEffect="fade"
+							styleClass="p-0 overlay-pop modal-dialog"
+							widgetVar="dlgComments1" width="40%">
+
+							<f:facet name="header">
+								<h:outputText id="someDialogHeader"
+									value="#{msg['approve_comments']}" />
+							</f:facet>
+
+							<div class="row">
+								<div class="col-lg-12">
+									<p:outputLabel value="#{msg['remarks']}" />
+									<div class="form-group">
+										<p:inputTextarea autoResize="false" rows="4" cols="50"
+											maxlength="235" styleClass="form-control"
+											value="#{bean.approvedRemark}" id="comments1" />
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer ph0">
+								<p:commandButton value="&#xed6a;&nbsp;#{msg['cancel']}"
+									title="#{msg['cancel']}"
+									class="btn bg-slate heading-btn  font-iconmoon" ajax="false">
+								</p:commandButton>
+								<p:commandButton value="&#xed6e;&nbsp;#{msg['submit']}"
+									title="#{msg['submit']}"
+									class="btn bg-success heading-btn  font-iconmoon"
+									action="#{bean.approveFileMovement}"
+									onclick="PF('dlgComments1').hide();">
+								</p:commandButton>
+							</div>
+
+						</p:dialog>
+
+						<p:dialog modal="true" draggable="true" id="dlgComments"
+							showEffect="fade" hideEffect="fade"
+							styleClass="p-0 overlay-pop modal-dialog"
+							widgetVar="dlgComments2" width="40%">
+
+							<f:facet name="header">
+								<h:outputText id="someDialogHeader1"
+									value="#{msg['reject_comments']}" />
+							</f:facet>
+
+							<div class="row">
+								<div class="col-lg-12">
+									<p:outputLabel value="#{msg['remarks']}" />
+									<div class="form-group">
+										<p:inputTextarea autoResize="false" rows="4" cols="50"
+											maxlength="235" styleClass="form-control"
+											value="#{bean.rejectedRemark}" id="comments2" />
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer ph0">
+								<p:commandButton value="&#xed6a;&nbsp;#{msg['cancel']}"
+									title="#{msg['cancel']}"
+									class="btn bg-slate heading-btn  font-iconmoon" ajax="false">
+								</p:commandButton>
+								<p:commandButton value="&#xed6e;&nbsp;#{msg['submit']}"
+									title="#{msg['submit']}"
+									class="btn bg-success heading-btn  font-iconmoon"
+									action="#{bean.rejectCashToBank}"
+									onclick="PF('dlgComments2').hide();">
+								</p:commandButton>
+							</div>
+
+						</p:dialog>
+
+						<p:dialog header="#{msg['view_note']}" widgetVar="notedialog"
+							modal="true" showEffect="fade" hideEffect="fade"
+							resizable="false" styleClass="p-0">
+							<h:form>
+								<p:outputPanel id="customerPanel">
+									<div class="panel-body modal-lg p-0">
+										<div class="tabbable wysihtml5-tabc">
+											<ul
+												class="nav nav-lg nav-tabs nav-tabs-solid nav-tabs-component m-b-5">
+												<li class="active"><a href="#large-tab1"
+													data-toggle="tab">#{msg['note']} - 1</a></li>
+												<li class="pull-right"><a href="#large-tab2"
+													data-toggle="tab"> <i class="icon-plus3"></i></a></li>
+											</ul>
+											<div class="tab-content">
+												<div class="tab-pane active" id="large-tab1">
+													<!-- WYSIHTML5 basic -->
+													<div class="panel panel-flat">
+														<form action="#">
+															<div class="form-group text-wysihtml5-toolbar">
+																<p:textEditor value="#{bean.filemovementNote.note}"
+																	widgetVar="editor1">
+																</p:textEditor>
+															</div>
+														</form>
+													</div>
+													<div class='col-md-12'>
+														<div class="carousel slide media-carousel" id="media">
+															<div class="carousel-inner">
+																<div class="item  active">
+																	<div class="row">
+																		<div class="col-md-3">
+																			<div
+																				class="panel panel-body border-top-warning no-padding-bottom m-b-0 p-8 wysihtml5-sign">
+																				<ul class="list list-icons m-b-0">
+																					<li>
+																						<!-- <i class="icon-checkmark-circle text-success position-left"></i> -->
+																						<h6 class="m-t-0 text-center">Created By</h6>
+																					</li>
+																					<li>Name : Ramesh Kumar N</li>
+																					<li>Designation : Ramesh Kumar N</li>
+																					<li>Date : 12-Jul-2017</li>
+																				</ul>
+																			</div>
+																		</div>
+
+																		<div class="col-md-3">
+																			<div
+																				class="panel panel-body border-top-warning no-padding-bottom m-b-0 p-8 wysihtml5-sign">
+																				<ul class="list list-icons m-b-0">
+																					<li>
+																						<!-- <i class="icon-checkmark-circle text-success position-left"></i> -->
+																						<h6 class="m-t-0 text-center">Created By</h6>
+																					</li>
+																					<li>Name : Ramesh Kumar N</li>
+																					<li>Designation : Ramesh Kumar N</li>
+																					<li>Date : 12-Jul-2017</li>
+																				</ul>
+																			</div>
+																		</div>
+
+																		<div class="col-md-3">
+																			<div
+																				class="panel panel-body border-top-warning no-padding-bottom m-b-0 p-8 wysihtml5-sign">
+																				<ul class="list list-icons m-b-0">
+																					<li>
+																						<!-- <i class="icon-checkmark-circle text-success position-left"></i> -->
+																						<h6 class="m-t-0 text-center">Created By</h6>
+																					</li>
+																					<li>Name : Ramesh Kumar N</li>
+																					<li>Designation : Ramesh Kumar N</li>
+																					<li>Date : 12-Jul-2017</li>
+																				</ul>
+																			</div>
+																		</div>
+																		<div class="col-md-3">
+																			<div
+																				class="panel panel-body border-top-warning no-padding-bottom m-b-0 p-8 wysihtml5-sign">
+																				<ul class="list list-icons m-b-0">
+																					<li>
+																						<!-- <i class="icon-checkmark-circle text-success position-left"></i> -->
+																						<h6 class="m-t-0 text-center">Created By</h6>
+																					</li>
+																					<li>Name : Ramesh Kumar N</li>
+																					<li>Designation : Ramesh Kumar N</li>
+																					<li>Date : 12-Jul-2017</li>
+																				</ul>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div class="item">
+																	<div class="row">
+																		<div class="col-md-3">
+																			<div
+																				class="panel panel-body border-top-warning no-padding-bottom m-b-0 p-8 wysihtml5-sign">
+																				<ul class="list list-icons m-b-0">
+																					<li>
+																						<!-- <i class="icon-checkmark-circle text-success position-left"></i> -->
+																						<h6 class="m-t-0 text-center">Created By</h6>
+																					</li>
+																					<li>Name : Ramesh Kumar N</li>
+																					<li>Designation : Ramesh Kumar N</li>
+																					<li>Date : 12-Jul-2017</li>
+																				</ul>
+																			</div>
+																		</div>
+
+																		<div class="col-md-3">
+																			<div
+																				class="panel panel-body border-top-warning no-padding-bottom m-b-0 p-8 wysihtml5-sign">
+																				<ul class="list list-icons m-b-0">
+																					<li>
+																						<h6 class="m-t-0 text-center">Created By</h6>
+																					</li>
+																					<li>Name : Ramesh Kumar N</li>
+																					<li>Designation : Ramesh Kumar N</li>
+																					<li>Date : 12-Jul-2017</li>
+																				</ul>
+																			</div>
+																		</div>
+
+																		<div class="col-md-3">
+																			<div
+																				class="panel panel-body border-top-warning no-padding-bottom m-b-0 p-8 wysihtml5-sign">
+																				<ul class="list list-icons m-b-0">
+																					<li>
+																						<h6 class="m-t-0 text-center">Created By</h6>
+																					</li>
+																					<li>Name : Ramesh Kumar N</li>
+																					<li>Designation : Ramesh Kumar N</li>
+																					<li>Date : 12-Jul-2017</li>
+																				</ul>
+																			</div>
+																		</div>
+																		<div class="col-md-3">
+																			<div
+																				class="panel panel-body border-top-warning no-padding-bottom m-b-0 p-8 wysihtml5-sign">
+																				<ul class="list list-icons m-b-0">
+																					<li>
+																						<h6 class="m-t-0 text-center">Created By</h6>
+																					</li>
+																					<li>Name : Ramesh Kumar N</li>
+																					<li>Designation : Ramesh Kumar N</li>
+																					<li>Date : 12-Jul-2017</li>
+																				</ul>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div class="item">
+																	<div class="row">
+																		<div class="col-md-3">
+																			<div
+																				class="panel panel-body border-top-warning no-padding-bottom m-b-0 p-8 wysihtml5-sign">
+																				<ul class="list list-icons m-b-0">
+																					<li>
+																						<h6 class="m-t-0 text-center">Created By</h6>
+																					</li>
+																					<li>Name : Ramesh Kumar N</li>
+																					<li>Designation : Ramesh Kumar N</li>
+																					<li>Date : 12-Jul-2017</li>
+																				</ul>
+																			</div>
+																		</div>
+
+																		<div class="col-md-3">
+																			<div
+																				class="panel panel-body border-top-warning no-padding-bottom m-b-0 p-8 wysihtml5-sign">
+																				<ul class="list list-icons m-b-0">
+																					<li>
+																						<h6 class="m-t-0 text-center">Created By</h6>
+																					</li>
+																					<li>Name : Ramesh Kumar N</li>
+																					<li>Designation : Ramesh Kumar N</li>
+																					<li>Date : 12-Jul-2017</li>
+																				</ul>
+																			</div>
+																		</div>
+
+																		<div class="col-md-3">
+																			<div
+																				class="panel panel-body border-top-warning no-padding-bottom m-b-0 p-8 wysihtml5-sign">
+																				<ul class="list list-icons m-b-0">
+																					<li>
+																						<!-- <i class="icon-checkmark-circle text-success position-left"></i> -->
+																						<h6 class="m-t-0 text-center">Created By</h6>
+																					</li>
+																					<li>Name : Ramesh Kumar N</li>
+																					<li>Designation : Ramesh Kumar N</li>
+																					<li>Date : 12-Jul-2017</li>
+																				</ul>
+																			</div>
+																		</div>
+																		<div class="col-md-3">
+																			<div
+																				class="panel panel-body border-top-warning no-padding-bottom m-b-0 p-8 wysihtml5-sign">
+																				<ul class="list list-icons m-b-0">
+																					<li>
+																						<!-- <i class="icon-checkmark-circle text-success position-left"></i> -->
+																						<h6 class="m-t-0 text-center">Created By</h6>
+																					</li>
+																					<li>Name : Ramesh Kumar N</li>
+																					<li>Designation : Ramesh Kumar N</li>
+																					<li>Date : 12-Jul-2017</li>
+																				</ul>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<a data-slide="prev" href="#media"
+																class="left carousel-control">‹</a> <a data-slide="next"
+																href="#media" class="right carousel-control">›</a>
+														</div>
+													</div>
+												</div>
+
+
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-lg-12 col-md-12 col-sm-12 text-right">
+												<div class="form-group m-b-0">
+													<p:commandButton value="&#xed6a;&nbsp;#{msg['cancel']}"
+														title="#{msg['cancel']}"
+														onclick="PF('notedialog').hide();"
+														class="btn bg-slate heading-btn  font-iconmoon" />
+													<p:commandButton value="&#xed6e;&nbsp;#{msg['submit']}"
+														title="#{msg['submit']}" action="#{bean.submitFileNote}"
+														oncomplete="PF('notedialog').hide();"
+														class="btn bg-success heading-btn  font-iconmoon" />
+												</div>
+											</div>
+										</div>
+									</div>
+								</p:outputPanel>
+							</h:form>
+						</p:dialog>
+
+						<p:dialog header="#{msg['comment']}" widgetVar="commentdialog"
+							modal="true" showEffect="fade" hideEffect="fade"
+							resizable="false" styleClass="p-0">
+							<h:form>
+								<p:outputPanel id="customerPanel">
+									<div class="panel panel-flat">
+										<div class="panel-body p-0">
+											<div class="tabbable">
+												<ul class="nav nav-tabs nav-tabs-bottom">
+													<li class="active"><a href="#solid-tab1"
+														data-toggle="tab"><i class="icon-thumbs-up3"></i>
+															#{msg['approve']}</a></li>
+													<li><a href="#solid-tab2" data-toggle="tab"><i
+															class="icon-thumbs-down3"></i> #{msg['reject']}</a></li>
+												</ul>
+
+												<div class="tab-content">
+													<div class="tab-pane active" id="solid-tab1">
+														<table class="table table-striped cust-table">
+															<tbody>
+																<tr class="success">
+																	<td><strong>#{msg['appcommts']}</strong></td>
+																	<td><span class="pull-left m-b-10">Given By</span>
+																		<span
+																		class="label label-flat border-success text-success-600 pull-right m-b-10">Admin
+																			User</span> <br /> <span class="pull-left">Given
+																			Date</span> <span
+																		class="label label-flat border-warning text-warning-600 pull-right">12-Dec-2017
+																	</span></td>
+																	<td>100% Cotton printed Bed spread, printed with
+																		fast Rapid Indigo colours and with over...</td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+
+													<div class="tab-pane" id="solid-tab2">
+														<table class="table table-striped cust-table">
+															<tbody>
+																<tr class="success">
+																	<td><strong>#{msg['rejection_comments']}</strong></td>
+																	<td><span class="pull-left m-b-10">Given By</span>
+																		<span
+																		class="label label-flat border-success text-success-600 pull-right m-b-10">Admin
+																			User</span> <br /> <span class="pull-left">Given
+																			Date</span> <span
+																		class="label label-flat border-warning text-warning-600 pull-right">12-Dec-2017
+																	</span></td>
+																	<td>100% Cotton printed Bed spread, printed with
+																		fast Rapid Indigo colours and with over...</td>
+																</tr>
+
+																<tr>
+																	<td><strong>Reply Comment</strong></td>
+																	<td><span class="pull-left m-b-10">Given By</span>
+																		<span
+																		class="label label-flat border-success text-success-600 pull-right m-b-10">Admin
+																			User</span> <br /> <span class="pull-left">Given
+																			Date</span> <span
+																		class="label label-flat border-warning text-warning-600 pull-right">12-Dec-2017
+																	</span></td>
+																	<td><textarea name="enter-message"
+																			class="form-control" rows="3" cols="1"
+																			placeholder="What's on your mind?"></textarea></td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-12 col-md-12 col-sm-12 text-right">
+											<div class="form-group m-b-0">
+												<p:commandButton value="&#xed6a;&nbsp;#{msg['cancel']}"
+													title="#{msg['cancel']}"
+													onclick="location.href='createAmountTransferCashToBank.xhtml';"
+													class="btn bg-slate heading-btn  font-iconmoon" />
+												<p:commandButton value="&#xed6e;&nbsp;#{msg['submit']}"
+													title="#{msg['submit']}"
+													class="btn bg-success heading-btn  font-iconmoon" />
+											</div>
+										</div>
+									</div>
+								</p:outputPanel>
+							</h:form>
+						</p:dialog>
+
+					</div>
+
+
+				</div>
+			</div>
+
+
+
+
+
+
+
+			<script>
+				/*
+				 //  jquery equivalent
+				 jQuery(document).ready(function() {
+				 jQuery(".main-table").clone(true).appendTo('#table-scroll .faux-table').addClass('clone');
+				 jQuery(".main-table.clone").clone(true).appendTo('#table-scroll .faux-table').addClass('clone2'); 
+				 });
+				 */
+				(function() {
+					var fauxTable = document.getElementById("faux-table");
+					var mainTable = document.getElementById("main-table");
+					var clonedElement = mainTable.cloneNode(true);
+					var clonedElement2 = mainTable.cloneNode(true);
+					clonedElement.id = "";
+					clonedElement2.id = "";
+					fauxTable.appendChild(clonedElement);
+					fauxTable.appendChild(clonedElement2);
+				})();
+			</script>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,41 @@
+.input-group-addon { background-color: #eeeeee; padding: 6px 12px; }
+.mand-red { color: red }
+.p-0 { padding: 0 }
+.m-b-0 { margin-bottom: 0 }
+.cust-table { width: 100%; }
+.cust-table thead tr th { background: #26a69a !important; color: #fff !important; font-size: 13px; text-align: center; border: 1px solid #ccc !important; padding: 4px 6px 8px; white-space: normal; }
+.cust-table td { color: #333; font-size: 13px; border: 1px solid #ccc !important; padding: 4px 6px !important; }
+.cust-table input { height: 30px }
+.cust-table input[type="radio"] { height: auto; }
+.cust-table input[type="checkbox"] { height: 0 }
+.date-pik .picker__holder { color: #444; width: 260px; position: fixed }
+.date-pik .picker__holder .picker__box { padding: 0 }
+.date-pik .picker__holder .picker__footer { display: none }
+.date-pik .picker__holder .picker__header { padding-top: 5px; padding-bottom: 5px; }
+.date-pik .picker__holder .picker__table { margin-bottom: 0 }
+.date-pik .picker__holder .picker__weekday { padding: 10px 0 ; background-color: #26A69A; color: #fff}
+.date-pik .picker__table th { border: none !important }
+.date-pik .picker__table td { padding: 0 !important; border: none !important }
+
+.fa-input { font-family: FontAwesome, "Roboto", "Helvetica Neue",  sans-serif !important; font-size: 13px; }
+.navbar-brand { padding: 0px 0px 0px 11px; line-height: 40px; }
+.navbar-brand>img { height: 32px; display: inline-block; margin-right: 6px; }
+span.brand-title { font-size: 22px; color: #fff; font-family: "Roboto", Helvetica Neue, Helvetica, Arial, sans-serif; font-weight: 500; line-height: 0; display: inline-block; padding-top: 0; vertical-align: middle; }
+.navbar.navbar-fixed-bottom { min-height: 36px; }
+.navbar.navbar-fixed-bottom .navbar-text { padding: 8px 20px; float: none; }
+.page-scroll { overflow: auto; overflow-x: hidden; height: 480px; }
+/* view screen style */
+.view-style .form-group label {
+	font-size: 1em;
+	display: block;
+	padding: 0 0 5px 0;
+	margin: 0 0 5px 0;
+	border-bottom: 1px solid #eee;
+	font-weight: 500;
+}
+.view-style .form-group span, .view-style .form-group p, .view-style .form-group span label {
+	color: #08A1B4;
+	font-weight: 500;
+	display: block;
+	word-break: break-word;
+}

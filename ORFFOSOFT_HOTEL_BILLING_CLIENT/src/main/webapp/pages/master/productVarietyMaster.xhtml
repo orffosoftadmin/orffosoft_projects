@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+		xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	template="/pages/template/layout.xhtml">
+	<ui:define name="content">
+		<title>InfoTex | Product Variety</title>
+		<h:form id="prodForm">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="clearfix">
+						<div class="pull-left">
+							<h4 class="page-title">
+								<h:outputLabel
+									rendered="#{productVarietyMasterBean.action eq 'ADD'}">#{msg['add']} #{msg['prod_variety_master']}</h:outputLabel>
+							</h4>
+							<h4 class="page-title">
+								<h:outputLabel
+									rendered="#{productVarietyMasterBean.action eq 'EDIT'}">#{msg['edit']} #{msg['prod_variety_master']}</h:outputLabel>
+							</h4>
+							<h4 class="page-title">
+								<h:outputLabel
+									rendered="#{productVarietyMasterBean.action eq 'VIEW'}">#{msg['view']} #{msg['prod_variety_master']}</h:outputLabel>
+							</h4>
+							<!-- <h4 class="page-title">#{msg['prod_variety_master']}</h4> -->
+						</div>
+						<div class="pull-right">
+							<ol class="breadcrumb hidden-xs mt text12 ph0">
+								<li><i class="fa fa-home mr-sm"></i><a href="#">#{msg['home']}</a></li>
+								<li>#{msg['master']}</li>
+								<li class="active"><h:outputLabel
+										rendered="#{productVarietyMasterBean.action eq 'ADD'}">#{msg['add']} #{msg['prod_variety_master']}</h:outputLabel>
+									<h:outputLabel
+										rendered="#{productVarietyMasterBean.action eq 'EDIT'}">#{msg['edit']} #{msg['prod_variety_master']}</h:outputLabel>
+									<h:outputLabel
+										rendered="#{productVarietyMasterBean.action eq 'VIEW'}">#{msg['view']} #{msg['prod_variety_master']}</h:outputLabel>
+
+								</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+			</div>
+			<p:outputPanel id="prodPannal"
+				styleClass="#{productVarietyMasterBean.action eq 'VIEW' ? 'view_style' : ''}">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="panel panel-default panel-top-bor">
+							<div class="panel-body">
+								<p:outputPanel
+									rendered="#{productVarietyMasterBean.action ne 'VIEW'}">
+									<div class="col-md-12 m-b-10">
+										<div class="text-right">
+											<p:outputLabel>
+												<span class="mand-red">*</span>
+												<span class="reqd_msg">#{msg['mrk_mand']}</span>
+											</p:outputLabel>
+										</div>
+									</div>
+								</p:outputPanel>
+								<h4 class="bord_bot">
+									<i class="fa fa-th-large m-r-5"></i> <span class="iform-title">#{msg['general']}</span>
+								</h4>
+								<div class="row">
+									<div class="col-md-3">
+										<div class="form-group">
+											<p:outputLabel
+												value="#{msg['prod_category_code']} - #{msg['name']}" />
+											<p:outputLabel
+												rendered="#{productVarietyMasterBean.action ne 'VIEW'}"
+												class="mand-sign" value="*"></p:outputLabel>
+											<!-- 	<span class="mand-sign-input">*</span> -->
+											<h:selectOneMenu tabindex="1" id="ccode"
+												converter="#{entityConverter}"
+												required="#{not empty param[submit.clientId]  || not empty param[update.clientId]}"
+												requiredMessage="#{msg['category_code_req_msg']}"
+												disabled="#{productVarietyMasterBean.action eq 'VIEW'}"
+												value="#{productVarietyMasterBean.productCategoryDto}"
+												class="form-control selectOneMenuGrouped">
+												<p:ajax event="change"
+													listener="#{productVarietyMasterBean.onProductCategoryChange}"
+													update=" gcode msgccode " />
+												<f:selectItem itemLabel="#{msg['select']} "
+													itemValue="#{null}" noSelectionOption="true" />
+												<f:selectItems itemValue="#{p}" var="p"
+													itemLabel="#{p.productCatCode} - #{languageBean.localeCode eq 'ta_IN' ? (p.regionalName ne null ? p.regionalName : '') : p.productCatName} "
+													value="#{productVarietyMasterBean.productCategoryDtoList}" />
+
+											</h:selectOneMenu>
+											<p:message for="ccode" id="msgccode" />
+										</div>
+									</div>
+
+									<div class="col-md-3">
+										<div class="form-group">
+											<p:outputLabel
+												value="#{msg['prod_group_code']} -  #{msg['name']}" />
+											<p:outputLabel
+												rendered="#{productVarietyMasterBean.action ne 'VIEW'}"
+												class="mand-sign" value="*"></p:outputLabel>
+											<h:selectOneMenu tabindex="1" id="gcode"
+												converter="#{entityConverter}"
+												required="#{not empty param[submit.clientId] || not empty param[update.clientId] }"
+												requiredMessage="#{msg['group_code_require']}"
+												value="#{productVarietyMasterBean.productGroupDto}"
+												disabled="#{productVarietyMasterBean.action eq 'VIEW'}"
+												class="form-control">
+												<p:ajax event="change" update="msggcode" />
+												<f:selectItem itemLabel="#{msg['select']} "
+													itemValue="#{null}" noSelectionOption="true" />
+												<f:selectItems itemValue="#{p}" var="p"
+													itemLabel="#{p.code} - #{languageBean.localeCode eq 'ta_IN' ? (p.lname ne null ? p.lname : '') : p.name}"
+													value="#{productVarietyMasterBean.productGroupDtoList}" />
+											</h:selectOneMenu>
+											<p:message for="gcode" id="msggcode" />
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<p:outputLabel class="fa-input"
+												value="#{msg['prod_variey_code']}" />
+											<p:outputLabel
+												rendered="#{productVarietyMasterBean.action ne 'VIEW'}"
+												class="mand-sign" value="*"></p:outputLabel>
+											<p:inputText a:autofocus="true" id="vcode" maxlength="4" class="form-control"
+												autocomplete="off"
+												
+												required="#{not empty param[submit.clientId] || not empty param[update.clientId] }"
+												requiredMessage="#{msg['product_variety_code_req']}"
+												disabled="#{productVarietyMasterBean.action eq 'VIEW' || productVarietyMasterBean.action eq 'EDIT'}"
+												value="#{productVarietyMasterBean.productVarietyMasterDTO.code}"
+												onkeypress="return checkAlphaNumeric(event)">
+												<p:ajax event="keyup" update="msgvcode" />
+											</p:inputText>
+											<p:message for="vcode" id="msgvcode" />
+
+											<p:tooltip for="vcode"
+												rendered="#{productVarietyMasterBean.action eq 'ADD' }"
+												value="#{msg['product_variety_code_valid_msg']}"></p:tooltip>
+
+
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<p:outputLabel value="#{msg['prod_variety_name']}" />
+											<p:outputLabel
+												rendered="#{productVarietyMasterBean.action ne 'VIEW'}"
+												class="mand-sign" value="*"></p:outputLabel>
+											<p:inputText id="vname" maxlength="100" class="form-control"
+												required="#{not empty param[submit.clientId] || not empty param[update.clientId] }"
+												autocomplete="off"
+												requiredMessage="#{msg['product_variety_name_req']}"
+												disabled="#{productVarietyMasterBean.action eq 'VIEW'}"
+												onkeypress="return onlyAlphaNumberSpace(event)"
+												value="#{productVarietyMasterBean.productVarietyMasterDTO.name}">
+												<p:ajax event="keyup" update="msgvname" />
+											</p:inputText>
+											<p:message for="vname" id="msgvname" />
+
+											<p:tooltip for="vname"
+												rendered="#{productVarietyMasterBean.action eq 'ADD' or productVarietyMasterBean.action eq 'EDIT'}"
+												value="#{msg['product_variety_name_valid_msg']}"></p:tooltip>
+
+										</div>
+									</div>
+									<div class="clearfix"></div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<p:outputLabel class="fa-input"
+												value="#{msg['prod_variety_lname']}" />
+											<p:outputLabel
+												rendered="#{productVarietyMasterBean.action ne 'VIEW'}"
+												class="mand-sign" value="*"></p:outputLabel>
+											<p:inputText id="vlname" maxlength="100" class="form-control"
+												required="#{not empty param[submit.clientId] || not empty param[update.clientId] }"
+												autocomplete="off"
+												onkeypress="return onlyAlphaNumberSpace(event)"
+												requiredMessage="#{msg['product_variety_lname_req']}"
+												disabled="#{productVarietyMasterBean.action eq 'VIEW'}"
+												value="#{productVarietyMasterBean.productVarietyMasterDTO.lname}">
+												<p:ajax event="keyup" update="msgvlname" />
+											</p:inputText>
+											<p:message for="vlname" id="msgvlname" />
+
+											<p:tooltip for="vlname"
+												rendered="#{productVarietyMasterBean.action eq 'ADD' or productVarietyMasterBean.action eq 'EDIT'}"
+												value="#{msg['product_variety_name_valid_msg']}" />
+
+										</div>
+									</div>
+								</div>
+								<h4 class="bord_bot">
+									<i class="fa fa-th-large m-r-5"></i> <span class="iform-title">#{msg['specifications']}</span>
+								</h4>
+								<div class="row">
+									<div class="col-md-6">
+										<h3 class="sub-title m-t-0">#{msg['length_of_product']}</h3>
+
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+													<p:outputLabel value="#{msg['actual_value']}" />
+
+													<p:inputNumber id="zccc"
+														styleClass="form-control no_border " minValue="0.00"
+														maxValue="9999.99" decimalPlaces="2" autocomplete="off"
+														roundMethod="disabled"
+														disabled="#{productVarietyMasterBean.action eq 'VIEW'}"
+														value="#{productVarietyMasterBean.productVarietyMasterDTO.lengthActual}">
+
+													</p:inputNumber>
+													<p:tooltip for="zccc"
+														rendered="#{productVarietyMasterBean.action eq 'ADD' or productVarietyMasterBean.action eq 'EDIT'}"
+														value="#{msg['actual_value_tooltip_msg']}" />
+
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<p:outputLabel value="#{msg['tolerance_value']}" />
+													<p:inputNumber id="z" minValue="0.00" maxValue="9999.99"
+														decimalPlaces="2" styleClass="form-control no_border "
+														maxlength="7" roundMethod="disabled"
+														disabled="#{productVarietyMasterBean.action eq 'VIEW'}"
+														autocomplete="off"
+														value="#{productVarietyMasterBean.productVarietyMasterDTO.lengthTolerance}">
+													</p:inputNumber>
+
+													<p:message for="z" id="ttPercent" styleClass="" />
+
+													<p:tooltip for="z"
+														rendered="#{productVarietyMasterBean.action eq 'ADD' or productVarietyMasterBean.action eq 'EDIT'}"
+														value="#{msg['tolerance_value_tooltip_msg']} #{productVarietyMasterBean.percentTole} #{msg['percent_actual']}">
+													</p:tooltip>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<h3 class="sub-title m-t-0">#{msg['width_of_product']}</h3>
+
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+													<p:outputLabel for="d" value="#{msg['actual_value']}" />
+													<p:inputNumber id="d" styleClass="form-control no_border "
+														maxlength="7" minValue="0.00" maxValue="9999.99"
+														decimalPlaces="2"
+														disabled="#{productVarietyMasterBean.action eq 'VIEW'}"
+														autocomplete="off" roundMethod="disabled"
+														value="#{productVarietyMasterBean.productVarietyMasterDTO.widthActual}">
+													</p:inputNumber>
+
+													<p:tooltip for="d"
+														rendered="#{productVarietyMasterBean.action eq 'ADD' or productVarietyMasterBean.action eq 'EDIT'}"
+														value="#{msg['actual_value_tooltip_msg']}" />
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<p:outputLabel for="de" class="fa-input"
+														value="#{msg['tolerance_value']}" />
+													<p:inputNumber id="de" styleClass="form-control no_border "
+														maxlength="7" minValue="0.00" maxValue="9999.99"
+														decimalPlaces="2"
+														disabled="#{productVarietyMasterBean.action eq 'VIEW'}"
+														autocomplete="off" roundMethod="disabled"
+														value="#{productVarietyMasterBean.productVarietyMasterDTO.widthTolerance}">
+													</p:inputNumber>
+
+													<p:tooltip for="de"
+														rendered="#{productVarietyMasterBean.action eq 'ADD' or productVarietyMasterBean.action eq 'EDIT'}"
+														value="#{msg['tolerance_value_tooltip_msg']} #{productVarietyMasterBean.percentTole} #{msg['percent_actual']}" />
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<!-- Warp Details -->
+									<div class="col-md-6">
+										<h3 class="sub-title m-t-0">#{msg['warp_yarn']}</h3>
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+													<p:outputLabel for="WarpType"
+														value="#{msg['warp_yarn_type']}" />
+													<h:selectOneMenu tabindex="1" id="WarpType"
+														converter="#{entityConverter}"
+														disabled="#{productVarietyMasterBean.action eq 'VIEW'}"
+														value="#{productVarietyMasterBean.productVarietyMasterDTO.warpyarnTypeMasterDTO}"
+														class="form-control">
+
+														<f:selectItem itemLabel="#{msg['select']} "
+															itemValue="#{null}" noSelectionOption="false" />
+														<f:selectItems itemValue="#{p}" var="p"
+															itemLabel="#{p.name} "
+															value="#{productVarietyMasterBean.yarnTypeMasterDtoList}" />
+													</h:selectOneMenu>
+													<p:message for="WarpType" />
+												</div>
+											</div>
+
+											<div class="col-md-6">
+												<div class="form-group">
+													<p:outputLabel for="fk" class="fa-input"
+														value="#{msg['warp_yarn_waight']}" />
+													<p:inputNumber id="fk" styleClass="form-control no_border "
+														maxlength="7" minValue="0.00" maxValue="9999.99"
+														decimalPlaces="2" autocomplete="off"
+														roundMethod="disabled"
+														disabled="#{productVarietyMasterBean.action eq 'VIEW'}"
+														value="#{productVarietyMasterBean.productVarietyMasterDTO.warpYarnWeight}">
+													</p:inputNumber>
+
+													<p:tooltip for="fk"
+														rendered="#{productVarietyMasterBean.action eq 'ADD' or productVarietyMasterBean.action eq 'EDIT'}"
+														value="#{msg['waight_tooltip_msg']}" />
+
+												</div>
+											</div>
+										</div>
+										<!-- <h3 class="sub-title">Warp Yarn Count</h3> -->
+										<!-- <div class="row">
+									
+										<div class="col-md-6">
+										<p:outputLabel for="g" class="fa-input" value="Actual Value" />
+											<p:inputNumber id="g" maxlength="7" maxValue="9999.99" decimalPlaces="2"
+												styleClass="form-control no_border text-right" 
+												disabled="#{productVarietyMasterBean.action eq 'VIEW'}"
+												value="#{productVarietyMasterBean.productVarietyMasterDTO.warpYarnCountActual}" >
+												<f:validateDoubleRange minimum="0000.00" maximum="9999.99"></f:validateDoubleRange>
+												</p:inputNumber>
+												<p:tooltip for="g"
+														value="Actual Value should be between 0000.00 to 9999.99"></p:tooltip>
+										</div>
+										<div class="col-md-6">
+										<p:outputLabel for="g" class="fa-input" value="Tolerance Value" />
+											<p:inputText id="h" maxlength="30"
+												class="form-control text-right"
+												 
+												disabled="#{productVarietyMasterBean.action eq 'VIEW'}"
+												value="#{productVarietyMasterBean.productVarietyMasterDTO.warpYarnCountTolerance}"/>
+									
+									
+										</div>
+									</div> -->
+
+									</div>
+									<!-- wraft Details -->
+									<div class="col-md-6">
+										<h3 class="sub-title m-t-0">#{msg['weft_yarn']}</h3>
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+													<p:outputLabel for="weftType"
+														value="#{msg['weft_yarn_type']}" />
+													<h:selectOneMenu tabindex="1" id="weftType"
+														converter="#{entityConverter}"
+														disabled="#{productVarietyMasterBean.action eq 'VIEW'}"
+														value="#{productVarietyMasterBean.productVarietyMasterDTO.weftyarnTypeMasterDTO}"
+														class="form-control">
+
+														<f:selectItem itemLabel="#{msg['select']} "
+															itemValue="#{null}" noSelectionOption="false" />
+														<f:selectItems itemValue="#{p}" var="p"
+															itemLabel="#{p.name} "
+															value="#{productVarietyMasterBean.yarnTypeMasterDtoList}" />
+													</h:selectOneMenu>
+													<p:message for="weftType" />
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<p:outputLabel for="i" class="fa-input"
+														value="#{msg['weft_yarn_waight']}" />
+													<p:inputNumber id="i" maxlength="7" minValue="0.00"
+														maxValue="9999.99" decimalPlaces="2"
+														styleClass="form-control no_border " autocomplete="off"
+														roundMethod="disabled"
+														disabled="#{productVarietyMasterBean.action eq 'VIEW'}"
+														value="#{productVarietyMasterBean.productVarietyMasterDTO.weftYarnWeight}">
+													</p:inputNumber>
+
+													<p:tooltip for="i"
+														rendered="#{productVarietyMasterBean.action eq 'ADD' or productVarietyMasterBean.action eq 'EDIT'}"
+														value="#{msg['waight_tooltip_msg']}" />
+
+												</div>
+											</div>
+										</div>
+										<!-- <h3 class="sub-title">Weft Yarn Count</h3> -->
+										<!-- <div class="row">
+										<div class="col-md-6">
+									 	<p:outputLabel for="j" class="fa-input" value="Actual Value" />
+										<p:inputNumber id="j" maxlength="7" maxValue="9999.99" decimalPlaces="2"
+												styleClass="form-control no_border text-right" 
+												autocomplete="off" onkeypress="return checkNumbers(event)" 
+												disabled="#{productVarietyMasterBean.action eq 'VIEW'}"
+												value="#{productVarietyMasterBean.productVarietyMasterDTO.weftYarnCountActual}">
+												</p:inputNumber>
+												<p:tooltip for="j"
+														value="Actual Value should be between 0000.00 to 9999.99"></p:tooltip>
+										</div>
+										<div class="col-md-6">
+										<p:outputLabel for="j" class="fa-input" value="Tolerance Value" />
+										<p:inputText id="k" maxlength="7" maxValue="9999.99" decimalPlaces="2"
+												styleClass="form-control no_border text-right" 
+												autocomplete="off" onkeypress="return checkNumbers(event)"
+												
+												disabled="#{productVarietyMasterBean.action eq 'VIEW'}"
+												value="#{productVarietyMasterBean.productVarietyMasterDTO.weftYarnCountTolerance}">
+												</p:inputText>
+										</div>
+									</div> -->
+
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6">
+										<h3 class="sub-title m-t-0">#{msg['reed_pick_per_inch']}</h3>
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+													<p:outputLabel for="pick" class="fa-input"
+														value="#{msg['actual_value']}" />
+													<p:inputNumber id="pick" maxlength="7" minValue="0"
+														maxValue="9999.99" decimalPlaces="2"
+														styleClass="form-control no_border " autocomplete="off"
+														roundMethod="disabled"
+														disabled="#{productVarietyMasterBean.action eq 'VIEW'}"
+														value="#{productVarietyMasterBean.productVarietyMasterDTO.picksPerInchActual}">
+
+													</p:inputNumber>
+
+													<p:tooltip for="pick"
+														rendered="#{productVarietyMasterBean.action eq 'ADD' or productVarietyMasterBean.action eq 'EDIT'}"
+														value="#{msg['actual_value_tooltip_msg']}" />
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<p:outputLabel for="m" class="fa-input"
+														value="#{msg['tolerance_value']}" />
+													<p:inputNumber id="m" styleClass="form-control no_border "
+														autocomplete="off" roundMethod="disabled"
+														disabled="#{productVarietyMasterBean.action eq 'VIEW'}"
+														value="#{productVarietyMasterBean.productVarietyMasterDTO.picksPerInchTolerance}">
+
+													</p:inputNumber>
+
+													<p:tooltip for="m"
+														rendered="#{productVarietyMasterBean.action eq 'ADD' or productVarietyMasterBean.action eq 'EDIT'}"
+														value="#{msg['tolerance_value_tooltip_msg']} #{productVarietyMasterBean.percentTole} #{msg['percent_actual']}" />
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<h3 class="sub-title m-t-0">#{msg['reed_end_per_inch']}</h3>
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+													<p:outputLabel for="n" class="fa-input"
+														value="#{msg['actual_value']}" />
+													<p:inputNumber id="n" maxlength="7" minValue="0.00"
+														maxValue="9999.99" decimalPlaces="2"
+														styleClass="form-control no_border " autocomplete="off"
+														roundMethod="disabled"
+														disabled="#{productVarietyMasterBean.action eq 'VIEW'}"
+														value="#{productVarietyMasterBean.productVarietyMasterDTO.endspPerInchActual}">
+
+													</p:inputNumber>
+
+													<p:tooltip for="n"
+														rendered="#{productVarietyMasterBean.action eq 'ADD' or productVarietyMasterBean.action eq 'EDIT'}"
+														value="#{msg['actual_value_tooltip_msg']}" />
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<p:outputLabel for="readT" class="fa-input"
+														value="#{msg['tolerance_value']}" />
+													<p:inputNumber id="readT" maxlength="7" maxValue="9999.99"
+														decimalPlaces="2" styleClass="form-control no_border "
+														autocomplete="off" roundMethod="disabled"
+														disabled="#{productVarietyMasterBean.action eq 'VIEW'}"
+														value="#{productVarietyMasterBean.productVarietyMasterDTO.endsPerInchTolerance}">
+													</p:inputNumber>
+
+													<p:tooltip for="readT"
+														rendered="#{productVarietyMasterBean.action eq 'ADD' or productVarietyMasterBean.action eq 'EDIT'}"
+														value="#{msg['tolerance_value_tooltip_msg']} #{productVarietyMasterBean.percentTole} #{msg['percent_actual']}" />
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-3">
+										<div class="form-group">
+											<label class="control-label">#{msg['status']}</label>
+											<p:selectOneMenu id="status"
+												styleClass="form-control int-drop"
+												disabled="#{productVarietyMasterBean.action eq 'VIEW'}"
+												value="#{productVarietyMasterBean.productVarietyMasterDTO.activeStatus}">
+
+												<f:selectItem itemLabel="#{msg['active']}"
+													itemValue="#{true}"></f:selectItem>
+												<f:selectItem itemLabel="#{msg['inactive']}"
+													itemValue="#{false}"></f:selectItem>
+											</p:selectOneMenu>
+										</div>
+									</div>
+									
+									<!-- Modifyed Date-->
+									 <!-- <div class="col-md-3">
+												<div class="form-group">
+													<p:outputLabel for="rea" class="fa-input" 	rendered="#{productVarietyMasterBean.action eq 'VIEW'}"
+														value="Modifyed Date" />
+													<p:inputText id="rea" 
+														 styleClass="form-control no_border "
+														rendered="#{productVarietyMasterBean.action eq 'VIEW'}"
+													
+														value="#{productVarietyMasterBean.productVarietyMasterDTO.modifiedBy.modifiedBy}">
+													</p:inputText>
+
+												</div>
+											</div>  -->
+									<!-- Modifyed Date-->
+									
+								</div>
+								<div class="row">
+									<div class="col-sm-12 text-right">
+										<div class="form-group m-b-0">
+											<p:commandButton id="back"
+												class="btn btn-info waves-effect waves-light fa-input m-r-10"
+												update="prodForm" value="&#xf060;&nbsp;#{msg['back']}"
+												rendered="#{productVarietyMasterBean.action ne 'ADD' and productVarietyMasterBean.action ne 'EDIT'}"
+												action="#{productVarietyMasterBean.cancelProductVariety}"
+												immediate="true">
+											</p:commandButton>
+
+											<p:commandButton id="cancel"
+												class="btn btn-sm btn-cancel waves-effect waves-light fa-input m-r-10"
+												update="prodForm" value="&#xf00d;&nbsp;#{msg['cancel']}"
+												rendered="#{productVarietyMasterBean.action eq 'ADD' ||productVarietyMasterBean.action eq 'EDIT'}"
+												action="#{productVarietyMasterBean.cancelProductVariety}"
+												immediate="true">
+											</p:commandButton>
+
+											<p:commandButton binding="#{submit}" id="submit"
+												update="prodPannal growls "
+												class="btn btn-success fa-input waves-effect waves-light"
+												value="&#xf00c;&nbsp;#{msg['submit']}"
+												rendered="#{productVarietyMasterBean.action eq 'ADD'}"
+												action="#{productVarietyMasterBean.submitForm}">
+												<f:setPropertyActionListener value="ADD"
+													target="#{productVarietyMasterBean.action}"></f:setPropertyActionListener>
+											</p:commandButton>
+
+											<p:commandButton binding="#{update}" id="update"
+												class="btn btn-success fa-input waves-effect waves-light"
+												value="&#xf021;&nbsp;#{msg['update']}"
+												update="prodPannal growls"
+												rendered="#{productVarietyMasterBean.action eq 'EDIT'}"
+												action="#{productVarietyMasterBean.submitForm}">
+												<f:setPropertyActionListener value="EDIT"
+													target="#{productVarietyMasterBean.action}"></f:setPropertyActionListener>
+											</p:commandButton>
+
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</p:outputPanel>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/pages/layout.xhtml">
+<ui:define name="content">
+<title>Infotex | Sample Page</title>
+<h:form id="discountDetailsform">
+<p:outputPanel id="discountpanel">
+<div class="row">
+  <div class="col-lg-12">
+    <div class="clearfix">
+      <div class="pull-left">
+        <h4 class="page-title">Sample Page</h4>
+      </div>
+      <div class="pull-right">
+        <ol class="breadcrumb mt text12 ph0">
+          <li><i class="fa fa-home mr-sm"></i><a href="#">Home</a></li>
+          <!-- <li><a href="#">Production Plan</a></li> -->
+          <li class="active">Create Discount Details</li>
+        </ol>
+      </div>
+    </div>
+    <div class="panel panel-color panel-top-bor">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <p:outputLabel value="#{msg['discount_name']}" />
+              <span class="mand-red">*</span>
+              <div class="form-group">
+                <p:selectOneMenu id="dMaster"
+													value="#{discountDetailsBean.discountDetailsDto.discountMasterDTO}"
+													styleClass="form-control" required="true"
+													requiredMessage="Select Discount Master">
+                  <p:ajax listener="#{discountDetailsBean.onDiscountChange}"
+														update="" />
+                  <f:selectItem itemLabel="Select" itemValue=""
+														noSelectionOption="true" />
+                  <f:selectItems itemLabel="#{it.name}" var="it"
+														itemValue="#{it}"
+														value="#{discountDetailsBean.discountMasterDtoList}" />
+                </p:selectOneMenu>
+                <p:message for="dMaster"></p:message>
+              </div>
+              <!-- input-group --> 
+            </div>
+          </div>
+          <!-- end col -->
+          <div class="col-md-3">
+            <p:outputLabel value="#{msg['percentage']}" />
+            <span class="mand-red">*</span>
+            <p:inputText id="dPercentage"
+											value="#{discountDetailsBean.discountDetailsDto.discountMasterDTO.percentage}"
+											disabled="true" styleClass="form-control"></p:inputText>
+          </div>
+          <!-- end col -->
+          <div class="col-md-3">
+            <div class="form-group">
+              <p:outputLabel value="#{msg['pro_cat']}" />
+              <span class="mand-red">*</span>
+              <div class="form-group mul-select">
+                <p:selectCheckboxMenu id="dProductCategodry"
+													value="#{discountDetailsBean.discountDetailsDto.productCategoryDTOs}"
+													label="Product Categories" multiple="true"
+													styleClass="form-control" filter="true"
+													filterMatchMode="startsWith" required="true"
+													requiredMessage="Select Product Category">
+                  <f:selectItems itemLabel="#{it.productCatName}" var="it"
+														itemValue="#{it}"
+														value="#{discountDetailsBean.productCategoryDtoList}" />
+                </p:selectCheckboxMenu>
+                <p:message for="dProductCategodry"></p:message>
+              </div>
+            </div>
+          </div>
+          <!-- end col -->
+          <div class="col-md-3">
+            <div class="form-group">
+              <p:outputLabel value="#{msg['region_name']}" />
+              <span class="mand-red">*</span>
+              <div class="form-group">
+                <p:selectCheckboxMenu id="dRegion"
+													value="#{discountDetailsBean.discountDetailsDto.regionDtos}"
+													label=" " multiple="true" filter="true"
+													filterMatchMode="startsWith" styleClass="form-control"
+													required="true" requiredMessage="Select Region">
+                  <f:selectItems itemLabel="#{it.name}" var="it"
+														itemValue="#{it}"
+														value="#{discountDetailsBean.regionDtoList}" />
+                </p:selectCheckboxMenu>
+                <p:message for="dRegion"></p:message>
+              </div>
+            </div>
+          </div>
+          <!-- end col -->
+          <div class="clearfix"></div>
+          <div class="col-md-3">
+            <p:outputLabel value="#{msg['discount_period_from']}" />
+            <span class="mand-red">*</span>
+            <div class="form-group form-group_calend">
+              <p:calendar id="dperiodFrom"
+												value="#{discountDetailsBean.discountDetailsDto.periodFrom}"
+												pattern="dd-MM-yyyy" mask="true" required="true"
+												requiredMessage="Required"
+												styleClass="form-control calend-icon caled-top"></p:calendar>
+            </div>
+          </div>
+          <!-- end col -->
+          
+          <div class="col-md-3">
+            <p:outputLabel value="#{msg['discount_period_to']}" />
+            <span class="mand-red">*</span>
+            <div class="form-group form-group_calend">
+              <p:calendar id="dperiodTo"
+												value="#{discountDetailsBean.discountDetailsDto.periodTo}"
+												pattern="dd-MM-yyyy" mask="true" required="true"
+												requiredMessage="Required"
+												styleClass="form-control calend-icon" />
+            </div>
+          </div>
+          <!-- end col -->
+          
+          <div class="col-md-3">
+            <div class="form-group">
+              <p:outputLabel value="#{msg['status']}" />
+              <div class="form-group">
+                <h:selectOneMenu id="dActiveStatus"
+													value="#{discountDetailsBean.discountDetailsDto.activeStatus}"
+													styleClass="form-control">
+                  <f:selectItem itemLabel="Active" itemValue="true" />
+                  <f:selectItem itemLabel="In-Active" itemValue="false" />
+                </h:selectOneMenu>
+              </div>
+              <!-- input-group --> 
+            </div>
+          </div>
+          <!-- end col -->
+          <div class="col-lg-12 text-right">
+            <div class="panel-heading pull-left m-t-10 ph0"> <span class="mand-red">*</span> <span class="text12">Marked
+              Fields are Mandatory</span> </div>
+            <p:commandButton value="&#xf00d;&nbsp;#{msg['cancel']}"
+											styleClass="btn btn-sm btn-cancel waves-effect waves-light m-r-10 fa-input"></p:commandButton>
+            <p:commandButton value="&#xf00c;&nbsp;#{msg['submit']}"
+											action="#{discountDetailsBean.submit}"
+											styleClass="btn btn-sm btn-success waves-effect waves-light fa-input"
+											update="discountpanel"> </p:commandButton>
+          </div>
+        </div>
+        <!-- end row -->
+        <hr />
+        <div class="col-lg-12 ph0 text-right m-b-20">
+          <p:commandButton value="&#xf067;&nbsp;#{msg['add_req']}"
+										action="#{discountDetailsBean.submit}"
+										styleClass="btn btn-sm btn-success waves-effect waves-light fa-input m-r-10"
+										update="discountpanel"> </p:commandButton>
+          <p:commandButton value="&#xf00d;&nbsp;#{msg['cen_req']}"
+										action="#{discountDetailsBean.submit}"
+										styleClass="btn btn-sm btn-cancel waves-effect waves-light fa-input m-r-10"
+										update="discountpanel"> </p:commandButton>
+          <p:commandButton value="&#xf1ea;&nbsp;#{msg['gen_plan']}"
+										action="#{discountDetailsBean.submit}"
+										styleClass="btn btn-sm btn-info waves-effect waves-light fa-input m-r-10"
+										update="discountpanel"> </p:commandButton>
+          <p:commandButton value="&#xf022;&nbsp;#{msg['inpt_form']}"
+										action="#{discountDetailsBean.submit}"
+										styleClass="btn btn-sm btn-info waves-effect waves-light fa-input m-r-10"
+										update="discountpanel"> </p:commandButton>
+          <p:commandButton value="&#xf0c7;&nbsp;#{msg['save']}"
+										action="#{discountDetailsBean.submit}"
+										styleClass="btn btn-sm btn-primary waves-effect waves-light fa-input "
+										update="discountpanel"> </p:commandButton>
+        </div>
+        <div class="col-lg-12 ph0">
+          <div class="portlet">
+            <div class="panel-grey">
+              <h3 class="portlet-title">Search Discount Details</h3>
+              <div class="clearfix"></div>
+            </div>
+            <div id="bg-primary1" class="panel-collapse collapse in">
+              <div class="portlet-body">
+                <div class="row">
+                  <div class="col-md-3">
+                    <p:outputLabel value="#{msg['dis_code']}" />
+                    <h:inputText
+															value="#{discountDetailsBean.discountDetailsDto.discountMasterDTO.code}"
+															id="dSeacrhCode" styleClass="form-control"></h:inputText>
+                  </div>
+                  <div class="col-md-3">
+                    <p:outputLabel value="#{msg['dis_name']}" />
+                    <h:inputText
+															value="#{discountDetailsBean.discountDetailsDto.discountMasterDTO.name}"
+															id="dSeacrhName" styleClass="form-control"></h:inputText>
+                  </div>
+                  <!-- end col -->
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <p:outputLabel value="#{msg['pro_cat']}" />
+                      <span class="mand-red">*</span>
+                      <div class="form-group">
+                        <p:selectCheckboxMenu id="dSearchProdCat"
+																	value="#{discountDetailsBean.discountDetailsDto.productCategoryDTOs}"
+																	label="Product Categories" multiple="true"
+																	styleClass="form-control" filter="true"
+																	filterMatchMode="startsWith">
+                          <f:selectItems itemLabel="#{it.productCatName}"
+																		var="it" itemValue="#{it}"
+																		value="#{discountDetailsBean.productCategoryDtoList}" />
+                        </p:selectCheckboxMenu>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- end col -->
+                  <div class="col-md-3">
+                    <p:outputLabel value="#{msg['discount_period_from']}" />
+                    <span class="mand-red">*</span>
+                    <div class="form-group form-group_calend">
+                      <p:calendar id="dSearchPeriodFrom"
+																value="#{discountDetailsBean.discountDetailsDto.periodFrom}"
+																pattern="dd-MM-yyyy" mask="true"
+																styleClass="form-control calend-icon"></p:calendar>
+                    </div>
+                  </div>
+                  <!-- end col -->
+                  <div class="clearfix"></div>
+                  <div class="col-md-3">
+                    <p:outputLabel value="#{msg['discount_period_to']}" />
+                    <span class="mand-red">*</span>
+                    <div class="form-group form-group_calend">
+                      <p:calendar id="dSearchperiodTo"
+																value="#{discountDetailsBean.discountDetailsDto.periodTo}"
+																pattern="dd-MM-yyyy" mask="true"
+																styleClass="form-control calend-icon" />
+                    </div>
+                  </div>
+                  <!-- end col -->
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <p:outputLabel value="#{msg['status']}" />
+                      <div class="form-group">
+                        <h:selectOneMenu id="dSearchStatus"
+																	value="#{discountDetailsBean.discountDetailsDto.activeStatus}"
+																	styleClass="form-control">
+                          <f:selectItem itemLabel="Active" itemValue="true" />
+                          <f:selectItem itemLabel="In-Active" itemValue="false" />
+                        </h:selectOneMenu>
+                      </div>
+                      <!-- input-group --> 
+                    </div>
+                  </div>
+                  <!-- end col -->
+                  <div class="col-lg-12 text-right">
+                    <p:commandButton value="&#xf12d;&nbsp;#{msg['clear']}"
+															styleClass="btn btn-sm btn-cancel waves-effect waves-light m-r-10 fa-input"></p:commandButton>
+                    <p:commandButton value="&#xf002;&nbsp;#{msg['search']}"
+															action="#{discountDetailsBean.search}"
+															styleClass="btn btn-sm btn-info waves-effect waves-light fa-input"> </p:commandButton>
+                  </div>
+                </div>
+                <!-- end row --> 
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end col -->
+        <div class="clearfix"></div>
+        <div class="col-lg-12 ph0">
+          <div class="portlet m-b-0">
+            <div class="panel-grey">
+              <h3 class="portlet-title m-t-5">#{msg['dis_list']}</h3>
+              <div class="portlet-widgets">
+                <p:commandButton value="&#xf002;&nbsp;#{msg['search']}"
+													styleClass="btn btn-sm btn-info waves-effect waves-light fa-input"></p:commandButton>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div id="bg-primary1" class="panel-collapse collapse in">
+              <div class="portlet-body p0">
+                <div class="row">
+                  <div class="col-md-12">
+                    <p:dataTable id="table" var="data"
+			value="#{entityMasterBean.entityList}"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rows="5" paginator="true" paginatorPosition="bottom" styleClass="cust-table"
+			rowsPerPageTemplate="5,10,15" rowIndexVar="idx">
+                      <p:column headerText="#{msg['serial_no']}"
+					style="width:50px; text-align:center;">
+                        <h:outputText value="#{idx+1}" />
+                      </p:column>
+                      <p:column headerText="#{msg['app_no']}" styleClass="text-center">
+                        <h:outputText value="2476006" />
+                      </p:column>
+                      <p:column headerText="#{msg['dt_of_app']}" styleClass="text-center">
+                        <h:outputText value="10-Apr-2017" />
+                      </p:column>
+                      <p:column headerText="#{msg['candidate_name']}">
+                        <h:outputText value="Bala Murugan" />
+                      </p:column>
+                      <p:column headerText="#{msg['applied_for']}">
+                        <h:outputText value="Sales Manager" />
+                      </p:column>
+                      <p:column headerText="#{msg['gdr']}" styleClass="text-center">
+                        <h:outputText value="#{msg['male']}" />
+                      </p:column>
+                      <p:column headerText="#{msg['community']}" styleClass="text-center">
+                        <h:outputText value="MBC" />
+                      </p:column>
+                      <p:column headerText="#{msg['status']}" styleClass="text-center">
+                        <h:outputText class="text-primary" value="New" />
+                      </p:column>
+                      <p:column headerText="#{msg['action']}">
+                        <p:commandLink title="#{msg['edit']}" styleClass="btn btn-xs btn-primary waves-effect waves-light m-r-5"> <i class="fa fa-edit"></i> </p:commandLink>
+                        <p:commandLink title="#{msg['view']}" styleClass="btn btn-xs btn-info waves-effect waves-light m-r-5"> <i class="fa fa-eye"></i> </p:commandLink>
+                        <p:commandLink title="#{msg['delete']}" styleClass="btn btn-xs btn-danger waves-effect waves-light m-r-5"> <i class="fa fa-trash"></i> </p:commandLink>
+                        <p:commandLink title="#{msg['download']}" styleClass="btn btn-xs btn-warning waves-effect waves-light"> <i class="fa fa-download"></i> </p:commandLink>
+                      </p:column>
+                      <f:facet name="footer">
+                        <p:commandLink
+						class="btn btn-xs btn-primary waves-effect waves-light fa-input"> <i class="fa fa-download"></i> PDF </p:commandLink>
+                        <p:commandLink class="btn btn-xs btn-success waves-effect waves-light fa-input m-l-10"> <i class="fa fa-download"></i> Excel </p:commandLink>
+                      </f:facet>
+                    </p:dataTable>
+                  </div>
+                  <!-- end col -->
+                  <div class="clearfix"></div>
+                </div>
+                <!-- end row --> 
+                
+              </div>
+            </div>
+          </div>
+          <div class="panel-footer">
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="text-left">
+                  <p:commandButton
+														value="&#xf060;&nbsp; #{msg['revert_back']}"
+														class="btn btn-sm btn-info waves-effect waves-light fa-input  m-r-10" />
+                  <p:commandButton value="&#xf165;&nbsp; #{msg['reject']}"
+														class="btn btn-sm btn-danger waves-effect waves-light fa-input  m-r-10" />
+                  <p:commandButton value="&#xf164;&nbsp; #{msg['approve']}"
+														class="btn btn-sm btn-success waves-effect waves-light fa-input" />
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="text-right">
+                  <p:outputLabel class="m-r-10">#{msg['file_type']}</p:outputLabel>
+                  <h:selectOneMenu class="m-r-10 form-control inline_block"
+														style="max-width:120px;">
+                    <f:selectItem itemLabel="Select" itemValue="" />
+                  </h:selectOneMenu>
+                  <p:commandButton
+														value="&#xf019;&nbsp; #{msg['downld_report']}"
+														class="btn btn-sm btn-info waves-effect waves-light fa-input m-r-10" />
+                  <p:commandButton value="&#xf060;&nbsp; #{msg['back']}"
+														class="btn btn-sm btn-info waves-effect waves-light fa-input" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end col --> 
+      </div>
+    </div>
+  </div>
+  <!-- end col --> 
+</div>
+</p:outputPanel>
+</h:form>
+</ui:define>
+</ui:composition>

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	template="/pages/template/layout.xhtml">
+	<ui:define name="content">
+		<title>InfoTex | menu</title>
+		<div class="row">
+			<div class="col-lg-6 col-md-6 col-sm-6">
+
+
+
+				<h4 class="page-title">View Menu</h4>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-6">
+				<div class="text-right">
+					<ol class="breadcrumb mt text12 ph0">
+						<li><i class="fa fa-home mr-sm"></i><a href="#">#{msg['home']}</a></li>
+						<li>#{msg['master']}</li>
+						<li class="active">View Menu</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-color panel-top-bor">
+			<div class="panel-body">
+				<h:form id="viewform">
+					<div class="row">
+						<div class="col-sm-12">
+							<p:outputPanel id="entity">
+
+								<div class="row view-style">
+									<div class="col-lg-6 col-md-6 col-sm-6">
+										<div class="form-group">
+											<p:outputLabel value="#{msg['module']}" />
+											<h:outputText id="code" onblur=""
+												value="#{menuMasterBean.menuMaster.menuGroup.name}">
+
+											</h:outputText>
+
+										</div>
+									</div>
+									<div class="col-lg-6 col-md-6 col-sm-6">
+										<div class="form-group">
+											<p:outputLabel value="#{msg['menu_code']}" />
+											<h:outputText value="#{menuMasterBean.menuMaster.code}"
+												id="cname">
+											</h:outputText>
+										</div>
+									</div>
+								</div>
+
+								<div class="row view-style">
+									<div class="col-lg-6 col-md-6 col-sm-6">
+										<div class="form-group">
+											<p:outputLabel value="#{msg['menu_name']}" />
+											<h:outputText value="#{menuMasterBean.menuMaster.name}"
+												id="name">
+
+											</h:outputText>
+
+										</div>
+									</div>
+
+									<div class="col-lg-6 col-md-6 col-sm-6">
+										<div class="form-group">
+											<p:outputLabel value="#{msg['menu_lname']}" />
+											<h:outputText value="#{menuMasterBean.menuMaster.lname}"
+												id="regname">
+
+											</h:outputText>
+
+										</div>
+									</div>
+
+								</div>
+
+								<div class="row view-style">
+									<div class="col-lg-12 col-md-12 col-sm-12">
+										<div class="form-group">
+											<p:outputLabel value="#{msg['file_path']}" />
+											<h:outputText value="#{menuMasterBean.menuMaster.filePath}"
+												id="filepath">
+
+											</h:outputText>
+
+										</div>
+									</div>
+
+								</div>
+								
+								<div class="row view-style">
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<div class="form-group">
+											<p:outputLabel value="#{msg['status']}" />
+											<h:outputText value="#{menuMasterBean.menuMaster.activeStatus}"
+												id="status">
+
+											</h:outputText>
+
+										</div>
+									</div>
+								</div>
+								<!--  row end-->
+
+								<div class="row view-style">
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<div class="form-group">
+											<p:outputLabel value="#{msg['created_date']}" />
+											<h:outputText
+												value="#{menuMasterBean.menuMaster.createdDate}"
+												id="createDate">
+												<f:convertDateTime timeZone="GMT+05:30"
+													pattern="dd-MMM-YYYY hh:mm:ss" />
+											</h:outputText>
+										</div>
+									</div>
+
+
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<div class="form-group">
+											<p:outputLabel value="#{msg['created_by']}" />
+											<h:outputText
+												value="#{menuMasterBean.menuMaster.createdBy.username}"
+												id="createBy">
+
+											</h:outputText>
+										</div>
+									</div>
+
+
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<div class="form-group">
+											<p:outputLabel value="#{msg['modified_date']}" />
+											<h:outputText
+												value="#{menuMasterBean.menuMaster.modifiedDate}"
+												id="modDate">
+												<f:convertDateTime timeZone="GMT+05:30"
+													pattern="dd-MMM-YYYY hh:mm:ss" />
+											</h:outputText>
+										</div>
+									</div>
+
+									<div class="col-lg-3 col-md-3 col-sm-3">
+										<div class="form-group">
+											<p:outputLabel value="#{msg['modified_by']}" />
+											<h:outputText
+												value="#{menuMasterBean.menuMaster.modifiedBy.username}"
+												id="modBy">
+											</h:outputText>
+										</div>
+									</div>
+
+								</div>
+
+								<div class="text-right m-b-20">
+
+									<p:commandButton value="&#xf060;&nbsp;#{msg['back']}"
+										action="#{menuMasterBean.back}" update="viewform entity"
+										immediate="true"
+										class="btn btn-info waves-effect waves-light fa-input m-r-10">
+									</p:commandButton>
+
+								</div>
+
+							</p:outputPanel>
+						</div>
+					</div>
+
+				</h:form>
+
+			</div>
+		</div>
+
+	</ui:define>
+
+
+</ui:composition>
+
+
+

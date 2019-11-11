@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	template="/pages/template/layout.xhtml">
+	<ui:define name="content">
+		<f:metadata>
+			<f:viewAction action="#{supplierMasterBean.onPageLoad}"
+				onPostBack="true" />
+		</f:metadata>
+		<f:metadata>
+				<f:event type="preRenderView"
+					listener="#{loginBean.checkPrivilege('SUPPLIER_MASTER_LIST')}" />
+			</f:metadata>
+
+		<title>Mark Solution | Supplier List</title>
+		<div class="page-header page-header-default">
+			<div class="page-header-content">
+				<div class="page-title">
+					<h4>#{msg['supplier_master_list']}</h4>
+					<ul class="breadcrumb">
+						<li><a href="#{request.contextPath}/pages/home.xhtml"><i
+								class="icon-home2 position-left"></i>#{msg['home']}</a></li>
+						<li>#{msg['masters']}</li>
+						<li>#{msg['oper_master']}</li>
+						<li>#{msg['supplier_master_list']}</li>
+					</ul>
+					<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+				</div>
+				<ui:include src="/pages/pageHeadingElements.xhtml" />
+			</div>
+		</div>
+
+		<div class="content">
+			<div class="row">
+				<div class="col-lg-6">
+					<h6 class="panel-title">
+						<strong> <h:panelGroup id="size">
+								<h:outputText value="#{supplierMasterBean.size}" />
+							</h:panelGroup>
+						</strong> - #{msg['sup_msrt']}(s)<a class="heading-elements-toggle"><i
+							class="icon-more"></i></a>
+					</h6>
+				</div>
+				<div class="col-lg-6 text-right">
+					<div class="form-group m-b-10">
+						<p:commandButton value="&#xea0e; #{msg['add']}" id="addButton"
+							rendered="#{loginBean.userFeatures['SUPPLIER_MASTER_ADD']}"
+							disabled="#{supplierMasterBean.addButtonFlag}"
+							title="#{msg['add']}"
+							action="#{supplierMasterBean.addPage}"
+							class="btn bg-success font-iconmoon" update="growls"
+							onstart="PF('statusDialog').show()"
+							onsuccess="PF('statusDialog').hide()">
+							<f:setPropertyActionListener value="ADD"
+								target="#{supplierMasterBean.action}"></f:setPropertyActionListener>
+						</p:commandButton>
+						<p:commandButton value="&#xe912; #{msg['edit']}" update="growls"
+							rendered="#{loginBean.userFeatures['SUPPLIER_MASTER_EDIT']}"
+							class="btn bg-primary font-iconmoon" title="#{msg['edit']}"
+							action="#{supplierMasterBean.editPage}"
+							onstart="PF('statusDialog').show()"
+							onsuccess="PF('statusDialog').hide()">
+							<f:setPropertyActionListener value="EDIT"
+								target="#{supplierMasterBean.action}"></f:setPropertyActionListener>
+						</p:commandButton>
+						<p:commandButton value="&#xea18; #{msg['view']}"
+							rendered="#{loginBean.userFeatures['SUPPLIER_MASTER_VIEW']}"
+							class="btn bg-info heading-btn  font-iconmoon"
+							title="#{msg['view']}" action="#{supplierMasterBean.editPage}"
+							onstart="PF('statusDialog').show()"
+							onsuccess="PF('statusDialog').hide()" update="growls">
+							<f:setPropertyActionListener value="VIEW"
+								target="#{supplierMasterBean.action}"></f:setPropertyActionListener>
+						</p:commandButton>
+						<p:commandButton value="&#xe916; #{msg['clear']}"
+							onclick="location.reload();" class="btn bg-slate font-iconmoon"
+							title="#{msg['clear']}">
+						</p:commandButton>
+					</div>
+				</div>
+			</div>
+
+			<div class="panel panel-info ">
+				<div class="panel-body p-0">
+					<div class="table-responsive">
+						<div class="ui-datatable ui-widget ui-datatable-scrollable table">
+							<div class="ui-datatable-scrollable-header-box cust-table">
+								<p:dataTable id="table" var="data" class="table"
+									widgetVar="table"
+									value="#{supplierMasterBean.supplierMasterList}"
+									selection="#{supplierMasterBean.supplierMaster}"
+									rowKey="#{data.id}" lazy="true"
+									paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									paginator="true" paginatorPosition="bottom"
+									rowsPerPageTemplate="10,15" rows="10" rowIndexVar="idx"
+									emptyMessage="#{msg['no_record_found']}">
+									<p:ajax event="rowSelectRadio"
+										listener="#{supplierMasterBean.onRowSelect}"
+										update=":#{p:component('addButton')}" />
+									<p:ajax event="filter" oncomplete="updateFilterSelection()" />
+
+									<p:column headerText="#{msg['s_no']}" styleClass="width-3 text-center">
+										<h:outputText value="#{idx+1}" />
+									</p:column>
+
+									<p:column headerText="#{msg['sup_code']} / #{msg['name']}"
+										filterMatchMode="contains" filterable="true"
+										filterBy="#{data.code}" styleClass="width-15"
+										sortBy="#{data.code}" sortable="true">
+										<h:outputText id="suppCodeName"
+											value="#{(data.code).concat(data.name).length() gt 35 ? fn:substring({data.code.concat('/').concat(data.name)}, 1, 32).concat('...'):(data.code.concat('/').concat(data.name))}" />
+										<p:tooltip for="suppCodeName"
+											value="#{data.code} / #{data.name}" />
+									</p:column>
+
+									<p:column headerText="#{msg['dt_reg']}"
+										filterBy="#{data.registrationDate}"
+										styleClass="text-center width-15 form-group_calend"
+										filterMatchMode="equals" sortBy="#{data.registrationDate}"
+										sortable="true">
+
+										<f:facet name="filter">
+											<p:calendar onchange="PF('table').filter()" navigator="true"
+												id="planFrom" pattern="dd-MMM-yyyy"
+												placeholder="dd-mmm-yyyy" mask="true"
+												styleClass="form-control calend-icon text-center">
+												<p:ajax event="dateSelect" oncomplete="PF('table').filter()" />
+											</p:calendar>
+										</f:facet>
+										<h:outputText value="#{data.registrationDate}">
+											<f:convertDateTime pattern="dd-MMM-yyyy"
+												timeZone="#{loginBean.timeZone}" />
+										</h:outputText>
+									</p:column>
+
+									<p:column headerText="#{msg['cname']}" styleClass="width-15"
+										filterMatchMode="contains" filterable="true"
+										filterBy="#{data.primaryContactName}"
+										sortBy="#{data.primaryContactName}" sortable="true">
+										<h:outputText value="#{data.primaryContactName}" />
+									</p:column>
+
+									<p:column headerText="#{msg['email']}" styleClass="width-15"
+										filterMatchMode="contains" filterable="true"
+										filterBy="#{data.primaryEmail}" sortBy="#{data.primaryEmail}"
+										sortable="true">
+										<h:outputText value="#{data.primaryEmail}" />
+									</p:column>
+
+									<p:column headerText="#{msg['mob_no']}"
+										filterMatchMode="contains" filterable="true"
+										filterBy="#{data.primaryContactNumber}"
+										styleClass="width-11 text-center"
+										sortBy="#{data.primaryContactNumber}" sortable="true">
+										<h:outputText value="#{data.primaryContactNumber}" />
+									</p:column>
+
+									<p:column headerText="#{msg['created_date']}"
+										filterBy="#{data.createdDate}"
+										styleClass="text-center width-12 form-group_calend"
+										filterMatchMode="equals" sortBy="#{data.createdDate}"
+										sortable="true">
+
+										<f:facet name="filter">
+											<p:calendar onchange="PF('table').filter()" navigator="true"
+												id="planCreatedDate" pattern="dd-MMM-yyyy"
+												placeholder="dd-mmm-yyyy" mask="true"
+												styleClass="form-control calend-icon text-center">
+												<p:ajax event="dateSelect" oncomplete="PF('table').filter()" />
+											</p:calendar>
+										</f:facet>
+										<h:outputText value="#{data.createdDate}">
+											<f:convertDateTime pattern="dd-MMM-yyyy"
+												timeZone="#{loginBean.timeZone}" />
+										</h:outputText>
+									</p:column>
+
+									<p:column filterBy=" #{data.activeStatus}" headerText="#{msg['status']}"
+										filterMatchMode="contains" filterable="true"
+										sortBy=" #{data.activeStatus}" sortable="true"
+										styleClass="text-center width-9">
+										<f:facet name="filter">
+											<h:selectOneMenu onchange="PF('table').filter()"
+												id="statusDropdown" class="form-control select2">
+												<f:selectItem itemLabel="#{msg['select']}"
+													itemValue="#{null}" noSelectionOption="true" />
+												<f:selectItem itemLabel="Active" itemValue="true" />
+												<f:selectItem itemLabel="InActive" itemValue="false" />
+											</h:selectOneMenu>
+										</f:facet>
+
+										<h:outputText
+											styleClass="#{data.activeStatus eq 'true' ? 'label label-success sts_shortl' : 'label label-default sts_shortl'}"
+											value="#{data.activeStatus eq 'true' ? 'Active' : 'InActive'}" />
+
+									</p:column>
+
+									<p:column headerText="#{msg['select']}" selectionMode="single"
+										styleClass="width-4; text-center;">
+									</p:column>
+
+								</p:dataTable>
+								<p:remoteCommand name="updateFilterSelection"
+									update=":#{p:component('size')}" autoRun="true" />
+
+								<div class="pagi">
+									<div
+										class="dataTables_paginate paging_simple_numbers m-t-10 m-b-0"
+										id="DataTables_Table_2_paginate" role="status"
+										aria-live="polite"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

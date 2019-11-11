@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	template="/pages/template/layoutWithIndividualForm.xhtml">
+	<ui:remove>
+	 https://docs.oracle.com/javaee/7/javaserver-faces-2-2/vdldocs-facelets/toc.htm
+	 https://www.primefaces.org/docs/vdl/6.1/core/
+	 https://docs.oracle.com/javaee/7/javaserver-faces-2-2/vdldocs-facelets/f/event.html
+	</ui:remove>
+	<ui:define name="content">
+	<ui:param name="bean" value="#{fileMovementConfigBean}"></ui:param>
+	
+		<h:form id ="createFileMovementId">
+			<title>InfoTex | Create File Movement Hierarchy Configuration</title>
+			<!-- Page Header -->
+			<div class="page-header page-header-default">
+				<div class="page-header-content">
+					<div class="page-title">
+						<h4>#{msg['fm_create_hierarchy_config']}</h4>
+						<ul class="breadcrumb">
+							<li><a href="index.html"><i
+									class="icon-home2 position-left"></i>#{msg['home']}</a></li>
+							<li>#{msg['master']}</li>
+							<li class="active">#{msg['fm_create_hierarchy_config']}</li>
+						</ul>
+						<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+					</div>
+					<ui:include src="/pages/pageHeadingElements.xhtml" />
+				</div>
+			</div>
+			<!-- Page Header End -->
+			<div class="content page-scroll">
+			<p:outputPanel id="filemovementConfigpanel">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+				<!-- collapse panel -->
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						<h6 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion-control-right"
+								href="#accordion-control-right-group1">#{msg['fm_hierarchy_config']}</a>
+							<p:outputLabel styleClass="pull-right">
+								<span class="mand-red">*</span>
+								<span>#{msg['mand_fields']}</span>
+							</p:outputLabel>
+						</h6>
+					</div>
+					
+					<div class="panel-body" style="padding: 10px 10px 10px 10px;">
+						<div class="row label-form">
+						
+							<div class="col-lg-3 col-md-3 col-sm-3">
+								<div class="form-group">
+									<p:outputLabel value="#{msg['fm_appfeature']}" />
+									<span class="text-danger">*</span>
+									<div class="input-group ui-outputlabel ui-widget">
+										<span class="input-group-addon"><i class="icon-tree6"></i></span>
+
+										<h:selectOneMenu class="form-control" id="appfeatureSelect" value="#{bean.fileMovementConfig.appFeature}"  disabled="#{bean.disableAddSelectAppFeatureDropDown}" 
+											  converter="#{entityConverter}" >
+
+											<f:selectItem itemLabel="#{msg['select']}"
+												itemValue="#{null}" noSelectionOption="true" />
+											<f:selectItems var="appFeature" itemValue="#{appFeature}"
+												itemLabel="#{appFeature.featureName}"
+												value="#{bean.activeFileMovementAppFeatureList}" />
+											<p:ajax listener="#{bean.filterForwardLevelNumberListBasedOnAppFeature}" event="change"
+             									update="forwardLevelSelect" onstart="PF('statusDialog').show()"
+             									onsuccess="PF('statusDialog').hide()"  />
+           									
+										</h:selectOneMenu>
+
+
+									</div>
+									<h:message for="appfeatureSelect" styleClass="validation-error-label"></h:message>
+								</div>
+							</div>
+							<div class="col-lg-3 col-md-3 col-sm-3">
+
+								<div class="form-group">
+
+
+									<p:outputLabel value="#{msg['fm_level_number']}" />
+									<span class="text-danger">*</span>
+
+									<div class="input-group">
+										<span class="input-group-addon"><i class="icon-balance"></i></span>
+										
+										<h:selectOneMenu class="form-control" id="forwardLevelSelect" disabled="#{bean.disableForwardlevelDropDown}" 
+											value="#{bean.fileMovementConfig.forwardLevel}">
+											<f:selectItem itemLabel="#{msg['select']}"
+												itemValue="#{null}" noSelectionOption="true" />
+											<f:selectItems  id="forwardLevelselectItem" var="forwardLevel" itemValue="#{forwardLevel}"
+												itemLabel="#{forwardLevel}"
+												value="#{bean.forwardLevelNumberList}" />
+										</h:selectOneMenu>
+										
+									</div>
+								</div>
+					
+
+							</div>
+
+
+
+							<div class="col-lg-3 col-md-3 col-sm-3">
+								<div class="form-group">
+									<p:outputLabel value="#{msg['fm_section']}" />
+									<div class="input-group ui-outputlabel ui-widget">
+										<span class="input-group-addon"><i class="icon-tree6"></i></span>
+
+										<h:selectOneMenu id="sectionMasterSelect" class="form-control" disabled="#{bean.disableSectionMasterButton}"  requiredMessage="#{msg['fm_section']} #{msg['required']}"
+											converter="#{entityConverter}"
+											value="#{bean.fileMovementConfig.sectionMaster}">
+											<f:selectItem itemLabel="#{msg['select']}"
+												itemValue="#{null}" noSelectionOption="true" />
+											<f:selectItems var="sectionMaster"
+												itemValue="#{sectionMaster}"
+												itemLabel="#{sectionMaster.name}"
+												value="#{bean.sectionMasterList}" />
+										</h:selectOneMenu>
+									</div>
+								</div>
+								<h:message for="sectionMasterSelect" styleClass="validation-error-label"></h:message>
+							</div>
+
+							<div class="col-lg-3 col-md-3 col-sm-3">
+
+								<div class="form-group">
+									<p:outputLabel value="#{msg['fm_designation']}" />
+									<span class="text-danger">*</span>
+									<div class="input-group ui-outputlabel ui-widget">
+										<span class="input-group-addon"><i class="icon-tree6"></i></span>
+										<h:selectOneMenu  id="designationSelect" class="form-control"  disabled="#{bean.disableDesignationButton}"  requiredMessage="#{msg['fm_designation']} #{msg['required']}"
+											converter="#{entityConverter}"
+											value="#{bean.fileMovementConfig.designation}">
+											<f:selectItem itemLabel="#{msg['select']}"
+												itemValue="#{null}" noSelectionOption="true" />
+											<f:selectItems var="designation" itemValue="#{designation}"
+												itemLabel="#{designation.name}"
+												value="#{bean.designationList}" />
+										</h:selectOneMenu>
+									</div>
+								</div>
+								<h:message for="designationSelect" styleClass="validation-error-label"></h:message>
+
+							</div>
+							
+						</div>
+						<div class="row text-right">
+							<div class="col-lg-12 col-md-12 col-sm-12 m-t-0">
+								<p:commandButton value="&#xe916; #{msg['clear']}" rendered="#{bean.view}"
+								action="#{bean.clear(bean.fileMovementConfigList)}"	 class="btn bg-slate font-iconmoon">
+								</p:commandButton>
+								&nbsp;
+								<p:commandButton id="addItem" value="&#xea0e; #{msg['add']}" rendered="#{bean.view}"
+									action="#{bean.addItem}"
+									update="fileMovementConfigTable forwardLevelSelect   appfeatureSelect  growls" validateClient="true"
+									class="btn bg-success heading-btn cust-btn-h  font-iconmoon">
+								</p:commandButton>
+
+							</div>
+
+						</div>
+
+
+
+
+
+						<div class="panel-body p-0">
+					      <div class="row ph0">
+					       <div class="col-sm-12">
+					        <div class="table-responsive">
+					         <p:dataTable id="fileMovementConfigTable" var="data" class="table"
+					          rowKey="#{data.id}" lazy="false"
+					          paginatorAlwaysVisible="false"
+					          value="#{bean.fileMovementConfigList}"
+					          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					          paginator="true" paginatorPosition="bottom"
+					          rowsPerPageTemplate="5,10,15" rows="10" rowIndexVar="idx"
+					          emptyMessage="No records found">
+					          <p:column headerText="#{msg['s_no']}"
+					           style="text-align: center; width: 3%;">
+					           <h:outputText value="#{idx+1}" />
+					          </p:column>
+					          <p:column filterable="true" styleClass="width-10 text-center"
+					           headerText="#{msg['fm_appfeature']}">
+					           <h:outputText value="#{data.appFeature.featureName}" />
+					          </p:column>
+					          <p:column styleClass="width-10 text-center"
+					           headerText="#{msg['fm_level_number']}(&#xf156;)">
+					           <h:outputText value="#{data.forwardLevel}" />
+					          </p:column>
+					          <p:column styleClass="width-10 text-center"
+					           headerText="#{msg['fm_section']}">
+					           <h:outputText value="#{data.sectionMaster.name}">
+					           </h:outputText>
+					          </p:column>
+					          <p:column styleClass="width-10 text-center"
+					           headerText="#{msg['fm_designation']}">
+					           <h:outputText value="#{data.designation.name}">
+					           </h:outputText>
+					          </p:column>
+					          
+					          
+					          <p:column headerText="#{msg['action']}"
+					           styleClass="width-5 text-center">
+					           <f:facet name="filter">
+					            <p:inputText class="form-control " />
+					           </f:facet>
+					           <p:commandButton value="&#xe99e;" disabled="#{bean.disableDeleteCommandLinkButton}"
+					            class="btn bg-danger font-iconmoon m-l-5"
+					            
+					            action="#{bean.removeItem(data)}"
+					            update="fileMovementConfigTable,createFileMovementId:forwardLevelSelect"
+					            title="#{msg['delete']}">
+					           </p:commandButton>
+					          </p:column>
+					         </p:dataTable>
+					        </div>
+					       </div>
+					      </div>
+     					</div>
+						
+						
+						
+
+
+
+						<div class="row text-right m-t-10">
+							<div class="col-lg-12 col-md-12 col-sm-12">
+								<p:commandButton value="&#xed6a;&nbsp;#{msg['cancel']}"
+								action="#{bean.cancelFileMovementConfig}"	immediate="true" class="btn bg-slate font-iconmoon m-r-0"
+									title="#{msg['cancel']}">
+								</p:commandButton>
+
+								<p:commandButton value="&#xed6e;&nbsp;#{msg['submit']}" update="growls createFileMovementId:filemovementConfigpanel"
+								action="#{bean.saveFileMovementConfig}"	 title="#{msg['submit']}" 
+									class="btn bg-success heading-btn  font-iconmoon"
+									onstart="PF('statusDialog').show();"
+									 onsuccess="PF('statusDialog').hide();"   disabled="#{bean.disableSubmitButton}" >
+								</p:commandButton>
+							</div>
+						</div>
+					</div>
+			
+			
+			<p:dialog header="Confirm Delete" draggable="false" modal="true"
+							styleClass="p-0 overlay-pop modal-dialog" closable="true"
+							width="30%" widgetVar="confirmFileMovementDataTableDelete"
+							showEffect="fade" hideEffect="fade" closeOnEscape="true"
+							resizable="false">
+
+							<div class="modal-body">
+
+								<h:outputText
+									value="Are you sure you want to delete this Record ?" />
+
+							</div>
+
+							<div class="modal-footer m-t-10">
+								<p:commandButton value="&#xed6a;&nbsp;No"
+									styleClass="btn bg-slate heading-btn font-iconmoon"
+									oncomplete="PF('confirmFileMovementDataTableDelete').hide()" />
+								<p:commandButton ajax="false"
+									styleClass="btn bg-success heading-btn font-iconmoon"
+									value="&#xed6e;&nbsp;Yes"
+									action="#{bean.deleteFileMovemetDatatableData(bean.fileMovementConfigList)}"
+									oncomplete="PF('confirmFileMovementDataTableDelete').hide()">
+								</p:commandButton>
+							</div>
+						</p:dialog>	
+
+				</div>
+
+				<!-- colleps panel end -->
+
+
+			</p:outputPanel>
+			</div>
+
+
+			<script type="text/javascript"
+				src="#{request.contextPath}/assets/js/pages/form_multiselect.js"></script>
+			<script type="text/javascript"
+				src="#{request.contextPath}/assets/js/plugins/forms/inputs/duallistbox.min.js"></script>
+			<script type="text/javascript"
+				src="#{request.contextPath}/assets/js/pages/form_dual_listboxes.js"></script>
+
+			<script>
+			/*
+			 //  jquery equivalent
+			 jQuery(document).ready(function() {
+			 jQuery(".main-table").clone(true).appendTo('#table-scroll .faux-table').addClass('clone');
+			 jQuery(".main-table.clone").clone(true).appendTo('#table-scroll .faux-table').addClass('clone2'); 
+			 });
+			 */
+			(function() {
+				var fauxTable = document.getElementById("faux-table");
+				var mainTable = document.getElementById("main-table");
+				var clonedElement = mainTable.cloneNode(true);
+				var clonedElement2 = mainTable.cloneNode(true);
+				clonedElement.id = "";
+				clonedElement2.id = "";
+				fauxTable.appendChild(clonedElement);
+				fauxTable.appendChild(clonedElement2);
+			})();
+		</script>
+			<script>
+			/*
+			 //  jquery equivalent
+			 jQuery(document).ready(function() {
+			 jQuery(".main-table").clone(true).appendTo('#table-scroll .faux-table').addClass('clone');
+			 jQuery(".main-table.clone").clone(true).appendTo('#table-scroll .faux-table').addClass('clone2'); 
+			 });
+			 */
+			(function() {
+				var fauxTable = document.getElementById("faux-table1");
+				var mainTable = document.getElementById("main-table1");
+				var clonedElement = mainTable.cloneNode(true);
+				var clonedElement2 = mainTable.cloneNode(true);
+				clonedElement.id = "";
+				clonedElement2.id = "";
+				fauxTable.appendChild(clonedElement);
+				fauxTable.appendChild(clonedElement2);
+			})();
+		</script>
+		</h:form>
+	</ui:define>
+</ui:composition>

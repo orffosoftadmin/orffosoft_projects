@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+	<meta http-equiv="refresh" content="#{session.maxInactiveInterval};" />
+	<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<link href="#{request.contextPath}/assets/images/favicon.jpg"
+		rel="shortcut icon" />
+
+	<!-- Global stylesheets -->
+
+	<link href="#{request.contextPath}/assets/css/icons/icomoon/styles.css"
+		rel="stylesheet" type="text/css" />
+	<link
+		href="#{request.contextPath}/assets/css/icons/fontawesome/styles.min.css"
+		rel="stylesheet" type="text/css" />
+	<link href="#{request.contextPath}/assets/css/bootstrap.css"
+		rel="stylesheet" type="text/css" />
+	<link href="#{request.contextPath}/assets/css/core.css"
+		rel="stylesheet" type="text/css" />
+	<link href="#{request.contextPath}/assets/css/components.css"
+		rel="stylesheet" type="text/css" />
+	<link href="#{request.contextPath}/assets/css/colors.css"
+		rel="stylesheet" type="text/css" />
+	<link href="#{request.contextPath}/assets/css/custom1.css"
+		rel="stylesheet" type="text/css" />
+	<link href="#{request.contextPath}/assets/css/custom2.css"
+		rel="stylesheet" type="text/css" />
+	<link href="#{request.contextPath}/assets/css/custom3.css"
+		rel="stylesheet" type="text/css" />
+	<link href="#{request.contextPath}/assets/css/custom4.css"
+		rel="stylesheet" type="text/css" />
+	<link href="#{request.contextPath}/assets/css/custom5.css"
+		rel="stylesheet" type="text/css" />
+	<link href="#{request.contextPath}/assets/css/custom6.css"
+		rel="stylesheet" type="text/css" />
+	<link href="#{request.contextPath}/assets/css/custom7.css"
+		rel="stylesheet" type="text/css" />
+	<link href="#{request.contextPath}/assets/css/overrides/components.css"
+		rel="stylesheet" type="text/css" />
+
+	<link href="#{request.contextPath}/assets/css/overrides/theme.css"
+		rel="stylesheet" type="text/css" />
+
+	<link href="#{request.contextPath}/assets/css/responsive.css"
+		rel="stylesheet" type="text/css" />
+	<link href="#{request.contextPath}/assets/css/mediaQueries.css"
+		rel="stylesheet" type="text/css" />
+	<link href="#{request.contextPath}/assets/css/ui-fileupload.css"
+		rel="stylesheet" type="text/css" />
+
+	<!-- /global stylesheets -->
+
+	<f:view locale="#{languageBean.localeCode}" />
+
+
+</h:head>
+
+<h:body
+	class=" #{detectOSAndBrowser.osClass}-#{languageBean.languageCss} 
+#{detectOSAndBrowser.osClass}-#{detectOSAndBrowser.browserClass}-#{languageBean.languageCss} #{detectOSAndBrowser.windowsVersion}"
+	styleClass="sidebar-xs layout-growl">
+
+	<p:growl id="growls" showDetail="true" sticky="true" globalOnly="true" />
+	<div id="wrapper">
+
+		<h:form id="headerForm">
+			<ui:insert name="header">
+				<ui:include src="header.xhtml" />
+			</ui:insert>
+		</h:form>
+		<!-- Page container -->
+		<div class="page-container">
+
+			<!-- Page content -->
+			<div class="page-content">
+
+				<ui:insert name="sidebar">
+					<ui:include src="menu.xhtml" />
+				</ui:insert>
+
+				<!-- Main content -->
+				<div class="content-wrapper">
+
+					<div class="content-page">
+						<ui:insert name="content">
+						</ui:insert>
+					</div>
+
+					<h:form id="footerForm">
+						<ui:insert name="footer">
+							<ui:include src="footer.xhtml" />
+						</ui:insert>
+					</h:form>
+				</div>
+			</div>
+		</div>
+
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			class="pre-loader" closable="false" resizable="false"
+			showHeader="false">
+			<img src="#{request.contextPath}/assets/images/preloader.gif" />
+		</p:dialog>
+
+
+	</div>
+
+	<script>
+		var resizefunc = [];
+	</script>
+
+	<!-- jQuery  -->
+
+
+	<!-- Core JS files -->
+	<!-- <script type="text/javascript"
+		src="#{request.contextPath}/assets/js/plugins/loaders/pace.min.js"></script> -->
+	<!-- <script type="text/javascript"
+		src="#{request.contextPath}/assets/js/core/libraries/jquery.min.js"></script> -->
+
+	<script type="text/javascript"
+		src="#{request.contextPath}/assets/js/core/libraries/bootstrap.min.js"></script>
+
+	<script type="text/javascript"
+		src="#{request.contextPath}/assets/js/plugins/loaders/blockui.min.js"></script>
+	<script type="text/javascript"
+		src="#{request.contextPath}/assets/js/core/jquery-ui.js"></script>
+	<!-- /core JS files -->
+
+
+	<script type="text/javascript"
+		src="#{request.contextPath}/assets/js/plugins/forms/styling/switchery.min.js"></script>
+	<script type="text/javascript"
+		src="#{request.contextPath}/assets/js/plugins/forms/styling/uniform.min.js"></script>
+	<script type="text/javascript"
+		src="#{request.contextPath}/assets/js/plugins/forms/selects/bootstrap_select.min.js"></script>
+	<script type="text/javascript"
+		src="#{request.contextPath}/assets/js/plugins/forms/selects/bootstrap_multiselect.js"></script>
+	<script type="text/javascript"
+		src="#{request.contextPath}/assets/js/plugins/ui/moment/moment.min.js"></script>
+	<script type="text/javascript"
+		src="#{request.contextPath}/assets/js/plugins/pickers/daterangepicker.js"></script>
+	<script type="text/javascript"
+		src="#{request.contextPath}/assets/js/plugins/ui/headroom/headroom.min.js"></script>
+	<script type="text/javascript"
+		src="#{request.contextPath}/assets/js/plugins/ui/headroom/headroom_jquery.min.js"></script>
+
+
+	<script type="text/javascript"
+		src="#{request.contextPath}/assets/js/plugins/forms/selects/select2.min.js"></script>
+
+	<script
+		src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+
+
+	<script type="text/javascript"
+		src="#{request.contextPath}/assets/js/plugins/ui/nicescroll.min.js"></script>
+	<script type="text/javascript"
+		src="#{request.contextPath}/assets/js/core/app.js"></script>
+	<script type="text/javascript"
+		src="#{request.contextPath}/assets/js/pages/layout_fixed_custom.js"></script>
+	<script type="text/javascript"
+		src="#{request.contextPath}/assets/js/pages/job_apply.js"></script>
+
+	<script type="text/javascript"
+		src="#{request.contextPath}/assets/js/pages/layout_navbar_hideable_sidebar.js"></script>
+
+	<!-- Floating Labels -->
+
+	<script type="text/javascript"
+		src="#{request.contextPath}/assets/js/plugins/velocity/velocity.min.js"></script>
+	<script type="text/javascript"
+		src="#{request.contextPath}/assets/js/plugins/velocity/velocity.ui.min.js"></script>
+	<script type="text/javascript"
+		src="#{request.contextPath}/assets/js/plugins/buttons/spin.min.js"></script>
+	<script type="text/javascript"
+		src="#{request.contextPath}/assets/js/plugins/buttons/ladda.min.js"></script>
+	<script type="text/javascript"
+		src="#{request.contextPath}/assets/js/plugins/forms/wizards/steps.min.js"></script>
+	<script type="text/javascript"
+		src="#{request.contextPath}/assets/js/pages/wizard_steps.js"></script>
+	<script type="text/javascript"
+		src="#{request.contextPath}/assets/js/pages/components_buttons.js"></script>
+	<script type="text/javascript"
+		src="#{request.contextPath}/assets/js/pages/jquery.smartWizard.min.js"></script>
+
+	<script type="text/javascript">
+			function isDecimal(evt) /*only numbers*/
+			{
+		         var charCode = (evt.which) ? evt.which : event.keyCode
+		        		 console.log(charCode);
+		         if ((charCode &gt; 31)  &amp;&amp; ((charCode &lt; 48 || charCode &gt; 57)) &amp;&amp; (charCode &lt; 46 || charCode &gt; 46))
+		            return false;
+		
+		         return true;
+		      }
+		</script>
+
+	<!-- <script>
+var s = document.createElement('script');
+s.setAttribute('src','http://developer.quillpad.in/static/js/quill.js?lang=Tamil &amp; key=9f5ffc7a10e0bad054458b089947ce2f');
+s.setAttribute('id','qpd_script');
+document.head.appendChild(s);
+</script> -->
+</h:body>
+</html>

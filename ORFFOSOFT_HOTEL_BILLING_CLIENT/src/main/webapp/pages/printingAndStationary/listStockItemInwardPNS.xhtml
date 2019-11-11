@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/pages/template/layout.xhtml">
+	<ui:define name="content">
+		<h:form>
+			<title>Mark Solution | Stock Item Inward List</title>
+			<!-- Page Header -->
+			<div class="page-header page-header-default">
+				<div class="page-header-content">
+					<div class="page-title">
+						<h4>#{msg['stock_item_inward_list']}</h4>
+						<ul class="breadcrumb">
+							<li><a href="#{request.contextPath}/pages/home.xhtml"><i
+									class="icon-home2 position-left"></i>#{msg['home']}</a></li>
+							<li>#{msg['oper']}</li>
+							<li>#{msg['stock_management']}</li>
+							<li>#{msg['item_inward']}</li>
+							<li class="active">#{msg['stock_item_inward_list']}</li>
+						</ul>
+						<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+					</div>
+					<ui:include src="/pages/pageHeadingElements.xhtml" />
+				</div>
+			</div>
+			<!-- End Page Header -->
+			<div class="content">
+				<div class="row">
+					<div class="col-lg-6 col-sm-4 col-xs-12 m-t-5">
+						<h6 class="panel-title">
+							<b> <h:outputText id="totalRecord"
+									value="#{stockItemUploadBean.size}" />
+							</b> - #{msg['stock_item_inward']}(s)<a
+								class="heading-elements-toggle"><i class="icon-more"></i></a>
+						</h6>
+					</div>
+					<div class="col-lg-6 col-sm-8 col-xs-12 text-right">
+						<div class="form-group m-b-10">
+							<p:outputPanel id="actionButtons">
+								<p:commandButton value="&#xea0e; #{msg['add']}"
+									class="btn bg-success font-iconmoon m-r-0"
+									title="#{msg['add']}"
+									action="#{stockItemUploadBean.createNewStockItemInward}"
+									onclick="PF('statusDialog').show();"
+									oncomplete="PF('statusDialog).hide();">
+								</p:commandButton>
+								<p:commandButton value="&#xe912; #{msg['edit']}"
+									title="#{msg['edit']}" class="btn bg-primary font-iconmoon"
+									action="#{stockItemUploadBean.itemReceiveRetrieveDetailsEdit}"
+									onclick="PF('statusDialog').show();"
+									oncomplete="PF('statusDialog').hide();">
+								</p:commandButton>
+								<p:commandButton value="&#xea18; #{msg['view']}"
+									title="#{msg['view']}" class="btn bg-info font-iconmoon"
+									onclick="PF('statusDialog').show();"
+									oncomplete="PF('statusDialog').hide();"
+									action="#{stockItemUploadBean.itemReceiveRetrieveDetails}">
+								</p:commandButton>
+								<p:commandButton value="&#xe916; #{msg['clear']}"
+									onclick="PF('statusDialog').show();"
+									oncomplete="PF('statusDialog').hide();" title="#{msg['clear']}"
+									class="btn bg-slate font-iconmoon"
+									action="#{stockItemUploadBean.clearButton}">
+								</p:commandButton>
+							</p:outputPanel>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-info m-b-0">
+					<div class="panel-body p-0">
+						<div class="table-responsive">
+							<p:outputPanel id="tablepanel">
+								<p:dataTable id="table" var="list" class="table"
+									widgetVar="liststockTransferLazyListWdgr" tableStyleClass=""
+									lazy="true"
+									selection="#{stockItemUploadBean.selectedStockItemInwardPNSDTO}"
+									value="#{stockItemUploadBean.stockTransferLazyList}"
+									rowKey="#{list.grnHID}"
+									paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									paginator="true" paginatorPosition="bottom"
+									rowsPerPageTemplate="5,10,15" rows="10" rowIndexVar="idx"
+									emptyMessage="#{msg['no_record_found']}">
+
+									<p:ajax event="filter" oncomplete="updateFilterSelection()" />
+
+									<p:ajax event="rowSelectRadio"
+										listener="#{stockItemUploadBean.onRowSelect}"
+										update=":#{p:component('actionButtons')}" />
+
+									<p:column headerText="#" styleClass="text-center width-3">
+										<f:facet name="header">
+											<p:outputLabel value="#" />
+										</f:facet>
+										<h:outputText styleClass="ui-column-title" value="#{index+1}"></h:outputText>
+									</p:column>
+
+									<p:column headerText="#{msg['grn_number']}"
+										styleClass="width-10 text-center" sortBy="#{list.grnNumber}"
+										filterBy="#{list.grnNumber}"
+										filterMatchMode="#{list.grnNumber}">
+										<h:outputText styleClass="ui-column-title"
+											value="#{list.grnNumber}"></h:outputText>
+									</p:column>
+
+									<p:column headerText="#" sortBy="#{list.supplierCodeName}"
+										styleClass="width-20" filterBy="#{list.supplierCodeName}"
+										filterMatchMode="contains">
+										<f:facet name="header">
+											<p:outputLabel value="#{msg['grn_supplier_code_name']}" />
+										</f:facet>
+										<h:outputText styleClass="ui-column-title"
+											value="#{list.supplierCodeName}"></h:outputText>
+									</p:column>
+
+									<p:column headerText="#{msg['grn_created_date']}"
+										sortBy="#{list.grnDate}" sortable="true"
+										filterBy="#{list.grnDate}"
+										styleClass="width-12 text-center form-group_calend"
+										filterMatchMode="exact">
+										<f:facet name="filter">
+											<p:calendar id="fromDate" pattern="dd-MMM-yyyy"
+												placeholder="dd-mmm-yyyy" mask="true"
+												onchange="PF('liststockTransferLazyListWdgr').filter()"
+												styleClass="form-control calend-icon" yearRange="c-10:c+10"
+												navigator="true">
+												<p:ajax event="dateSelect"
+													oncomplete="PF('liststockTransferLazyListWdgr').filter()" />
+												<p:ajax event="change" execute="@this"
+													oncomplete="PF('liststockTransferLazyListWdgr').filter()" />
+											</p:calendar>
+										</f:facet>
+										<p:outputLabel value="#{list.grnDate}">
+											<f:convertDateTime timeZone="GMT+05:30" pattern="dd-MMM-yyyy" />
+										</p:outputLabel>
+									</p:column>
+
+									<p:column filterBy=" #{list.status}" headerText="#{msg['status']}"
+										filterMatchMode="contains" filterable="true"
+										sortBy=" #{list.status}" sortable="true"
+										styleClass="text-center width-10">
+										<f:facet name="filter">
+											<h:selectOneMenu onchange="PF('table').filter()"
+												id="statusDropdown" class="form-control select2">
+												<f:selectItem itemLabel="#{msg['select']}"
+													itemValue="#{null}" noSelectionOption="true" />
+												<f:selectItem itemLabel="#{msg['active']}" itemValue="Active" />
+												<f:selectItem itemLabel="#{msg['inactive']}"
+													itemValue="InActive" />
+											</h:selectOneMenu>
+										</f:facet>
+
+										<h:outputText value="#{msg['active']}"
+											styleClass="label label-success sts_shortl"
+											rendered="#{list.status eq 'Active'}" />
+
+										<h:outputText value="#{msg['inactive']}"
+											styleClass="label label-default sts_shortl"
+											rendered="#{list.status eq 'InActive'}" />
+
+									</p:column>
+									<p:column headerText="#{msg['select']}" selectionMode="single"
+										styleClass="width-4 text-center">
+									</p:column>
+
+								</p:dataTable>
+
+								<p:remoteCommand name="updateFilterSelection"
+									update=":#{p:component('totalRecord')}" autoRun="true" />
+							</p:outputPanel>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+
+			<!-- Confirm Delete Start -->
+			<p:dialog header="#{msg['confirmation_delete_title']}"
+				draggable="false" modal="true"
+				styleClass="p-0 overlay-pop modal-dialog" closable="true"
+				width="30%" widgetVar="deleteConfirm" showEffect="fade"
+				hideEffect="fade" closeOnEscape="true" resizable="false"
+				id="deleteConfirmID">
+				<div class="modal-body">
+					<p:outputPanel id="deleteDialogPanel">
+						<h:outputText value="#{msg['delete_record']}" />
+						<br />
+					</p:outputPanel>
+				</div>
+				<div class="modal-footer m-t-10">
+					<p:commandButton value="&#xed6a;&nbsp;#{msg['no']}"
+						title="#{msg['no']}"
+						styleClass="btn bg-slate heading-btn font-iconmoon"
+						oncomplete="PF('deleteConfirm').hide()" />
+					<p:commandButton ajax="false"
+						styleClass="btn bg-success heading-btn font-iconmoon"
+						title="#{msg['yes']}" value="&#xed6e;&nbsp;#{msg['yes']}"
+						onclick="PF('statusDialog').show();"
+						action="#{stockItemUploadBean.delete}"
+						oncomplete="PF('deleteConfirm').hide()">
+					</p:commandButton>
+				</div>
+			</p:dialog>
+			<!-- Confirm Delete End -->
+		</h:form>
+	</ui:define>
+</ui:composition>

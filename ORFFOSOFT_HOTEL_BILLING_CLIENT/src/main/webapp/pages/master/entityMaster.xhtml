@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	template="/pages/template/layout.xhtml">
+	<ui:define name="content">
+		<h:form id="entityForm">
+			<title>InfoTex | Entity</title>
+
+			<!-- Page Header -->
+			<div class="page-header page-header-default"
+				style="margin-top: 50px;">
+				<div class="page-header-content">
+					<div class="page-title">
+						<h4>
+							<i class="icon-arrow-left52 position-left"></i>#{msg['entity_master']}
+						</h4>
+						<ul class="breadcrumb">
+							<li><a href="index.html"><i
+									class="icon-home2 position-left"></i>#{msg['home']}</a></li>
+							<li><a href="components_page_header.html">#{msg['master']}</a></li>
+							<li class="active">#{msg['entity_master']}</li>
+						</ul>
+						<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+					</div>
+
+					<div class="heading-elements">
+						<div class="heading-btn-group">
+							<a href="#" class="btn btn-link btn-float has-text"><i
+								class="icon-info22 text-primary"></i> <span>Help</span></a> <a
+								href="#" class="btn btn-link btn-float has-text"><i
+								class="glyphicon glyphicon-th text-primary"></i> <span>Quick
+									Menu</span></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End Page Header -->
+
+			<!-- Main content -->
+			<div class="content">
+				<div class="search-panel">
+					<div class="panel panel-info panel-bordered">
+						<div class="panel-heading">
+							<h6 class="panel-title">
+								Create New Entity <a class="heading-elements-toggle"></a>
+							</h6>
+							<div class="heading-elements">
+								<ul class="icons-list">
+									<li><a href="" data-action="collapse" class=""></a></li>
+								</ul>
+							</div>
+						</div>
+
+						<div class="panel-body" style="display: block;">
+							<p:outputPanel id="entityPanel">
+								<div class="row">
+									<div class="col-md-3">
+										<p:outputLabel value="#{msg['entity_master_code']}"
+											styleClass="control-label " />
+										<div class="input-group">
+											<p:inputText tabindex="1" autocomplete="off"
+												a:autofocus="true" id="code"
+												onkeyup="this.value=this.value.toUpperCase();"
+												disabled="#{entityTypeMasterBean.visible}"
+												value="#{entityTypeMasterBean.entityMasterDto.entityCode}"
+												class="form-control" maxlength="50"
+												required="#{not empty param[submit.clientId]}"
+												requiredMessage="#{msg['entity_master_code']} #{msg['required']}">
+												<p:keyFilter mask="alpha" />
+											</p:inputText>
+											<span class="input-group-addon"><i
+												class="fa fa-hashtag"></i></span>
+										</div>
+										<p:message for="code" />
+										<p:tooltip for="code"
+											value="#{msg['entity_type_code_valid_msg']}" />
+
+									</div>
+
+									<div class="col-md-3">
+										<p:outputLabel value="#{msg['entity_master_name']}"
+											styleClass="control-label " />
+										<div class="input-group">
+											<p:inputText tabindex="2" id="name" autocomplete="off"
+												value="#{entityTypeMasterBean.entityMasterDto.entityName}"
+												class="form-control" maxlength="50"
+												required="#{not empty param[submit.clientId] || not empty param[update.clientId]}"
+												requiredMessage="#{msg['entity_master_name']} #{msg['required']}">
+												<p:keyFilter mask="alpha" />
+											</p:inputText>
+
+											<span class="input-group-addon"><i class="icon-user"></i></span>
+										</div>
+										<p:message for="name" />
+										<p:tooltip for="name"
+											value="#{msg['entity_type_name_valid_msg']}" />
+									</div>
+
+									<div class="col-md-3">
+										<p:outputLabel value="#{msg['entity_master_lname']}"
+											styleClass="control-label" />
+										<div class="input-group">
+											<p:inputText tabindex="3" id="regnlName" autocomplete="off"
+												value="#{entityTypeMasterBean.entityMasterDto.localName}"
+												class="form-control" maxlength="50"
+												required="#{not empty param[submit.clientId] || not empty param[update.clientId]}"
+												requiredMessage="#{msg['entity_master_lname']} #{msg['required']}"
+												onkeypress="return onlyAlphaNumberSpace(event)">
+											</p:inputText>
+
+											<span class="input-group-addon"><i class="icon-user"></i></span>
+										</div>
+										<p:message for="regnlName" />
+										<p:tooltip for="regnlName"
+											value="#{msg['entity_type_local_name_valid_msg']}" />
+									</div>
+
+									<div class="col-md-3 m-t-25">
+										<p:commandButton value="&#xe916;&nbsp;#{msg['clear']}"
+											tabindex="5" ajax="false"
+											update="entityPanel entityTablePanel"
+											class="btn bg-slate btn-xs font-iconmoon"
+											actionListener="#{entityTypeMasterBean.clear}"
+											rendered="#{entityTypeMasterBean.action eq 'ADD'}"
+											data-style="zoom-in" />
+
+										<p:commandButton value="&#xed6a;&nbsp;#{msg['cancel']}"
+											ajax="false" update="entityPanel entityTablePanel"
+											actionListener="#{entityTypeMasterBean.clear}"
+											rendered="#{entityTypeMasterBean.action eq 'EDIT'}"
+											class="btn bg-slate btn-xs font-iconmoon"
+											data-style="zoom-in" />
+
+										<!-- Search Button -->
+										<p:commandButton tabindex="6"
+											value="&#xe98e;&nbsp;#{msg['search']}" ajax="false"
+											update="entityForm entityPanel entityTablePanel growls"
+											action="#{entityTypeMasterBean.search}"
+											class="btn bg-primary btn-xs font-iconmoon"
+											data-style="zoom-in"
+											rendered="#{entityTypeMasterBean.action eq 'ADD'}">
+											<f:setPropertyActionListener value="Search"
+												target="#{entityTypeMasterBean.buttonName}" />
+										</p:commandButton>
+										<!-- Save Button -->
+										<p:commandButton id="submit" binding="#{submit}"
+											value="&#xea0e;&nbsp;#{msg['add']}"
+											update="entityPanel entityTablePanel growls"
+											action="#{entityTypeMasterBean.submitForm}"
+											class="btn bg-success btn-xs font-iconmoon"
+											data-style="zoom-in"
+											rendered="#{entityTypeMasterBean.action eq 'ADD'}">
+											<f:setPropertyActionListener value="ADD"
+												target="#{entityTypeMasterBean.buttonName}" />
+										</p:commandButton>
+										<p:commandButton id="update" binding="#{update}" tabindex="4"
+											value="&#xe9fb;&nbsp;#{msg['update']}"
+											update="entityPanel entityTablePanel growls"
+											action="#{entityTypeMasterBean.updateData}"
+											rendered="#{entityTypeMasterBean.action eq 'EDIT'}"
+											class="btn bg-primary btn-xs font-iconmoon"
+											data-style="zoom-in" />
+									</div>
+
+								</div>
+							</p:outputPanel>
+						</div>
+					</div>
+				</div>
+
+				<!-- Contnet area -->
+
+				<div class="panel panel-flat">
+					<div class="panel-heading">
+						<h6 class="panel-title">
+							Total Entities Types : 10 <a class="heading-elements-toggle"><i
+								class="icon-more"></i></a>
+						</h6>
+					</div>
+
+					<div class="table-lay-a">
+						<p:outputPanel id="entityTablePanel">
+							<div class="table-responsive">
+								<p:dataTable id="table" var="data" 
+									styleClass="table table-striped table-hover"
+									value="#{entityTypeMasterBean.entityList}"
+									paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									rows="10" paginator="true" paginatorPosition="bottom"
+									tableStyleClass="" rowsPerPageTemplate="5,10,15"
+									rowIndexVar="idx">
+									<p:column headerText="#{msg['serial_no']}"
+										style="width:50px; text-align:center;">
+										<h:outputText value="#{idx+1}" />
+									</p:column>
+									<p:column headerText="#{msg['entity_master_code']}">
+										<h:outputText value="#{data.entityCode}" />
+									</p:column>
+									<p:column headerText="#{msg['entity_master_name']}">
+										<h:outputText value="#{data.entityName}" />
+									</p:column>
+									<p:column headerText="#{msg['entity_master_lname']}">
+										<h:outputText value="#{data.localName}" />
+									</p:column>
+									<p:column headerText="#{msg['action']}"
+										styleClass="text-center">
+										<p:commandLink
+											action="#{entityTypeMasterBean.updateFormData(data)}"
+											title="#{msg['edit']}"
+											styleClass="btn btn-primary text-primary-600 btn-flat btn-icon btn-rounded">
+											<i class="icon-pencil5"></i>
+										</p:commandLink>
+											&nbsp;&nbsp;
+											<p:commandLink action="#{entityTypeMasterBean.delete(data)}"
+											title="#{msg['delete']}"
+											styleClass="btn border-danger text-danger-600 btn-flat btn-icon btn-rounded">
+											<i class="icon-trash"></i>
+											<p:confirm header="#{msg['confirmation']}"
+												message="#{msg['confirm_delete']} ?" />
+										</p:commandLink>
+									</p:column>
+								</p:dataTable>
+							</div>
+						</p:outputPanel>
+					</div>
+				</div>
+			</div>
+
+
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+

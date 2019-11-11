@@ -1,0 +1,852 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	template="/pages/template/layout.xhtml">
+	<ui:define name="content">
+		<title>InfoTex | File Movement</title>
+		<ui:param name="bean" value="#{fileMovementBean}"></ui:param>
+		<h:form id="fileMovementForm">
+			<!-- Page Header -->
+			<div class="page-header page-header-default">
+				<div class="page-header-content">
+					<div class="page-title">
+						<h4>#{fileMovementBean.action eq 'ADD' ?
+							msg['cr_file_movmnt'] : msg['ed_file_movmnt']}</h4>
+
+						<ul class="breadcrumb">
+							<li><a href="#{request.contextPath}/pages/home.xhtml"><i
+									class="icon-home2 position-left"></i>#{msg['home']}</a></li>
+							<li>#{msg['personnel']}</li>
+							<li>#{msg['admin']}</li>
+							<li class="active">#{fileMovementBean.action eq 'ADD' ?
+								msg['cr_file_movmnt'] : msg['ed_file_movmnt']}</li>
+						</ul>
+					</div>
+					<ui:include src="/pages/pageHeadingElements.xhtml" />
+				</div>
+			</div>
+			<!-- Page Header End -->
+
+			<div class="content  no-padding-bottom">
+				<p:outputPanel id="panel">
+					<div
+						class="panel-group m-b-10 panel-group-control panel-group-control-right"
+						id="accordion-control-right">
+						<div class="panel panel-info">
+							<div class="panel-heading">
+								<h6 class="panel-title">
+									#{msg['file_movmnt']} <span class="pull-right text-13 ">(<span
+										class="text-danger">*</span> #{msg['marked_field_mandatory']})
+									</span>
+								</h6>
+							</div>
+							<div class="page-scroll">
+								<div class="panel-body no-padding-bottom">
+									<div class="row label-form custom-form-1">
+										<div class="col-lg-3 col-md-3 col-sm-6 ">
+											<div class="form-group">
+												<p:outputLabel value="#{msg['ho_ro']}" for="headoffice" />
+												<p:outputLabel value="*" class="text-danger mand-symbol"
+													for="headoffice" rendered="#{empty param[submit.clientId]}" />
+												<div class="input-group">
+													<span class="input-group-addon"><i
+														class="icon-office"></i></span>
+													<h:selectOneMenu class="form-control" id="headoffice"
+														value="#{bean.entityMaster}"
+														converter="#{entityConverter}"
+														required="#{not empty param[submit.clientId]}"
+														requiredMessage="#{msg['ho_ro_req']}">
+														<f:selectItem itemLabel="#{msg['select']}" itemValue="" />
+														<f:selectItems value="#{bean.entityMasterList}"
+															var="entityMaster" itemLabel="#{entityMaster.name}"
+															itemValue="#{entityMaster}"></f:selectItems>
+														<p:ajax event="change" listener="#{bean.headOfficeChange}"
+															update="entityType"></p:ajax>
+													</h:selectOneMenu>
+												</div>
+												<h:message for="headoffice" class="validation-error-label"></h:message>
+											</div>
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-6 ">
+											<div class="form-group">
+												<p:outputLabel value="#{msg['entity_master']}"
+													for="entityType" />
+												<p:outputLabel value="*" class="text-danger mand-symbol"
+													for="entityType" rendered="#{empty param[submit.clientId]}" />
+												<div class="input-group">
+													<span class="input-group-addon"><i
+														class="icon-office"></i></span>
+													<h:selectOneMenu class="form-control"
+														value="#{bean.entityTypeMaster}"
+														converter="#{entityConverter}" id="entityType"
+														required="#{not empty param[submit.clientId]}"
+														requiredMessage="#{msg['en_ty_req']}">
+														<f:selectItem itemLabel="#{msg['select']}" itemValue="" />
+														<f:selectItems value="#{bean.entityTypeList}"
+															var="entityType" itemLabel="#{entityType.entityName}"
+															itemValue="#{entityType}"></f:selectItems>
+														<p:ajax event="change" listener="#{bean.entityTypeChange}"
+															update="entityid"></p:ajax>
+													</h:selectOneMenu>
+												</div>
+												<h:message for="entityType" class="validation-error-label"></h:message>
+											</div>
+										</div>
+										<div class="col-lg-3 col-md-3 col-sm-6 ">
+											<div class="form-group">
+												<p:outputLabel value="#{msg['entity']}" for="entityid" />
+												<p:outputLabel value="*" class="text-danger mand-symbol"
+													for="entityid" rendered="#{empty param[submit.clientId]}" />
+												<div class="input-group">
+													<span class="input-group-addon"><i
+														class="icon-office"></i></span>
+													<h:selectOneMenu class="form-control"
+														value="#{bean.entity}" converter="#{entityConverter}"
+														id="entityid"
+														required="#{not empty param[submit.clientId]}"
+														requiredMessage="#{msg['ent_req']} ">
+														<f:selectItem itemLabel="#{msg['select']}" itemValue="" />
+														<f:selectItems value="#{bean.entityList}" var="entity"
+															itemLabel="#{entity.name}" itemValue="#{entity}"></f:selectItems>
+													</h:selectOneMenu>
+												</div>
+												<h:message for="entityid" class="validation-error-label"></h:message>
+											</div>
+										</div>
+
+										<div class="col-lg-3 col-md-3 col-sm-6 ">
+											<div class="form-group">
+												<p:outputLabel value="#{msg['dept']}" for="deptid" />
+												<p:outputLabel value="*" class="text-danger mand-symbol"
+													for="deptid" rendered="#{empty param[submit.clientId]}" />
+												<div class="input-group">
+													<span class="input-group-addon"><i
+														class="icon-office"></i></span>
+													<h:selectOneMenu class="form-control"
+														value="#{bean.department}" converter="#{entityConverter}"
+														id="deptid" required="#{not empty param[submit.clientId]}"
+														requiredMessage="#{msg['dept_req']}">
+														<f:selectItem itemLabel="#{msg['select']}" itemValue="" />
+														<f:selectItems value="#{bean.departmentList}"
+															var="department" itemLabel="#{department.name}"
+															itemValue="#{department}"></f:selectItems>
+														<p:ajax event="change" listener="#{bean.departmentChange}"
+															update="sectionid"></p:ajax>
+													</h:selectOneMenu>
+												</div>
+												<h:message for="deptid" class="validation-error-label"></h:message>
+											</div>
+										</div>
+									</div>
+
+									<div class="row custom-form-1">
+										<div class="col-lg-3 col-md-3 col-sm-6 ">
+											<div class="form-group">
+												<p:outputLabel value="#{msg['sec']}" for="sectionid" />
+												<p:outputLabel value="*" class="text-danger mand-symbol"
+													for="sectionid" rendered="#{empty param[submit.clientId]}" />
+												<div class="input-group">
+													<span class="input-group-addon"><i
+														class="icon-office"></i></span>
+													<h:selectOneMenu class="form-control"
+														value="#{bean.sectionMaster}"
+														converter="#{entityConverter}" id="sectionid"
+														required="#{not empty param[submit.clientId]}"
+														requiredMessage="#{msg['sec_req']}">
+														<f:selectItem itemLabel="#{msg['select']}" itemValue="" />
+														<f:selectItems value="#{bean.sectionList}" var="section"
+															itemLabel="#{section.name}" itemValue="#{section}"></f:selectItems>
+													</h:selectOneMenu>
+												</div>
+												<h:message for="sectionid" class="validation-error-label"></h:message>
+											</div>
+										</div>
+										<div class="col-lg-3 col-md-6 col-sm-6">
+											<div class="form-group">
+												<p:outputLabel value="#{msg['emp_name']}" for="empmasterid" />
+												<p:outputLabel value="*" class="text-danger mand-symbol"
+													for="empmasterid"
+													rendered="#{empty param[submit.clientId]}" />
+												<div class="input-group">
+													<span class="input-group-addon"><i class="icon-user"></i></span>
+													<h:selectOneMenu class="form-control"
+														value="#{bean.employeeMaster}"
+														converter="#{entityConverter}" id="empmasterid"
+														required="#{not empty param[submit.clientId]}"
+														requiredMessage="#{msg['emp_name_req']}">
+														<f:selectItem itemLabel="#{msg['select']}" itemValue="" />
+														<f:selectItems value="#{bean.employeeMasterList}"
+															var="empMaster" itemLabel="#{empMaster.firstName}"
+															itemValue="#{empMaster}"></f:selectItems>
+													</h:selectOneMenu>
+												</div>
+												<h:message for="empmasterid" class="validation-error-label"></h:message>
+											</div>
+										</div>
+										<!-- <div class="col-lg-3 col-md-6 col-sm-6 ">
+											<div class="form-group">
+												<p:outputLabel value="#{msg['file_num']}" />
+												<div class="input-group">
+													<span class="input-group-addon"><i
+														class=" icon-file-text"></i></span>
+													<p:inputText value="" class="form-control" disabled="true"
+														placeholder="001" />
+												</div>
+											</div>
+										</div>
+										 -->
+
+										<h:panelGroup rendered="#{bean.action eq 'ADD'}">
+											<div class="col-lg-3 col-sm-6 col-md-6">
+												<div class="form-group">
+													<p:outputLabel value="#{msg['file_num']}" />
+
+													<div class="input-group">
+														<span class="input-group-addon"><i
+															class=" icon-hash"></i></span>
+														<p:inputText value="#{bean.movementNumber}"
+															class="form-control" id="filenum" disabled="true">
+
+														</p:inputText>
+													</div>
+												</div>
+											</div>
+										</h:panelGroup>
+
+										<h:panelGroup rendered="#{bean.action eq 'EDIT'}">
+											<div class="col-lg-3 col-sm-6 col-md-6">
+												<div class="form-group">
+													<p:outputLabel value="#{msg['file_num']}" />
+
+													<div class="input-group">
+														<span class="input-group-addon"><i
+															class=" icon-hash"></i></span>
+														<p:inputText value="#{bean.movementNumber}"
+															class="form-control" id="filenumber" disabled="true">
+
+														</p:inputText>
+													</div>
+
+												</div>
+											</div>
+										</h:panelGroup>
+
+										<div class="col-lg-3 col-md-6 col-sm-6">
+											<div class="form-group">
+												<p:outputLabel value="#{msg['tapal_ref_no']}" />
+
+												<div class="input-group">
+													<span class="input-group-addon"><i class="icon-hash"></i></span>
+													<h:selectOneMenu class="form-control"
+														value="#{bean.incomingTapal}"
+														converter="#{entityConverter}" id="refnumberid">
+														<f:selectItem itemLabel="#{msg['select']}"
+															onSelectionOption="true" />
+														<f:selectItems value="#{bean.referenceNumberList}"
+															var="refNumber"
+															itemLabel="#{refNumber.referenceNumber} / #{refNumber.createdDate}"
+															itemValue="#{refNumber}">
+														</f:selectItems>
+													</h:selectOneMenu>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="form-group">
+												<p:outputLabel value="#{msg['sub']}" for="subject" />
+												<p:outputLabel value="*" class="text-danger mand-symbol"
+													for="subject" rendered="#{empty param[submit.clientId]}" />
+												<h:inputTextarea rows="1" class="form-control"
+													disabled="#{rosterReservationBean.action eq 'VIEW'}"
+													value="#{bean.subject}" maxlength="250"
+													required="#{not empty param[submit.clientId]}"
+													requiredMessage="#{msg['sub_req']}" id="subject"></h:inputTextarea>
+												<small>#{msg['textarea_msg']}</small>
+												<h:message for="subject" class="validation-error-label"></h:message>
+
+											</div>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-lg-12">
+											<p:outputLabel value="#{msg['context']}" />
+											<span class="mand-red">*</span>
+											<div class="panel-body p-0">
+												<div class="tabbable">
+													<div class="tab-content">
+														<div class="tab-pane active" id="large-tab1">
+															<div class="form-group m-b-0">
+																<p:editor value="#{bean.content}" id="content"
+																	required="#{not empty param[submit.clientId]}"
+																	requiredMessage="#{msg['context_req']}"></p:editor>
+															</div>
+															<h:message for="content" class="validation-error-label"></h:message>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row custom-form-1 m-t-10">
+
+										<div class="col-lg-4 m-b-10 ">
+											<label class="control-label">#{msg['up_doc']}</label> <span
+												class="mand-sign-input">*</span>
+
+											<div class="input-group image-preview" style="width: 100%">
+												<p:inputText class="form-control " id="fileName"
+													required="#{not empty param[submit.clientId]}"
+													requiredMessage="#{msg['up_doc']}" value="#{bean.fileName}"
+													style="width:62%" disabled="true" />
+												<div class=" no-padding contact-upload upload-popup"
+													style="float: left">
+													<div class="btn-file-upload">
+														<p:fileUpload class="btn-upload text-right"
+															label="&#xf093;&nbsp;Upload"
+															update="fileName growls filemovementFilelisttable"
+															fileUploadListener="#{bean.fileUpload}"
+															onstart="PF('progressDlg').show();"
+															oncomplete="PF('progressDlg').hide();" mode="advanced"
+															auto="true" sizeLimit="1000000"
+															allowTypes="/(\.|\/)(doc|docx|jpeg|png|pdf|xlsx)$/">
+														</p:fileUpload>
+													</div>
+												</div>
+												<h:message for="fileName" class="validation-error-label"></h:message>
+											</div>
+											<small class="uploadfinename">#{msg['file_format_lessthan_5MB']}</small>
+										</div>
+									</div>
+								</div>
+
+								<div class="panel-body">
+									<div class="row">
+										<div class="col-sm-12">
+											<h5 class="panel-title">
+												<i class="fa fa-th-large m-r-5"></i>#{msg['send_file']}
+
+											</h5>
+											<div class="table-responsive">
+												<p:dataTable id="filemovementFilelisttable" var="filelist"
+													class="table" value="#{bean.fileMovementFilesList}"
+													widgetVar="filemovementFiletablewdgt" rowIndexVar="idx">
+													<p:column headerText="#" class="width-3 text-center">
+														<h:outputText value="#{idx+1}" />
+													</p:column>
+													<p:column headerText="#{msg['name']}">
+														<f:facet name="filter">
+															<p:inputText class="form-control " />
+														</f:facet>
+														<h:outputText value="#{filelist.fileName}" />
+													</p:column>
+													<p:column headerText="#{msg['type']}">
+														<f:facet name="filter">
+															<p:inputText class="form-control " />
+														</f:facet>
+														<h:outputText value="#{filelist.fileType}" />
+													</p:column>
+													<p:column headerText="#{msg['size']}">
+														<f:facet name="filter">
+															<p:inputText class="form-control " />
+														</f:facet>
+														<h:outputText value="#{filelist.fileSize}" />
+													</p:column>
+													<p:column headerText="#{msg['action']}" class="text-center">
+														<f:facet name="filter">
+															<p:inputText class="form-control text-center" />
+														</f:facet>
+														<p:commandButton value="&#xe99e;" styleClass=""
+															class="btn bg-danger font-iconmoon m-l-5 "
+															update="filemovementFilelisttable"
+															onclick="PF('progressDlg').show();"
+															action="#{bean.deleteFile(filelist)}"
+															oncomplete="PF('progressDlg').hide();"
+															title="#{msg['delete']}">
+														</p:commandButton>
+													</p:column>
+
+												</p:dataTable>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="panel-body">
+									<div class="row label-form">
+										<div class="col-lg-3 col-md-6 col-sm-6">
+											<div class="form-group">
+												<p:outputLabel class="" value="#{msg['frwd_to']}" />
+												<div class="input-group ui-outputlabel ui-widget">
+													<span class="input-group-addon"><i
+														class="icon-forward"></i></span>
+													<h:selectOneMenu id="forwardto" styleClass="form-control"
+														converter="#{entityConverter}" value="#{bean.userMaster}">
+														<f:selectItem itemLabel="Select" noSelectionOption="true" />
+														<f:selectItems value="#{bean.userMasters}" var="userinfo"
+															itemLabel="#{userinfo.empCode} / #{userinfo.empName}" itemValue="#{userinfo}" />
+													</h:selectOneMenu>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-3 col-md-6 col-sm-6">
+											<div class="form-group">
+												<p:outputLabel class="" value="#{msg['frwd_for']}" />
+												<div class="input-group ui-outputlabel ui-widget">
+													<span class="input-group-addon"><i
+														class="icon-forward"></i></span>
+													<h:selectOneMenu class="form-control select2" id="frwdFor"
+														value="#{bean.filemovementNote.finalApproval}">
+														<f:selectItem itemLabel="#{msg['select']}" />
+														<f:selectItem itemValue="#{false}" itemLabel="Approved" />
+														<f:selectItem itemValue="#{true}"
+															itemLabel="Final Approval" />
+													</h:selectOneMenu>
+												</div>
+											</div>
+										</div>
+
+									</div>
+									<div class="row ">
+										<div class="col-lg-6 col-md-6 col-sm-6">
+											<p:commandButton value="&#xf067; #{msg['create_note']}"
+												title="#{msg['create_note']}"
+												styleClass="btn btn-success btn-md fa-input m-l-0"
+												onclick="PF('notedialog').show();"></p:commandButton>
+
+											<p:commandButton value="&#xeb0d;" title="#{msg['add']}"
+												style="min-width:32px;"
+												styleClass="btn btn-primary btn-md font-iconmoon"
+												onclick="PF('commentdialog').show();"></p:commandButton>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-6 text-right">
+											<p:commandButton value="&#xed6a;&nbsp;#{msg['cancel']}"
+												immediate="true" class="btn bg-slate font-iconmoon m-r-0"
+												action="#{bean.cancel}" update="panel"
+												onstart="PF('progressDlg').show();"
+												oncomplete="PF('progressDlg').hide();"
+												title="#{msg['cancel']}">
+											</p:commandButton>
+
+											<ui:remove>
+												<!-- <p:commandButton value="&#xea0e;&nbsp;#{msg['save']}"
+								immediate="true" class="btn bg-primary font-iconmoon m-r-0"
+								title="#{msg['save']}">
+							</p:commandButton> -->
+											</ui:remove>
+
+											<p:commandButton
+												value="#{fileMovementBean.action eq 'ADD' ?  '&#xed6e;' :  '&#xeda7;' }  #{fileMovementBean.action eq 'ADD' ?  msg['submit'] :  msg['update'] }"
+												title="#{fileMovementBean.action eq 'ADD' ?  msg['submit'] :  msg['update'] }"
+												update="growls panel" id="submit" binding="#{submit}"
+												onstart="PF('progressDlg').show();"
+												oncomplete="PF('progressDlg').hide();"
+												class="btn bg-success heading-btn  font-iconmoon"
+												action="#{bean.createFileMovements}">
+											</p:commandButton>
+										</div>
+									</div>
+								</div>
+								<!-- end row -->
+							</div>
+						</div>
+
+					</div>
+				</p:outputPanel>
+			</div>
+
+		</h:form>
+		<!-- Add Note Dialogue -->
+		<p:dialog header="#{msg['create_note']}" widgetVar="notedialog"
+			modal="true" showEffect="fade" hideEffect="fade" resizable="false"
+			width="80%" class="p-0 top-100">
+
+			<p:outputPanel id="customerPanel">
+				<div class="panel-body p-0">
+					<div class="tabbable">
+						<ul
+							class="nav nav-lg nav-tabs nav-tabs-solid nav-tabs-component m-b-5">
+							<li class="active"><a href="#large-tab1" data-toggle="tab">#{msg['note']}
+									- 1</a></li>
+							<li class="pull-right"><a href="#large-tab2"
+								data-toggle="tab"> <i class="icon-plus3"></i></a></li>
+						</ul>
+
+						<div class="tab-content">
+							<div class="tab-pane active" id="large-tab1">
+								<!-- WYSIHTML5 basic -->
+								<div class="panel-body p-0 m-b-10">
+									<p:textEditor widgetVar="editor1" value="#{bean.note}"
+										height="200" />
+								</div>
+
+
+								<div class='col-md-12'>
+									<div class="carousel slide media-carousel" id="media">
+										<div class="carousel-inner">
+											<div class="item  active">
+												<div class="row">
+													<div class="col-md-3">
+														<div
+															class="panel panel-body border-top-warning no-padding-bottom m-b-0 p-8 wysihtml5-sign">
+															<ul class="list list-icons m-b-0">
+																<li>
+																	<!-- <i class="icon-checkmark-circle text-success position-left"></i> -->
+																	<h6 class="m-t-0 text-center">Created By</h6>
+																</li>
+																<li>Name : Ramesh Kumar N</li>
+																<li>Designation : Ramesh Kumar N</li>
+																<li>Date : 12-Jul-2017</li>
+															</ul>
+														</div>
+													</div>
+
+													<div class="col-md-3">
+														<div
+															class="panel panel-body border-top-warning no-padding-bottom m-b-0 p-8 wysihtml5-sign">
+															<ul class="list list-icons m-b-0">
+																<li>
+																	<!-- <i class="icon-checkmark-circle text-success position-left"></i> -->
+																	<h6 class="m-t-0 text-center">Created By</h6>
+																</li>
+																<li>Name : Ramesh Kumar N</li>
+																<li>Designation : Ramesh Kumar N</li>
+																<li>Date : 12-Jul-2017</li>
+															</ul>
+														</div>
+													</div>
+
+													<div class="col-md-3">
+														<div
+															class="panel panel-body border-top-warning no-padding-bottom m-b-0 p-8 wysihtml5-sign">
+															<ul class="list list-icons m-b-0">
+																<li>
+																	<!-- <i class="icon-checkmark-circle text-success position-left"></i> -->
+																	<h6 class="m-t-0 text-center">Created By</h6>
+																</li>
+																<li>Name : Ramesh Kumar N</li>
+																<li>Designation : Ramesh Kumar N</li>
+																<li>Date : 12-Jul-2017</li>
+															</ul>
+														</div>
+													</div>
+													<div class="col-md-3">
+														<div
+															class="panel panel-body border-top-warning no-padding-bottom m-b-0 p-8 wysihtml5-sign">
+															<ul class="list list-icons m-b-0">
+																<li>
+																	<!-- <i class="icon-checkmark-circle text-success position-left"></i> -->
+																	<h6 class="m-t-0 text-center">Created By</h6>
+																</li>
+																<li>Name : Ramesh Kumar N</li>
+																<li>Designation : Ramesh Kumar N</li>
+																<li>Date : 12-Jul-2017</li>
+															</ul>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="item">
+												<div class="row">
+													<div class="col-md-3">
+														<div
+															class="panel panel-body border-top-warning no-padding-bottom m-b-0 p-8 wysihtml5-sign">
+															<ul class="list list-icons m-b-0">
+																<li>
+																	<!-- <i class="icon-checkmark-circle text-success position-left"></i> -->
+																	<h6 class="m-t-0 text-center">Created By</h6>
+																</li>
+																<li>Name : Ramesh Kumar N</li>
+																<li>Designation : Ramesh Kumar N</li>
+																<li>Date : 12-Jul-2017</li>
+															</ul>
+														</div>
+													</div>
+
+													<div class="col-md-3">
+														<div
+															class="panel panel-body border-top-warning no-padding-bottom m-b-0 p-8 wysihtml5-sign">
+															<ul class="list list-icons m-b-0">
+																<li>
+																	<h6 class="m-t-0 text-center">Created By</h6>
+																</li>
+																<li>Name : Ramesh Kumar N</li>
+																<li>Designation : Ramesh Kumar N</li>
+																<li>Date : 12-Jul-2017</li>
+															</ul>
+														</div>
+													</div>
+
+													<div class="col-md-3">
+														<div
+															class="panel panel-body border-top-warning no-padding-bottom m-b-0 p-8 wysihtml5-sign">
+															<ul class="list list-icons m-b-0">
+																<li>
+																	<h6 class="m-t-0 text-center">Created By</h6>
+																</li>
+																<li>Name : Ramesh Kumar N</li>
+																<li>Designation : Ramesh Kumar N</li>
+																<li>Date : 12-Jul-2017</li>
+															</ul>
+														</div>
+													</div>
+													<div class="col-md-3">
+														<div
+															class="panel panel-body border-top-warning no-padding-bottom m-b-0 p-8 wysihtml5-sign">
+															<ul class="list list-icons m-b-0">
+																<li>
+																	<h6 class="m-t-0 text-center">Created By</h6>
+																</li>
+																<li>Name : Ramesh Kumar N</li>
+																<li>Designation : Ramesh Kumar N</li>
+																<li>Date : 12-Jul-2017</li>
+															</ul>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="item">
+												<div class="row">
+													<div class="col-md-3">
+														<div
+															class="panel panel-body border-top-warning no-padding-bottom m-b-0 p-8 wysihtml5-sign">
+															<ul class="list list-icons m-b-0">
+																<li>
+																	<h6 class="m-t-0 text-center">Created By</h6>
+																</li>
+																<li>Name : Ramesh Kumar N</li>
+																<li>Designation : Ramesh Kumar N</li>
+																<li>Date : 12-Jul-2017</li>
+															</ul>
+														</div>
+													</div>
+
+													<div class="col-md-3">
+														<div
+															class="panel panel-body border-top-warning no-padding-bottom m-b-0 p-8 wysihtml5-sign">
+															<ul class="list list-icons m-b-0">
+																<li>
+																	<h6 class="m-t-0 text-center">Created By</h6>
+																</li>
+																<li>Name : Ramesh Kumar N</li>
+																<li>Designation : Ramesh Kumar N</li>
+																<li>Date : 12-Jul-2017</li>
+															</ul>
+														</div>
+													</div>
+
+													<div class="col-md-3">
+														<div
+															class="panel panel-body border-top-warning no-padding-bottom m-b-0 p-8 wysihtml5-sign">
+															<ul class="list list-icons m-b-0">
+																<li>
+																	<!-- <i class="icon-checkmark-circle text-success position-left"></i> -->
+																	<h6 class="m-t-0 text-center">Created By</h6>
+																</li>
+																<li>Name : Ramesh Kumar N</li>
+																<li>Designation : Ramesh Kumar N</li>
+																<li>Date : 12-Jul-2017</li>
+															</ul>
+														</div>
+													</div>
+													<div class="col-md-3">
+														<div
+															class="panel panel-body border-top-warning no-padding-bottom m-b-0 p-8 wysihtml5-sign">
+															<ul class="list list-icons m-b-0">
+																<li>
+																	<!-- <i class="icon-checkmark-circle text-success position-left"></i> -->
+																	<h6 class="m-t-0 text-center">Created By</h6>
+																</li>
+																<li>Name : Ramesh Kumar N</li>
+																<li>Designation : Ramesh Kumar N</li>
+																<li>Date : 12-Jul-2017</li>
+															</ul>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<a data-slide="prev" href="#media"
+											class="left carousel-control">‹</a> <a data-slide="next"
+											href="#media" class="right carousel-control">›</a>
+									</div>
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12 col-md-12 col-sm-12 text-right">
+							<div class="form-group m-b-0">
+								<p:commandButton value="&#xed6a;&nbsp;#{msg['cancel']}"
+									title="#{msg['cancel']}" onclick="PF('notedialog').hide();"
+									class="btn bg-slate heading-btn  font-iconmoon" />
+								<p:commandButton value="&#xed6e;&nbsp;#{msg['submit']}"
+									title="#{msg['submit']}" action="#{bean.submitFileNote}"
+									class="btn bg-success heading-btn  font-iconmoon"
+									oncomplete="PF('notedialog').hide();" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</p:outputPanel>
+
+		</p:dialog>
+
+		<!-- /.add note dialogue -->
+		<!-- Comment -->
+		<p:dialog header="#{msg['comment']}" widgetVar="commentdialog"
+			modal="true" showEffect="fade" hideEffect="fade" resizable="false"
+			styleClass="p-0">
+			<h:form>
+				<p:outputPanel id="customerPanel">
+					<div class="panel panel-flat">
+						<div class="panel-body p-0">
+							<div class="tabbable">
+								<ul class="nav nav-tabs nav-tabs-bottom">
+									<li class="active"><a href="#solid-tab1" data-toggle="tab"><i
+											class="icon-thumbs-up3"></i> #{msg['approve']}</a></li>
+									<li><a href="#solid-tab2" data-toggle="tab"><i
+											class="icon-thumbs-down3"></i> #{msg['reject']}</a></li>
+								</ul>
+
+								<div class="tab-content">
+									<div class="tab-pane active" id="solid-tab1">
+										<table class="table table-striped cust-table">
+											<tbody>
+												<tr class="success">
+													<td><strong>#{msg['appcommts']}</strong></td>
+													<td><span class="pull-left m-b-10">Given By</span> <span
+														class="label label-flat border-success text-success-600 pull-right m-b-10">Admin
+															User</span> <br /> <span class="pull-left">Given Date</span> <span
+														class="label label-flat border-warning text-warning-600 pull-right">12-Dec-2017
+													</span></td>
+													<td>100% Cotton printed Bed spread, printed with fast
+														Rapid Indigo colours and with over...</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+
+									<div class="tab-pane" id="solid-tab2">
+										<table class="table table-striped cust-table">
+											<tbody>
+												<tr class="success">
+													<td><strong>#{msg['rejection_comments']}</strong></td>
+													<td><span class="pull-left m-b-10">Given By</span> <span
+														class="label label-flat border-success text-success-600 pull-right m-b-10">Admin
+															User</span> <br /> <span class="pull-left">Given Date</span> <span
+														class="label label-flat border-warning text-warning-600 pull-right">12-Dec-2017
+													</span></td>
+													<td>100% Cotton printed Bed spread, printed with fast
+														Rapid Indigo colours and with over...</td>
+												</tr>
+
+												<tr>
+													<td><strong>Reply Comment</strong></td>
+													<td><span class="pull-left m-b-10">Given By</span> <span
+														class="label label-flat border-success text-success-600 pull-right m-b-10">Admin
+															User</span> <br /> <span class="pull-left">Given Date</span> <span
+														class="label label-flat border-warning text-warning-600 pull-right">12-Dec-2017
+													</span></td>
+													<td><textarea name="enter-message"
+															class="form-control" rows="3" cols="1"
+															placeholder="What's on your mind?"></textarea></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="row">
+						<div class="col-lg-12 col-md-12 col-sm-12 text-right">
+							<div class="form-group m-b-0">
+								<p:commandButton value="&#xed6a;&nbsp;#{msg['cancel']}"
+									title="#{msg['cancel']}"
+									onclick="window.location.href='listInitiateRequirementRequest.xhtml'"
+									class="btn bg-slate heading-btn  font-iconmoon" />
+								<p:commandButton value="&#xed6e;&nbsp;#{msg['submit']}"
+									title="#{msg['submit']}"
+									class="btn bg-success heading-btn  font-iconmoon" />
+							</div>
+						</div>
+					</div>
+				</p:outputPanel>
+			</h:form>
+		</p:dialog>
+		<!-- /.Comment -->
+
+
+
+
+
+
+
+
+		<script type="text/javascript"
+			src="#{request.contextPath}/assets/js/plugins/editors/wysihtml5/wysihtml5.min.js"></script>
+
+		<script type="text/javascript"
+			src="#{request.contextPath}/assets/js/plugins/editors/wysihtml5/toolbar.js"></script>
+
+		<script type="text/javascript"
+			src="#{request.contextPath}/assets/js/plugins/editors/wysihtml5/parsers.js"></script>
+
+		<script type="text/javascript"
+			src="#{request.contextPath}/assets/js/plugins/editors/wysihtml5/locales/bootstrap-wysihtml5.ua-UA.js"></script>
+
+		<script type="text/javascript"
+			src="#{request.contextPath}/assets/js/pages/editor_wysihtml5.js"></script>
+
+		<script>
+			(function() {
+				var fauxTable = document.getElementById("faux-table");
+				var mainTable = document.getElementById("main-table");
+				var clonedElement = mainTable.cloneNode(true);
+				var clonedElement2 = mainTable.cloneNode(true);
+				clonedElement.id = "";
+				clonedElement2.id = "";
+				fauxTable.appendChild(clonedElement);
+				fauxTable.appendChild(clonedElement2);
+			})();
+		</script>
+
+		<script>
+			$(document).ready(function() {
+				$('#purpose').on('change', function() {
+					if (this.value == '1') {
+						$("#business").show();
+						$("#durdate").show();
+						$("#extspc").hide();
+						$("#spcs").addClass("ff");
+					}
+					if (this.value == '2') {
+						$("#staff").show();
+						$("#spcs").removeClass("ff");
+						$("#business").hide();
+						$("#durdate").hide();
+						$("#extspc").show();
+					} else {
+						$("#staff").hide();
+					}
+				});
+			});
+		</script>
+
+	</ui:define>
+</ui:composition>

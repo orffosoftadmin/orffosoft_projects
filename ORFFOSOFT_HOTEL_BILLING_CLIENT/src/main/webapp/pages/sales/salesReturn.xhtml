@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/pages/template/layout.xhtml">
+	<ui:define name="content">
+		<h:form id="billing">
+			<ui:param name="bean" value="#{salesReturnBean}"></ui:param>
+			<title>Mark Solution | Sales Return</title>
+			<!-- Page Header -->
+			<div class="page-header page-header-default">
+				<div class="page-header-content">
+					<div class="page-title">
+						<h4>Sales Return</h4>
+						<ul class="breadcrumb">
+							<li><a href="#{request.contextPath}/pages/home.xhtml"><i
+									class="icon-home2 position-left"></i>#{msg['home']}</a></li>
+							<li>#{msg['oper']}</li>
+							<li class="active">Sales Return</li>
+						</ul>
+						<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+					</div>
+				</div>
+			</div>
+			<!-- End Page Header -->
+			<div class="content">
+				<div
+					class="panel-group panel-group-control panel-group-control-right m-b-15"
+					id="accordion-control-right">
+					<div class="panel panel-info ">
+						<div class="panel-heading">
+							<h6 class="panel-title">
+								Sales Return
+								<p:outputLabel styleClass="pull-right">(
+									<span class="mand-red">*</span>
+									<span>#{msg['mand_fields']}</span>)
+								</p:outputLabel>
+							</h6>
+						</div>
+
+						<div class="page-scroll">
+							<div class="panel-body p-t-10">
+								<h5 class="bord_bot m-t-0">
+									<span class="iform-title"><i
+										class="fa fa-th-large m-r-5"></i>Sales Return</span>
+								</h5>
+								<div class="row custom-form-1 label-form">
+									<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+										<div class="form-group">
+											<p:outputLabel class="fa-input" value="Customer Name" />
+											<p:outputLabel rendered="true" class="mand-red" value="*"></p:outputLabel>
+											<div class="input-group">
+												<span class="input-group-addon"><i class="icon-hash"></i></span>
+												<p:inputText id="cusName" class="form-control"
+													autocomplete="off"
+													required="#{not empty param[submit.clientId]}"
+													requiredMessage="#{msg['mobile_number_req']}"
+													value="#{bean.salesReturnDTO.customerName}">
+												</p:inputText>
+											</div>
+											<p:tooltip for="cusName" rendered="true"
+												value="#{msg['customer_name_req']}"></p:tooltip>
+										</div>
+									</div>
+
+									<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+										<div class="form-group">
+											<p:outputLabel class="fa-input" value="Customer Mobile No." />
+											<p:outputLabel rendered="true" class="mand-red" value="*"></p:outputLabel>
+											<div class="input-group">
+												<span class="input-group-addon"><i class="icon-hash"></i></span>
+												<p:inputText id="mob" class="form-control"
+													autocomplete="off" maxlength="10"
+													required="#{not empty param[submit.clientId]}"
+													requiredMessage="#{msg['mobile_number_req']}"
+													value="#{bean.salesReturnDTO.customerMobileNo}">
+												</p:inputText>
+											</div>
+											<p:tooltip for="mob" rendered="true"
+												value="#{msg['mobile_number_req']}"></p:tooltip>
+										</div>
+									</div>
+
+									<div class="col-lg-3 col-md-3 col-sm-6">
+										<div class="form-group">
+											<p:outputLabel class="fa-input" value="Bill No" />
+											<div class="input-group">
+												<span class="input-group-addon"><i class="icon-hash"></i></span>
+												<p:inputText id="billNo" class="form-control"
+													autocomplete="off" maxlength="10"
+													value="#{bean.salesReturnDTO.billNo}">
+												</p:inputText>
+											</div>
+											<p:tooltip for="billNo" rendered="true"
+												value="#{msg['mobile_number_req']}"></p:tooltip>
+										</div>
+									</div>
+
+								</div>
+
+
+								<div class="row custom-form-1 label-form">
+
+									<div class="col-lg-3 col-md-3 col-sm-6">
+										<p:outputLabel value="From Date" />
+										<div class="form-group form-group_calend">
+											<p:calendar id="fromDate" placeholder="dd-mmm-yyyy"
+												value="#{bean.salesReturnDTO.fromDate}"
+												pattern="dd-MMM-yyyy" navigator="true"
+												styleClass="form-control-1 calend-icon-1">
+												<p:ajax event="dateSelect" />
+											</p:calendar>
+											<h:message for="fromDate" class="validation-error-label"
+												style="margin-top:28px;" />
+										</div>
+									</div>
+
+									<div class="col-lg-3 col-md-3 col-sm-6">
+										<p:outputLabel value="To Date" />
+										<div class="form-group form-group_calend">
+											<p:calendar id="toDate" placeholder="dd-mmm-yyyy"
+												value="#{bean.salesReturnDTO.toDate}" pattern="dd-MMM-yyyy"
+												navigator="true" styleClass="form-control-1 calend-icon-1">
+												<p:ajax event="dateSelect" />
+											</p:calendar>
+											<h:message for="toDate" class="validation-error-label"
+												style="margin-top:28px;" />
+										</div>
+									</div>
+
+									<div class="col-lg-12 col-md-12 col-sm-12 text-right">
+										<div class="form-group">
+
+											<p:commandButton
+												update="tableId growls cusName,mob,billNo,fromDate,toDate"
+												value="&#xe916;&nbsp;#{msg['clear']}"
+												title="#{msg['clear']}" actionListener="#{bean.clearData}"
+												class="btn bg-slate font-iconmoon m-r-0">
+											</p:commandButton>
+											<p:commandButton update="growls tableId"
+												value="&#xe98e;&nbsp;#{msg['search']}"
+												title="#{msg['search']}"
+												actionListener="#{bean.generateReport}"
+												class="btn bg-info heading-btn  font-iconmoon">
+											</p:commandButton>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="table-responsive m-b-10 footer-pad-0 p-t-10">
+											<p:dataTable value="#{bean.salesReturnDTOList}" var="item"
+												id="tableId" rowKey="{item.bill_Id}" rowIndexVar="index"
+												scrollable="true" styleClass="report-table" editable="false"
+												widgetVar="tableWdgr">
+
+												<p:column headerText="#SNo" styleClass="text-center width-2">
+													<h:outputText value="#{index +1 }" />
+												</p:column>
+												<p:column headerText="Bill No" styleClass="width-10">
+													<h:outputText value="#{item.billNo}" />
+												</p:column>
+												<p:column headerText="Customer Name" styleClass="width-10">
+													<h:outputText value="#{item.customerName}" />
+												</p:column>
+												<p:column headerText="Mobile Number" styleClass="width-10">
+													<h:outputText value="#{item.customerMobileNo}" />
+												</p:column>
+												<p:column headerText="Bill Date" styleClass="width-10">
+													<h:outputText value="#{item.billDate}">
+														<f:convertDateTime pattern="dd-MMM-yyyy"
+															timeZone="#{loginBean.timeZone}" />
+													</h:outputText>
+												</p:column>
+												<p:column
+													headerText="#{msg['nt_price']} &lt;br/&gt; (&#xf156;)"
+													styleClass="width-10">
+													<h:outputText value="#{item.netPrice}"
+														styleClass="fa-input">
+														<f:convertNumber type="currency"></f:convertNumber>
+													</h:outputText>
+												</p:column>
+												<p:column headerText="User Name" styleClass="width-10">
+													<h:outputText value="#{item.userName}"
+														styleClass="fa-input">
+													</h:outputText>
+												</p:column>
+												<p:column headerText="Action" styleClass="width-10">
+
+													<p:commandButton update="billing:billDetails"
+														value="&#xea18;" action="#{bean.viewBillDetails(item)}"
+														class="btn bg-info font-iconmoon btn-xs m-l-5"
+														oncomplete="PF('viewBillDetails').show();" />
+
+												</p:column>
+
+
+												<p:columnGroup type="footer">
+													<p:row>
+														<p:column colspan="5" styleClass="width-38"
+															footerText="#{msg['tot']}" />
+														<p:column class="width-9" />
+														<p:column class="width-7" footerText="" />
+													</p:row>
+												</p:columnGroup>
+											</p:dataTable>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<p:dialog header="View Bill Details" id="billDetails"
+				widgetVar="viewBillDetails" position="center" width="80%"
+				resizable="false" modal="true" showEffect="fade" hideEffect="fade"
+				draggable="false" styleClass="cus-model-popup card_dialogbox p-0">
+
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="table-responsive">
+							<p:dataTable id="viewBill" var="data" class="table"
+								rowKey="#{data}" styleClass="report-table"
+								value="#{bean.viewBillDetailsList}"
+								emptyMessage="#{msg['no_records_found']}" editable="true"
+								editMode="cell" tableStyleClass="table table-hover"
+								rowIndexVar="idx">
+								<p:column headerText="#" styleClass="text-center width-3">
+									<h:outputText value="#{idx+1}" />
+								</p:column>
+								<p:column headerText="Item Name" styleClass="width-15">
+									<h:outputText value="#{data.itemName}" />
+								</p:column>
+								<p:column headerText="hsn Code" styleClass="width-8">
+									<h:outputText value="#{data.hsnCode}" />
+								</p:column>
+
+								<p:column headerText="Quantity" styleClass="text-right width-5">
+									<h:outputText value="#{data.qnty}">
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="Unit Price"
+									styleClass="text-right width-8">
+									<h:outputText value="#{data.unitPrice}">
+										<f:convertNumber pattern="#0.00" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="CGST(%)" styleClass="text-right width-4">
+									<h:outputText value="#{data.cgstPercent}">
+										<f:convertNumber pattern="#0" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="Cgst Amount"
+									styleClass="text-right width-8">
+									<h:outputText value="#{data.cgstAmount}">
+										<f:convertNumber pattern="#0.00" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="SGST(%)" styleClass="text-right width-4">
+									<h:outputText value="#{data.sgstPercent}">
+										<f:convertNumber pattern="#0" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="Sgst Amount"
+									styleClass="text-right width-8">
+									<h:outputText value="#{data.sgstAmount}">
+										<f:convertNumber pattern="#0.00" />
+									</h:outputText>
+								</p:column>
+
+
+								<p:column headerText="Total Unit Price &nbsp;(&#xf156;)"
+									styleClass="text-right fa-input width-8">
+									<h:outputText value="#{data.totalUnitPrice}">
+										<f:convertNumber pattern="#0" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="Discount&nbsp;(&#xf156;)"
+									styleClass="text-right fa-input width-5">
+									<h:outputText value="#{data.discount}">
+										<f:convertNumber pattern="#0" />
+									</h:outputText>
+								</p:column>
+
+
+								<p:column headerText="Net Price(&#xf156;)"
+									styleClass="text-right fa-input width-12">
+									<h:outputText value="#{data.netPrice}">
+										<f:convertNumber pattern="#0" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="Returned Quantity" styleClass="text-right width-5"
+									style="color:red">
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{data.returnedQnty}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText value="#{data.returnedQnty}">
+												<p:ajax event="change" update=" viewBill growls"
+													listener="#{bean.updateReturnQnty(data)}"></p:ajax>
+												<p:keyFilter regEx="/[0-9]/i" />
+											</p:inputText>
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
+
+								<ui:remove>
+									<p:column headerText="#{msg['select']}"
+										styleClass="text-center  width-6" scope="col">
+										<h:selectBooleanCheckbox id="checkbox"
+											style="width:25px;height:25px" value="#{data.isSelected}">
+											<ui:remove>
+												<p:ajax listener="#{bean.salesReturnProcess(data)}" />
+											</ui:remove>
+										</h:selectBooleanCheckbox>
+									</p:column>
+								</ui:remove>
+							</p:dataTable>
+						</div>
+
+						<div class="row">
+							<div class="col-md-12 col-lg-12 text-right m-t-10">
+								<div class="form-group m-b-10">
+									<p:commandButton value="&#xea60;&nbsp;Sales Return"
+										title="Sales Return" update="growls"
+										class="btn bg-primary heading-btn  font-iconmoon"
+										onstart="PF('statusDialog').show()"
+										onsuccess="PF('statusDialog').hide()" action="#{bean.submit}">
+									</p:commandButton>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

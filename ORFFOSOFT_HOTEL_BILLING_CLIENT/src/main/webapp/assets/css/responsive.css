@@ -1,0 +1,191 @@
+@media screen and (min-width:1600px) and (max-width:1800px) {
+.page-scroll { overflow-y: auto; height: 570px; }
+.page-scroll.pro_steps { overflow-y: auto; height: 470px; }
+.panelBody-fix-noStg { height: 590px; }
+.panelBody-fix { height: 400px; }
+.page-scroll-steps { overflow-y: auto; height: 495px; }
+}
+ @media screen and (min-width:1600px) and (max-width:1800px) and (-webkit-min-device-pixel-ratio:0) {
+.panelBody-fix { height: 465px; }
+}
+ @media screen and (min-width: 1366px) and (max-width: 1599px) {
+
+.panelBody-fixStg2line { overflow-y: auto; height: 400px; }
+.page-scroll { overflow-y: auto; height: 470px; }
+.x-hide { overflow-x: hidden }
+.page-scroll.pro_steps { overflow-y: scroll; height: 470px; }
+.modal-dialog.modal-lg-cust { width: 75% !important; }
+.page-scroll-steps { overflow-y: auto; height: 360px; }
+.page-scroll.pro_steps1line { overflow-y: auto; height: 365px; }
+/* <!-- Personnel HR Scroll --> */
+.page-scroll-with-process-insight-panel { max-height: 330px; overflow: auto; }
+.page-scroll-with-process-outsight-panel { max-height: 362px; overflow: auto; }
+.page-scroll-without-process { max-height: 500px; overflow: auto; }
+/* <!-- Personnel HR Scroll End --> */
+}
+ @media screen and (min-width: 1366px) and (max-width: 1599px) and(-webkit-min-device-pixel-ratio:0) {
+ .page-scroll {
+ height: 480px;
+}
+}
+ @media screen and (min-width:1366px) {
+.gen-btn button[class*="bg-slate"] { margin-bottom: 10px; }
+}
+ @media screen and (min-width:769px) and (max-width: 1366px) {
+.page-scroll { overflow-y: auto; height: 430px; }
+.page-scroll-1row { max-height: 320px; overflow: auto }
+.page-scroll-with1row { max-height: 365px; overflow: auto }
+/* <!-- Personnel HR Scroll --> */
+.page-scroll-with-process-insight-panel-complaint { max-height: 310px; overflow: auto; }
+.page-scroll-without-outsight-panel { max-height: 465px; overflow: auto; }
+.page-scroll-with-process-insight-panel { max-height: 330px; overflow: auto; }
+.page-scroll-with-process-outsight-panel { max-height: 362px; overflow: auto; }
+.page-scroll-without-process { max-height: 430px; overflow: auto; }
+/* <!-- Personnel HR Scroll End --> */
+.x-hide { overflow-x: hidden }
+.page-scroll-norow { height: 350px; overflow: auto }
+.page-scroll-result { overflow: auto; height: 240px; }
+.page-scroll.pro_steps { overflow-y: scroll; height: 340px; }
+.page-scroll.pro_steps2line { overflow-y: auto; height: 360px; }
+.page-scroll-hp { height: 470px; overflow-y: auto; }
+.page-scroll-jsp { max-height: 470px; overflow-y: auto; }
+}
+ @media screen and (min-width:769px) and (max-width: 1366px) and (-webkit-min-device-pixel-ratio:0) {
+.clearfixx::after { content: ""; clear: both; display: table; }
+.page-scroll { height: 440px; }
+.page-scroll-hp { height: 470px; overflow-y: auto; }
+}
+ @media screen and (-webkit-min-device-pixel-ratio:0) {
+.page-scroll.pro_steps { overflow-y: scroll; height: 350px; }
+}
+ @media screen and (max-width: 1366px) {
+.cust-gap { margin-left: 95px }
+.modal-dialog.modal-lg-cust3 { width: 90% !important; }
+.modal-dialog.modal-lg-cust5 { width: 95% !important; }
+}
+ @media screen and (min-width:720px) (max-width: 1280px) {
+ .gen-btn {
+ text-align: right
+}
+ .time-pick .input-group .pe-timepicker-input {
+ width: 72%;
+}
+}
+ @media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+.landscape .col-md-3 { width: 25%; }
+.input-group .pe-timepicker-input { width: 62%; }
+.sm-t-10 { margin-top: 10px }
+.clearfixx::after { content: ""; clear: both; display: table; }
+.layout-growl div.ui-growl { left: 370px !important; top: 240px; width: 35% !important; }
+}
+ @media screen and (max-width:960px) {
+.custom-block-height { min-height: 290px; }
+#printContentDialog .cust-table thead tr th { background-color: #f7f7f7 !important; font-weight: bold; color: #000 !important; font-size: 13px; text-align: center; border: 1px solid #ccc !important; padding: 5px 10px !important; white-space: normal; }
+}
+ @media screen and (min-width:768px) and (max-width:1024px) {
+.page-scroll-pro { }
+.clearfixx { content: ""; clear: both; display: table; }
+body .ui-datatable table thead tr th.ui-state-default input,  body .ui-datatable table thead tr th.ui-state-default select { width: auto; }
+/* 	body .ui-button.ui-state-default {margin-top:5px} */
+.page-title .breadcrumb { display: none }
+.panelBody-fix-noStg { height: auto; width: 100%; }
+.lobutton { width: auto !important; }
+.mdnone { display: none !important }
+.wizard>.steps>ul>li { width: 25% !important }
+.gen-btn { padding: 0px; border: 0px solid #dbdbdb; margin-top: 0px; }
+.panelBody-fix { height: auto; }
+.page-scroll.pro_steps { height: auto; }
+.no-padding-tab-pannel { padding: 0px }
+.smmargin5 { margin-top: 5px }
+.no-margin-tab { margin-top: 5px !important }
+.time-pick .input-group .pe-timepicker-input { width: 74%; }
+.clearfixx::after { content: ""; clear: both; display: table; }
+.sm-t-10 { margin-top: 10px }
+.payt td { width: 14%; }
+body .page-scroll { overflow: visible; height: auto; }
+.dropdown .dropdown-toggle .bg-warning-400 { background-color: #FF7043; border-color: #FF7043; color: #fff; }
+.dropdown .dropdown-toggle .badge { position: absolute; }
+.layout-growl div.ui-growl { left: 250px; top: 245px; width: 45%; }
+}
+ @media screen and (min-width:768px) and (max-width:1024px) and (-webkit-min-device-pixel-ratio:0) {
+.layout-growl div.ui-growl { left: 250px; top: 250px; width: 45%; }
+.page-scrollss { height: 325px; overflow: auto }
+}
+ @media screen and (min-width:768px) and (max-width: 991px) {
+.sm-t-10 { margin-top: 10px }
+/* 	body .ui-button.ui-state-default {margin-top:5px} */
+.payt td { width: 14%; }
+.clearfixx::after { content: ""; clear: both; display: table; }
+}
+ @media screen and (max-width:767px) {
+.uploadwidth { width: 56% !important }
+.fileupload-buttonbar .ui-button { padding: 0px !important; }
+.ui-fileupload-buttonbar .ui-button .ui-button-text { display: block; }
+body .ui-datatable table thead tr th.ui-state-default input,  body .ui-datatable table thead tr th.ui-state-default select { width: auto; }
+body .ui-button.ui-state-default { margin-top: 5px }
+.ui-fileupload-choose { margin-top: 0px !important }
+.smnone { display: none !important }
+.wizard>.steps>ul>li { width: 33% !important }
+body .ui-button { margin-top: 5px; }
+body .pe-timepicker a.ui-button { margin-top: 0px; }
+.lobutton { width: auto !important; }
+.page-title .breadcrumb { display: none }
+.sidebar-content { width: auto; }
+.wizard>.steps>ul>li a { font-size: 11px; }
+.page-title h4 { font-size: 15px }
+.p-content { margin-top: 15px; }
+.gen-btn { padding: 0px; border: 0px solid #dbdbdb; margin-top: 0px; text-align: right; }
+.content { padding: 10px; }
+.panelBody-fix-noStg { height: auto; width: 100%; }
+.page-scroll.pro_steps2line { height: auto; }
+.page-header-content { padding: 0 10px; }
+h6.panel-title,  .h6.panel-title { font-size: 13px; }
+.no-margin-mobile { margin-top: 3px !important }
+.no-padding-tab-pannel { padding: 0px }
+.smmargin5 { margin-top: 5px }
+.navbar-fixed-bottom { position: static }
+.page-scroll { overflow: visible; height: auto; }
+.navbar.headroom-top-unpinned { top: 0px; }
+.page-header-default { margin-bottom: 10px; }
+.displaynone { display: none }
+body .timepickbutton .ui-button { margin-top: 0px !important; }
+.pe-timepicker .ui-icon { left: 35%; }
+.input-group .pe-timepicker-input { width: 74%; }
+.language-switch { padding-left: 20px; padding-right: 20px; }
+.ui-dialog.preloader { width: 75px; }
+body .ui-dialog { width: 90% !important; }
+.address-popup .ui-widget-content { height: 280px !important; overflow: auto; }
+.hrcustomnav .nav-tabs:before { display: none; }
+.layout-growl div.ui-growl { left: 175px; top: 245px; width: 50%; }
+}
+ @media screen and (max-width: 480px) {
+body .ui-paginator .ui-paginator-pages { display: none; }
+.uploadwidth { width: 60% !important }
+.layout-growl div.ui-growl { left: 28px; top: 280px; width: 85%; }
+.datatb-upload-icon .ui-fileupload-buttonbar .ui-button-text-icon-left .ui-button-text { padding: 2px 12px 2px 8px !important; }
+}
+
+
+/* Chrome */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+.overflow-table .ui-datatable-scrollable .ui-datatable-scrollable-header .ui-datatable-scrollable-header-box { background: #26A69A; -webkit-padding-end: 6px; -webkit-margin-end: 0px !important; }
+.overflow-table .ui-datatable-scrollable .ui-datatable-scrollable-footer-box { background: #e4e4e4; -webkit-padding-end: 5px; -webkit-margin-end: 0px !important; }
+}
+/* Chrome */
+
+/* Firefox */
+
+@-moz-document url-prefix() {
+ body .overflow-table .ui-datatable-scrollable .ui-datatable-scrollable-header .ui-datatable-scrollable-header-box {
+ background: #26A69A;
+ padding-right: 17px;
+ margin-right: 0px !important
+}
+.tab-scroll-ht{height: 378px; overflow: auto; }
+ body .overflow-table .ui-datatable-scrollable .ui-datatable-scrollable-footer-box {
+ background: #e4e4e4;
+ padding-right: 17px;
+ margin-right: 0px !important
+}
+}
+/* Firefox */
