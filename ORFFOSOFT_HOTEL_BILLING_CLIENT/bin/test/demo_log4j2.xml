@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration monitorInterval="60">
+	<Properties>
+		<Property name="PATH">/Data/PROGRAMS/TOMCAT/INFOTEX/DATA/LOG4J/DEMO/PORTAL_CLIENT</Property>
+		<Property name="FILE_NAME">portal_client.log</Property>
+		<Property name="LOG_PATTERN">
+			[%-5level] %d{dd-MMM-yyyy HH:mm:ss.SSS} [%X{TrackId}] - (%F:%L) - %m%n
+        </Property>
+	</Properties> 
+	
+	<Appenders>
+		<Console name="Console-Appender" target="SYSTEM_OUT">
+			<PatternLayout pattern="${LOG_PATTERN}"/>
+		</Console>
+	
+		<File name="File-Appender" fileName="${PATH}/${FILE_NAME}">
+			<PatternLayout pattern="${LOG_PATTERN}"/>
+		</File>
+	</Appenders>
+	
+	<Loggers>
+		<Logger name="retail.co.mail" level="info" additivity="false">
+			<AppenderRef ref="File-Appender" />
+			<AppenderRef ref="Console-Appender" />
+		</Logger>
+		<Root>
+			<AppenderRef ref="Console-Appender" />
+		</Root>
+	</Loggers>
+</Configuration>
