@@ -29,7 +29,7 @@ buildscript {
 sourceCompatibility = 1.8
 
 war {
-	baseName = 'ORFFOSOFT_CLIENT'
+	baseName = 'ORFFOSOFT_HOTEL_BILLING_CLIENT'
 }
 
 sourceSets {
