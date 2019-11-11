@@ -8,3 +8,7 @@
  */
 
 rootProject.name = 'ORFFOSOFT_HOTEL_BILLING_CLIENT'
+
+include ':ORFFOSOFT_HOTEL_BILLING_CORE'
+project(':ORFFOSOFT_HOTEL_BILLING_CORE').projectDir = new File(settingsDir, '../ORFFOSOFT_HOTEL_BILLING_CORE')
+
