@@ -110,7 +110,10 @@ dependencies {
 	//runtime('org.postgresql:postgresql')
     // https://mvnrepository.com/artifact/org.postgresql/postgresql
     // compile group: 'org.postgresql', name: 'postgresql', version: '42.1.4'
-    runtime group: 'org.postgresql', name: 'postgresql', version: '42.1.4'
+    //runtime group: 'org.postgresql', name: 'postgresql', version: '42.1.4'
+
+     compile group: 'mysql', name: 'mysql-connector-java', version: '5.5'
+
 
     // https://mvnrepository.com/artifact/com.puppycrawl.tools/checkstyle
     compile group: 'com.puppycrawl.tools', name: 'checkstyle', version: '8.3'
@@ -136,13 +139,6 @@ dependencies {
    //compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.2'
 
    
-  
-   
-    // https://mvnrepository.com/artifact/org.flywaydb/flyway-gradle-plugin
-  // compile group: 'org.flywaydb', name: 'flyway-gradle-plugin', version: '5.0.2'
-
-
-   // Activiti related dependencies
 
     // https://mvnrepository.com/artifact/org.activiti/activiti-spring-boot-starter-basic
     compile group: 'org.activiti', name: 'activiti-spring-boot-starter-basic', version: '6.0.0'
