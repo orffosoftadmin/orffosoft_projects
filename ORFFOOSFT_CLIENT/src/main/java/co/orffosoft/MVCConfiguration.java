@@ -15,6 +15,8 @@ import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 @ComponentScan
 @Configuration
 public class MVCConfiguration extends WebMvcConfigurerAdapter {
+	
+	private int g;
 
 	@Override
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
