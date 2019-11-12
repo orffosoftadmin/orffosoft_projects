@@ -11,7 +11,6 @@ import co.orffosoft.core.util.SwaggerConfig;
 
 
 @EnableWebMvc
-// @ComponentScan(basePackages = { "in.gov.cooptex.operation", "co.oasys" })
 @ComponentScan
 @Import(value = {SwaggerConfig.class })
 public class OrffosoftMVCConfiguration extends WebMvcConfigurerAdapter {
