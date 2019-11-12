@@ -112,7 +112,7 @@ dependencies {
     // compile group: 'org.postgresql', name: 'postgresql', version: '42.1.4'
     //runtime group: 'org.postgresql', name: 'postgresql', version: '42.1.4'
 
-     compile group: 'mysql', name: 'mysql-connector-java', version: '5.5'
+     compile group: 'org.mysql', name: 'mysql-connector-java', version: '5.5'
 
 
     // https://mvnrepository.com/artifact/com.puppycrawl.tools/checkstyle

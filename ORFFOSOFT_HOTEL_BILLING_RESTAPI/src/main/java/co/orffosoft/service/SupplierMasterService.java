@@ -17,7 +17,6 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -32,7 +31,6 @@ import co.orffosoft.core.util.RestException;
 import co.orffosoft.core.util.Validate;
 import co.orffosoft.dto.BaseDTO;
 import co.orffosoft.dto.SupplierDetailsResponseDTO;
-import co.orffosoft.entity.ProductVarietyMaster;
 import co.orffosoft.entity.SupplierMaster;
 import co.orffosoft.entity.UserMaster;
 import co.orffosoft.repository.ApplicationQueryRepository;
@@ -437,10 +435,10 @@ public class SupplierMasterService {
 		} catch (DataIntegrityViolationException exception) {
 
 			log.error("Exception occured : ", exception);
-
-			if (exception.getCause().getCause() instanceof PSQLException) {
-				baseDTO.setStatusCode(ErrorDescription.CANNOT_DELETE_REFERENCED_RECORD.getErrorCode());
-			}
+//
+//			if (exception.getCause().getCause() instanceof PSQLException) {
+//				baseDTO.setStatusCode(ErrorDescription.CANNOT_DELETE_REFERENCED_RECORD.getErrorCode());
+//			}
 		} catch (Exception exception) {
 
 			log.error("Exception occurred in SupplierMaster delete method -:", exception);
