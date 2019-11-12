@@ -1,0 +1,146 @@
+-- Drop table
+
+-- DROP TABLE public.entity_type_master;
+
+CREATE TABLE entity_type_master (
+	id INT(11) AUTO_INCREMENT NOT NULL,
+	NAME VARCHAR(150) NULL,
+	l_name VARCHAR(150) NULL,
+	created_by INT(10) NULL,
+	created_date TIMESTAMP NOT NULL,
+	modified_by INT(10) NULL,
+	modified_date TIMESTAMP NULL,
+	CODE VARCHAR(50) NULL,
+	group_name VARCHAR(100) NULL,
+	VERSION INT(10) NULL,
+	active_status BOOL NULL,
+	CONSTRAINT pk_entitytypemaster_id PRIMARY KEY (id),
+	CONSTRAINT uq_entitytypemaster_code UNIQUE (CODE),
+	CONSTRAINT uq_entitytypemaster_name UNIQUE (NAME)
+	);
+
+
+# Converted with pg2mysql-1.9
+# Converted on Tue, 12 Nov 2019 12:13:20 -0500
+# Lightbox Technologies Inc. http://www.lightbox.ca
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET time_zone="+00:00";
+
+CREATE TABLE area_master (
+	id INT(11) AUTO_INCREMENT NOT NULL,
+	city_id INT4 NOT NULL,
+	NAME VARCHAR(100) NOT NULL,
+	l_name VARCHAR(100) NULL,
+	created_by INT4 NULL,
+	created_date DATE NOT NULL,
+	modified_by INT4 NULL,
+	modified_date DATE NULL,
+	VERSION INT4 NULL,
+	active_status BOOL NULL,
+	CODE VARCHAR(100) NULL,
+	CONSTRAINT pk_area_master PRIMARY KEY (id),
+	CONSTRAINT uq_area_master_cityidname UNIQUE (city_id, NAME),
+	CONSTRAINT uq_area_master_code UNIQUE (CODE),
+	CONSTRAINT uq_area_master_namecity UNIQUE (NAME, city_id)
+)
+
+
+
+
+CREATE TABLE address_master (
+	id INT(11) AUTO_INCREMENT NOT NULL,
+	NAME VARCHAR(200) NULL,
+	line_one VARCHAR(250) NOT NULL,
+	l_line_one VARCHAR(250) NULL,
+	line_two VARCHAR(250) NULL,
+	l_line_two VARCHAR(250) NULL,
+	line_three VARCHAR(250) NULL,
+	l_line_three VARCHAR(250) NULL,
+	area_id INT(10) NULL,
+	city_id INT(10) NULL,
+	taluk_id INT(10) NULL,
+	district_id INT(10) NULL,
+	state_id INT(10) NULL,
+	country_id INT(10) NULL,
+	land_mark VARCHAR(250) NULL,
+	postal_code VARCHAR(10) NULL,
+	geo_coordinates VARCHAR(100) NULL,
+	created_by INT(10) NOT NULL,
+	created_date DATETIME NOT NULL,
+	modified_by INT(10) NULL,
+	modified_date DATETIME NULL,
+	`version` INT(10) NOT NULL,
+	CODE VARCHAR(20) NULL,
+	sync_code INT(10) NULL,
+	CONSTRAINT pk_address_master PRIMARY KEY (id),
+	CONSTRAINT uq_address_master_synccode UNIQUE (sync_code),
+	CONSTRAINT uq_addressmaster_code UNIQUE (CODE),
+	CONSTRAINT uq_addressmaster_name UNIQUE (NAME),
+	CONSTRAINT fk_addressmaster_areaid FOREIGN KEY (area_id) REFERENCES area_master(id) ON UPDATE CASCADE ON DELETE RESTRICT
+)
+
+
+-- Drop table
+
+-- DROP TABLE public.entity_master;
+
+CREATE TABLE entity_master (
+	id INT(11) AUTO_INCREMENT NOT NULL,
+	entity_type_id INT(10) NULL,
+	parent_id INT(10) NULL,
+	CODE VARCHAR(150) NOT NULL,
+	NAME VARCHAR(150) NOT NULL,
+	address_id INT(10) NULL,
+	gst_number VARCHAR(20) NULL,
+	active_status BOOL NOT NULL,
+	created_by INT(10) NULL,
+	created_date DATETIME NOT NULL,
+	modified_by INT(10) NULL,
+	modified_date DATETIME NULL,
+	region_id INT(10) NULL,
+	VERSION INT(10) NULL,
+	contact_number VARCHAR(50) NULL,
+	email_id VARCHAR(100) NULL,
+	CONSTRAINT pk_entitymaster_id PRIMARY KEY (id),
+	CONSTRAINT uq_entitymaster_code UNIQUE (CODE),
+	CONSTRAINT uq_entitymaster_name UNIQUE (NAME),
+	CONSTRAINT fk_entitymaster_addressid FOREIGN KEY (address_id) REFERENCES address_master(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+	CONSTRAINT fk_entitymaster_entitytypeid FOREIGN KEY (entity_type_id) REFERENCES entity_type_master(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+	CONSTRAINT fk_entitymaster_parentid FOREIGN KEY (parent_id) REFERENCES entity_master(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+	CONSTRAINT fk_entitymaster_regionid FOREIGN KEY (region_id) REFERENCES entity_master(id) ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+
+
+
+CREATE TABLE user_master (
+	id INT(10) NOT NULL AUTO_INCREMENT,
+	username VARCHAR(100) NOT NULL,
+	PASSWORD VARCHAR(250) ,
+	created_by INT(10),
+	created_date DATETIME ,
+	modified_by INT(10) ,
+	modified_date DATETIME NULL,
+	VERSION INT(10) ,
+	STATUS BOOL NULL DEFAULT TRUE,
+	user_type VARCHAR(100) NULL,
+	email_id VARCHAR(150) NULL,
+	second_password VARCHAR(200) NULL,
+	mobile_number VARCHAR(10) NULL,
+	entity_id INT(10) NOT NULL,
+	CONSTRAINT pk_usermaster_id PRIMARY KEY (id),
+	CONSTRAINT uq_usermaster_username UNIQUE (username),
+	CONSTRAINT fk_usermaster_createdby FOREIGN KEY (created_by) REFERENCES user_master(id) ON UPDATE CASCADE ON DELETE 
+
+RESTRICT,
+	CONSTRAINT fk_usermaster_entity_id_pk FOREIGN KEY (entity_id) REFERENCES entity_master(id) ON UPDATE CASCADE ON 
+
+DELETE RESTRICT,
+	CONSTRAINT fk_usermaster_modifiedby FOREIGN KEY (modified_by) REFERENCES user_master(id) ON UPDATE CASCADE ON 
+
+DELETE RESTRICT
+)
+
+
+
