@@ -33,7 +33,7 @@ sourceSets {
 }
 
 springBoot {
-    mainClass = "co.mark.solution.OrffosoftRestApplication"
+    mainClass = "co.orffosoft.OrffosoftRestApplication"
 }
 
 bootRepackage.enabled = false
@@ -79,6 +79,7 @@ dependencies {
 	compile 'com.sun.faces:jsf-api:2.2.9'
     compile 'com.sun.faces:jsf-impl:2.2.9'
     compile 'jstl:jstl:1.2'
+    runtimeOnly 'mysql:mysql-connector-java'
 	
 	compile('org.projectlombok:lombok')
 	
@@ -111,8 +112,6 @@ dependencies {
     // https://mvnrepository.com/artifact/org.postgresql/postgresql
     // compile group: 'org.postgresql', name: 'postgresql', version: '42.1.4'
     //runtime group: 'org.postgresql', name: 'postgresql', version: '42.1.4'
-
-     compile group: 'org.mysql', name: 'mysql-connector-java', version: '5.5'
 
 
     // https://mvnrepository.com/artifact/com.puppycrawl.tools/checkstyle
