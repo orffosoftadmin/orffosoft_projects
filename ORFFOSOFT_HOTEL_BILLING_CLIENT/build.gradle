@@ -40,7 +40,7 @@ sourceSets {
 }
 
 springBoot {
-    mainClass = "co.mark.solution.MarkSolutionClientApplication"
+    mainClass = "co.orffosoft.MarkSolutionClientApplication"
 }
 
 pmd {
