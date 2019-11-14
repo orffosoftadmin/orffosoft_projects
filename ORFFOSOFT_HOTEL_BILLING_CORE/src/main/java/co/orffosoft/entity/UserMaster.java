@@ -37,8 +37,8 @@ import lombok.Setter;
 @Setter
 
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-@Table(name = "user_master", indexes = { @Index(name = "IDX_USER_MASTER_CREATEDDATE", columnList = "created_date"),
-		@Index(name = "IDX_USER_MASTER_MODIFIEDDATE", columnList = "modified_date") }, uniqueConstraints = @UniqueConstraint(columnNames = {
+@Table(name = "user_master",
+uniqueConstraints = @UniqueConstraint(columnNames = {
 				"username" }, name = "UQ_USER_MASTER_USERNAME"))
 // @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 @EqualsAndHashCode(of = { "id" })
@@ -51,7 +51,7 @@ public class UserMaster implements Serializable {
 
 	@Id
 	@SequenceGenerator(name = "user_master_id_seq", sequenceName = "user_master_id_seq", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_master_id_seq")
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "user_master_id_seq")
 	@Column(name = "id", updatable = false)
 	private Long id;
 
@@ -79,23 +79,9 @@ public class UserMaster implements Serializable {
 					@JoinColumn(name = "role_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_IDX_ROLEID")) })
 	List<RoleMaster> roleMaster;
 
-//	@LazyCollection(LazyCollectionOption.FALSE)
-//	@ManyToMany
-//	@JsonBackReference("region")
-//	@Cascade({ CascadeType.PERSIST, CascadeType.REFRESH })
-//	@JoinTable(name = "user_entity", joinColumns = {
-//			@JoinColumn(name = "user_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_USER_REGION_USERID")) }, inverseJoinColumns = {
-//					@JoinColumn(name = "entity_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_userentity_entityid")) })
-//	List<EntityMaster> region;
-
 	@Column(name = "entity_id")
 	private Long entityId;
 
-//	@ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "entity_id" , nullable = false)
-//	private EntityMaster entityMaster;
-	
-	
 	@Column(name = "version")
 	@Version
 	private Long userMasterVersion;

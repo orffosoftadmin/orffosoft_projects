@@ -16,7 +16,7 @@ public interface RoleMasterRepository extends JpaRepository<RoleMaster, Long> {
 	@Query("select r from RoleMaster r  order by r.createdDate desc,r.modifiedDate desc")
 	List<RoleMaster> findAllRoleMaster();
 	
-	@Query("select r from RoleMaster r where r.status='true' and r.application.id = 2 and r.roleName =?1")
+	@Query("select r from RoleMaster r where r.status='true' and r.roleName =?1")
 	RoleMaster findAllActiveRoleMaster(String userType);
 
 }

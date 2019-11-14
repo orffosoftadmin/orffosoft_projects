@@ -35,7 +35,7 @@ public class Application extends Trackable implements Serializable {
 
 	@Id
 	@SequenceGenerator(name = "application_id_seq", sequenceName = "application_id_seq", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "application_id_seq")
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "application_id_seq")
 	@Column(name = "id", updatable = false)
 	private Long id;
 

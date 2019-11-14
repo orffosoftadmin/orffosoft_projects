@@ -21,7 +21,7 @@ public interface AppFeatureRepository extends JpaRepository<AppFeature, Long> {
 	
 	@Query(nativeQuery = true, value = " select af.code from user_master um , role_user ru , role_feature rf , app_feature af " + 
 			                           " where um.id = ru.user_id and ru.role_id = rf.role_id and rf.feature_id = af.id and um.id =:userid " + 
-									   " and af.application_id = 2 and um.status = true group by af.code ")
+									   " and um.status = true group by af.code ")
 	List<String> getAppFeatureListByUserName(@Param("userid") Long userid);
 	
 	@Query(nativeQuery = true, value = "SELECT af.code FROM app_feature af, user_feature uf, user_master um WHERE uf.user_id=um.id AND  uf.feature_id=af.id AND (af.active_status IS NULL OR af.active_status=true) AND um.username=:username GROUP BY af.code")

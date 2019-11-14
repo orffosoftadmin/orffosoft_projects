@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/pages/template/layout.xhtml">
+	<ui:define name="content">
+		<title>InfoTex | Role</title>
+		<h:form id="roleListForm">
+			<div class="page-header page-header-default">
+				<div class="page-header-content">
+					<div class="page-title">
+						<h4>#{msg['role_list']}</h4>
+						<ul class="breadcrumb">
+							<li><a href="#{request.contextPath}/pages/home.xhtml"><i
+									class="icon-home2 position-left"></i>#{msg['home']}</a></li>
+							<li>#{msg['user_management']}</li>
+							<li class="active">#{msg['role_list']}</li>
+						</ul>
+						<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+					</div>
+					<ui:include src="/pages/pageHeadingElements.xhtml" />
+				</div>
+			</div>
+
+			<div class="content">
+				<div class="row">
+					<div class="col-lg-6">
+						<h6 class="panel-title">
+							<b><h:outputText value="#{roleBean.roleMasterListSize}"></h:outputText></b>
+							- #{msg['role']}(s)<a class="heading-elements-toggle"><i
+								class="icon-more"></i></a>
+						</h6>
+					</div>
+					<div class="col-lg-6 text-right">
+						<div class="form-group m-b-10">
+							<p:commandButton value="&#xea0e; #{msg['add']}"
+								rendered="#{loginBean.userFeatures['ROLE_ADD']}"
+								title="#{msg['add']}" class="btn bg-success font-iconmoon"
+								action="#{roleBean.addRole}" onclick="PF('progressDlg').show();"
+								oncomplete="PF('progressDlg').hide();">
+							</p:commandButton>
+							<p:commandButton value="&#xe912; #{msg['edit']}"
+								rendered="#{loginBean.userFeatures['ROLE_EDIT']}"
+								title="#{msg['edit']}" class="btn bg-primary font-iconmoon"
+								action="#{roleBean.editRole}" update="growls"
+								onclick="PF('progressDlg').show();"
+								oncomplete="PF('progressDlg').hide();">
+							</p:commandButton>
+							<p:commandButton value="&#xea18; #{msg['view']}"
+								title="#{msg['view']}" rendered="false"
+								class="btn bg-info heading-btn  font-iconmoon"
+								onclick="PF('progressDlg').show();"
+								oncomplete="PF('progressDlg').hide();">
+							</p:commandButton>
+							<p:commandButton value="&#xe99e; #{msg['delete']}"
+								title="#{msg['delete']}"
+								rendered="#{loginBean.userFeatures['ROLE_DELETE']}"
+								class="btn bg-danger font-iconmoon"
+								actionListener="#{roleBean.deleteRole}"
+								update="growls rolelisttable"
+								onclick="PF('progressDlg').show();"
+								oncomplete="PF('progressDlg').hide();">
+							</p:commandButton>
+							<p:commandButton value="&#xe916;&nbsp;#{msg['clear']}"
+								action="#{roleBean.clear}" title="#{msg['clear']}"
+								class="btn bg-slate font-iconmoon"
+								onclick="PF('progressDlg').show();"
+								oncomplete="PF('progressDlg').hide();">
+							</p:commandButton>
+						</div>
+					</div>
+				</div>
+				<div class="panel">
+					<div class="panel-body p-0">
+						<p:dataTable id="rolelisttable" var="role" class="table"
+							widgetVar="roletablewdgt" selection="#{roleBean.selectedRole}"
+							rowKey="#{role.id}" value="#{roleBean.roleMasterList}"
+							lazy="false" emptyMessage="#{msg['no_records_found']}"
+							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rows="10" paginator="true" paginatorPosition="bottom"
+							tableStyleClass="" rowsPerPageTemplate="5,10,15"
+							rowIndexVar="idx">
+							<p:column headerText="#" class="text-center width-3">
+								<h:outputText value="#{idx+1}" />
+							</p:column>
+							<p:column filterable="true" filterBy="#{role.roleName}"
+								filterMatchMode="contains" headerText="#{msg['role_name']}"
+								sortBy="#{role.roleName}" sortable="true">
+								<f:facet name="filter">
+									<p:inputText id="roleNameFilter"
+										class="form-control inline_select"
+										onkeyup="PF('roletablewdgt').filter()" />
+								</f:facet>
+								<h:outputText value="#{role.roleName}">
+								</h:outputText>
+							</p:column>
+							<p:column filterable="true"
+								filterBy="#{role.application.applicationName}"
+								filterMatchMode="contains"
+								headerText="#{msg['application_type']}"
+								sortBy="#{role.application.applicationName}" sortable="true">
+								<f:facet name="filter">
+									<p:inputText id="applicationFilter"
+										class="form-control inline_select"
+										onkeyup="PF('roletablewdgt').filter()" />
+								</f:facet>
+								<h:outputText value="#{role.application.applicationName}">
+								</h:outputText>
+							</p:column>
+
+							<p:column filterable="true" filterBy="#{role.createdByName}"
+								styleClass="width-15" filterMatchMode="contains"
+								headerText="#{msg['created_by']}" sortBy="#{role.createdBy}"
+								sortable="true">
+								<f:facet name="filter">
+									<p:inputText id="creaytedByFilter"
+										class="form-control inline_select"
+										onkeyup="PF('roletablewdgt').filter()" />
+								</f:facet>
+								<h:outputText value="#{role.createdByName}">
+								</h:outputText>
+							</p:column>
+							<p:column headerText="#{msg['created_date']}"
+								sortBy="#{role.createdDate}" filterable="true"
+								filterBy="#{role.createdDate}" sortable="true"
+								styleClass="text-center width-15">
+								<f:facet name="filter">
+									<p:calendar id="popup" class="form-control calend-icon"
+										placeholder="dd-mmm-yyyy" navigator="true"
+										pattern="dd-MMM-yyyy">
+										<p:ajax event="dateSelect"
+											oncomplete="PF('roletablewdgt').filter()" />
+									</p:calendar>
+								</f:facet>
+								<h:outputText value="#{role.createdDate}">
+									<f:convertDateTime timeZone="GMT+05:30" pattern="dd-MMM-YYYY" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="#{msg['select']}" selectionMode="single"
+								class="text-center width-4" />
+						</p:dataTable>
+					</div>
+				</div>
+			</div>
+
+			<p:dialog header="#{msg['confirmation_delete_title']}"
+				draggable="false" modal="true"
+				styleClass="p-0 overlay-pop modal-dialog" closable="true"
+				width="30%" widgetVar="confirmRoleDelete" showEffect="fade"
+				hideEffect="fade" closeOnEscape="true" resizable="false">
+				<div class="modal-body">
+					<h:outputText value="#{msg['confirmation_delete']}" />
+				</div>
+				<div class="modal-footer m-t-10">
+					<p:commandButton value="&#xed6a;&nbsp;#{msg['no']}"
+						title="#{msg['no']}"
+						styleClass="btn bg-slate heading-btn font-iconmoon"
+						oncomplete="PF('confirmRoleDelete').hide()" />
+					<p:commandButton ajax="false"
+						styleClass="btn bg-success heading-btn font-iconmoon"
+						title="#{msg['yes']}" value="&#xed6e;&nbsp;#{msg['yes']}"
+						action="#{roleBean.deleteRoleConfirm}"
+						oncomplete="PF('confirmRoleDelete').hide()">
+					</p:commandButton>
+				</div>
+			</p:dialog>
+
+		</h:form>
+	</ui:define>
+
+</ui:composition>

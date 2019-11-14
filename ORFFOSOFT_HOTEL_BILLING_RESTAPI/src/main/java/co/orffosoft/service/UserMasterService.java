@@ -413,13 +413,13 @@ public class UserMasterService {
 				entityMaster.setCreatedBy(loginService.getCurrentUser());
 				entityMaster.setActiveStatus(true);
 				if (userMasterDto.getId() == null) {
-					entityMaster.setEntityMasterParent(null);
+//					entityMaster.setEntityMasterParent(null);
 				} else {
 
 				}
 				entityMaster = entityMasterRepository.save(entityMaster);
 				if (entityMaster == null) {
-					log.info("Store Information Not Saved Due to Exception Check Further");
+					log.error("Store Information Not Saved Due to Exception Check Further");
 					throw new RestException("User Details Not Saved");
 				}
 
@@ -440,10 +440,21 @@ public class UserMasterService {
 			} else {
 				request = userMasterRepository.save(userMaster);
 			}
+			
+			if (request == null) {
+				log.error(" <<== User Master Not Saved ===>> ");
+				throw new RestException(" <<==  User Master Not saved === > ");
+			}
 
 			userMasterDto.setId(request.getId());
 
 			RoleMaster roleMaster = roleMasterRepository.findAllActiveRoleMaster(request.getUserType().toString());
+			
+			if (roleMaster == null) {
+				log.error("Role Master Not Found For === "+ request.getUserType().toString());
+				throw new RestException("Role Master Not Found For === "+ request.getUserType().toString());
+			}
+			
 			if (roleMaster != null) {
 				RoleUser roleUser = new RoleUser();
 				roleUser.setUserId(request.getId());
