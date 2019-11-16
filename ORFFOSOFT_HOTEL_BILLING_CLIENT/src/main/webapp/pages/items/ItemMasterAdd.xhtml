@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	template="/pages/template/layout.xhtml">
+	<ui:define name="content">
+
+		<title>MarkSolution | Create Item</title>
+		<h:form id="prodForm">
+			<!-- Page Header -->
+			<div class="page-header page-header-default">
+				<div class="page-header-content">
+					<div class="page-title">
+						<h4>#{productVarietyMasterBean.action eq 'ADD' ?
+							msg['item_add'] : msg['item_edit']}</h4>
+						<ul class="breadcrumb">
+							<li><a href="#{request.contextPath}/pages/home.xhtml"><i
+									class="icon-home2 position-left"></i>#{msg['home']}</a></li>
+							<li>#{msg['online_master_menu']}</li>
+							<li class="active">#{productVarietyMasterBean.action eq
+								'ADD' ? msg['item_add'] : msg['item_edit']}</li>
+						</ul>
+						<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+					</div>
+					<ui:include src="/pages/pageHeadingElements.xhtml" />
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-6">
+					<h6 class="panel-title">
+						<b><h:outputText value=""></h:outputText></b> - #{msg['role']}(s)<a
+							class="heading-elements-toggle"><i class="icon-more"></i></a>
+					</h6>
+				</div>
+				<div class="col-lg-6 text-right">
+					<div class="form-group m-b-10">
+						<p:commandButton value="&#xea0e; #{msg['save']}"
+							title="#{msg['add']}" class="btn bg-success font-iconmoon"
+							action="#{itemMasterBean.saveItem}"
+							onclick="PF('progressDlg').show();"
+							oncomplete="PF('progressDlg').hide();">
+						</p:commandButton>
+						<p:commandButton value="&#xe912; #{msg['back']}"
+							title="#{msg['edit']}" class="btn bg-primary font-iconmoon"
+							onclick="PF('progressDlg').show();"
+							oncomplete="PF('progressDlg').hide();"
+							action="#{itemMasterBean.backItem}">
+						</p:commandButton>
+						<p:commandButton value="&#xe916;&nbsp;#{msg['clear']}"
+							title="#{msg['clear']}" class="btn bg-slate font-iconmoon"
+							onclick="PF('progressDlg').show();"
+							oncomplete="PF('progressDlg').hide();">
+						</p:commandButton>
+					</div>
+				</div>
+			</div>
+
+			<!-- Page Header End -->
+			<p:outputPanel id="prodPannal">
+				<div class="content ">
+					<div class="panel">
+						<div class="panel-heading bg-info">
+							<h6 class="panel-title">
+								Row Item <span class="pull-right text13"> (<span
+									class="text-danger">*</span> #{msg['mand_fields']})
+								</span>
+							</h6>
+						</div>
+
+						<div class="panel-body page-scroll-without-process p-t-10">
+							<h5 class="bord_bot m-t-0">
+								<span class="iform-title"><i class="fa fa-th-large m-r-5"></i>#{msg['general']}</span>
+							</h5>
+
+							<div class="row label-form ">
+								<div class="col-md-3">
+									<div class="form-group">
+										<p:outputLabel class="fa-input" value="#{msg['item_code']}" />
+										<p:outputLabel rendered="true" class="mand-red" value="*"></p:outputLabel>
+										<div class="input-group">
+											<span class="input-group-addon"><i class="icon-hash"></i></span>
+											<p:inputText id="vcode" class="form-control"
+												autocomplete="off"
+												required="#{not empty param[submit.clientId]}"
+												requiredMessage="#{msg['product_variety_code_req']}"
+												value="#{productVarietyMasterBean.productVarietyMasterDTO.code}"
+												onkeypress="return checkAlphaNumericSpace(event)"
+												disabled="#{productVarietyMasterBean.action eq 'VIEW'}">
+												<p:ajax event="keyup" update="yu" />
+											</p:inputText>
+										</div>
+										<h:message for="vcode" id="yu" class="validation-error-label" />
+										<p:tooltip for="vcode" rendered="true"
+											value="#{msg['product_variety_code_valid_msg']}"></p:tooltip>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<p:outputLabel class="fa-input" value="#{msg['item_name']}" />
+										<p:outputLabel rendered="true" class="mand-red" value="*"></p:outputLabel>
+										<div class="input-group">
+											<span class="input-group-addon"><i class="icon-tree6"></i></span>
+											<p:inputText id="itemNmae" class="form-control"
+												autocomplete="off"
+												required="#{not empty param[submit.clientId]}"
+												requiredMessage="#{msg['product_variety_name_req']}"
+												value="#{productVarietyMasterBean.productVarietyMasterDTO.name}"
+												onkeypress="return checkAlphaNumericSpecial(event)"
+												disabled="#{productVarietyMasterBean.action eq 'VIEW'}">
+												<p:ajax event="keyup" update="itemNmae" />
+											</p:inputText>
+										</div>
+									</div>
+								</div>
+
+
+								<div class="col-md-3">
+									<div class="form-group">
+										<p:outputLabel class="fa-input" value="UOM" for="uom" />
+										<p:outputLabel value="*" class="text-danger mand-symbol"
+											for="uom" rendered="#{empty param[submit.clientId]}" />
+										<div class="input-group">
+											<span class="input-group-addon"><i class="icon-design"></i></span>
+											<h:selectOneMenu id="uom"
+												value="#{productVarietyMasterBean.productVarietyMasterDTO.uomMaster}"
+												required="#{not empty param[submit.clientId]}"
+												autocomplete="off" requiredMessage="#{msg['uom_is_req']}"
+												styleClass="form-control" converter="#{entityConverter}"
+												disabled="#{productVarietyMasterBean.action eq 'VIEW'}">
+												<f:selectItem itemLabel="#{msg['select']}"
+													itemValue="#{null}" noSelectionOption="true" />
+												<f:selectItems var="entity4" itemValue="#{entity4}"
+													itemLabel="#{entity4.name}"
+													value="#{productVarietyMasterBean.uomMasterList}" />
+												<p:ajax event="change" update="uom" />
+											</h:selectOneMenu>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-md-3">
+									<div class="form-group">
+										<p:outputLabel class="fa-input" value="Item Type" for="type" />
+										<p:outputLabel value="*" class="text-danger mand-symbol"
+											for="type" rendered="#{empty param[submit.clientId]}" />
+										<div class="input-group">
+											<span class="input-group-addon"><i class="icon-design"></i></span>
+											<h:selectOneMenu id="type"
+												value="#{itemMasterBean.itemMasterAddDTO.itemTypeFk}"
+												required="#{not empty param[submit.clientId]}"
+												styleClass="form-control">
+												<f:selectItem itemLabel="#{msg['select']}"
+													itemValue="#{null}" noSelectionOption="true" />
+												<f:selectItem itemLabel="ROW ITEM" itemValue="1"></f:selectItem>
+												<f:selectItem itemLabel="SELLING ITEM" itemValue="2"></f:selectItem>
+												<p:ajax event="change" update="type,prodPannal"
+													listener="#{itemMasterBean.sellingPanelVisible}" />
+											</h:selectOneMenu>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+					<p:panel rendered="#{itemMasterBean.sellingRender}">
+						<div class="panel-heading bg-info">
+							<h6 class="panel-title">
+								Selling Item<span class="pull-right text13"> (<span
+									class="text-danger">*</span> #{msg['mand_fields']})
+								</span>
+							</h6>
+						</div>
+						<div class="row label-form ">
+							<div class="col-md-3">
+								<div class="form-group">
+									<p:outputLabel class="fa-input" value="Selling Price" />
+									<p:outputLabel rendered="true" class="mand-red" value="*"></p:outputLabel>
+									<div class="input-group">
+										<span class="input-group-addon"><i class="icon-tree6"></i></span>
+										<p:inputText id="vname" class="form-control"
+											autocomplete="off"
+											required="#{not empty param[submit.clientId]}"
+											requiredMessage="#{msg['product_variety_name_req']}"
+											value="#{productVarietyMasterBean.productVarietyMasterDTO.name}"
+											onkeypress="return checkAlphaNumericSpecial(event)"
+											disabled="#{productVarietyMasterBean.action eq 'VIEW'}">
+											<p:ajax event="keyup" update="msgvcode" />
+										</p:inputText>
+									</div>
+									<h:message for="vname" id="msgvcode"
+										class="validation-error-label" />
+									<p:tooltip for="vname" rendered="true"
+										value="#{msg['product_variety_name_valid_msg']}"></p:tooltip>
+								</div>
+							</div>
+
+							<div class="col-md-3">
+								<div class="form-group">
+									<p:outputLabel class="fa-input" value="Selling Charges" />
+									<p:outputLabel rendered="true" class="mand-red" value="*"></p:outputLabel>
+									<div class="input-group">
+										<span class="input-group-addon"><i class="icon-tree6"></i></span>
+										<p:inputText id="chargs" class="form-control"
+											autocomplete="off"
+											required="#{not empty param[submit.clientId]}"
+											requiredMessage="#{msg['product_variety_name_req']}"
+											value="#{productVarietyMasterBean.productVarietyMasterDTO.name}"
+											onkeypress="return checkAlphaNumericSpecial(event)"
+											disabled="#{productVarietyMasterBean.action eq 'VIEW'}">
+											<p:ajax event="keyup" update="chargs" />
+										</p:inputText>
+									</div>
+									<h:message for="chargs" id="cahge"
+										class="validation-error-label" />
+									<p:tooltip for="chargs" rendered="true"
+										value="#{msg['product_variety_name_valid_msg']}"></p:tooltip>
+								</div>
+							</div>
+
+							<div class="col-md-3">
+								<div class="form-group">
+									<p:outputLabel class="fa-input" value="Packaging Charges" />
+									<p:outputLabel rendered="true" class="mand-red" value="*"></p:outputLabel>
+									<div class="input-group">
+										<span class="input-group-addon"><i class="icon-tree6"></i></span>
+										<p:inputText id="pack" class="form-control" autocomplete="off"
+											required="#{not empty param[submit.clientId]}"
+											requiredMessage="#{msg['product_variety_name_req']}"
+											value="#{productVarietyMasterBean.productVarietyMasterDTO.name}"
+											onkeypress="return checkAlphaNumericSpecial(event)"
+											disabled="#{productVarietyMasterBean.action eq 'VIEW'}">
+											<p:ajax event="keyup" update="pack" />
+										</p:inputText>
+									</div>
+
+								</div>
+							</div>
+
+						</div>
+
+						<div class="panel-body p-0">
+							<p:dataTable id="itemTable" var="item" class="table"
+								widgetVar="roletablewdgt"
+								value="#{itemMasterBean.itemMasterDTOList}" lazy="false"
+								emptyMessage="#{msg['no_records_found']}"
+								paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+								rows="10" paginator="true" paginatorPosition="bottom"
+								tableStyleClass="" rowsPerPageTemplate="5,10,15"
+								rowIndexVar="idx">
+
+								<p:column headerText="Tax">
+									<h:outputText value="#{item.itemCode}">
+									</h:outputText>
+								</p:column>
+								<p:column headerText="Percentage(%)">
+									<h:outputText value="#{item.itemCode}">
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="Item Value">
+									<h:outputText value="#{item.itemCode}">
+									</h:outputText>
+								</p:column>
+
+							</p:dataTable>
+						</div>
+					</p:panel>
+
+				</div>
+			</p:outputPanel>
+		</h:form>
+		<script type="text/javascript">
+/*only numbers*/
+/* function validMobileNumber(evt){
+       var charCode = (evt.which) ? evt.which : event.keyCode
+       if (((charCode &lt; 48 || charCode &gt; 57)))
+          return false;
+       return true;
+ } */
+ /* for land phone number  */
+ function validLandPhoneNumber(evt){
+       var charCode = (evt.which) ? evt.which : event.keyCode
+       if ((charCode &gt; 31)  &amp;&amp; ((charCode &lt; 48 || charCode &gt; 57)) &amp;&amp; 
+       (charCode &lt; 45 || charCode &gt; 45))
+          return false;
+       return true;
+ }
+ 
+/*only numbers*/
+function checkNumbersOnly(evt){
+       var charCode = (evt.which) ? evt.which : event.keyCode
+       if (charCode != 8 &amp;&amp; (charCode &lt; 48 || charCode &gt; 57))
+          return false;
+       return true;
+    }
+function allowOnlyAlphabetsSpace(evt){
+	  var charCode = (evt.which) ? evt.which : event.keyCode
+	  if(charCode &gt; 32 &amp;&amp; (charCode &lt; 65 || charCode &gt; 91) &amp;&amp; (charCode &lt; 97 || charCode &gt; 123)){
+		  return false
+	  }
+	return true;
+}    
+    
+function checkAlphaNumericSpace(evt) /*Alphanumeric*/
+{
+	
+    var charCode = (evt.which) ? evt.which : event.keyCode
+    if (charCode &gt; 32 &amp;&amp; (charCode &lt; 48 || charCode &gt; 57) &amp;&amp;
+    
+    
+    
+    (charCode &gt; 32 &amp;&amp; (charCode &lt; 65 || charCode &gt; 90) &amp;&amp; (charCode &lt; 97 || charCode &gt; 122)) || charCode ==32 )
+       return false;
+   
+
+    return true;
+ }   
+ 
+ 
+function checkAlphaNumericSpecial(evt) /*Alphanumeric special*/
+{
+	
+    var charCode = (evt.which) ? evt.which : event.keyCode
+    if (charCode &gt; 42 &amp;&amp; (charCode &lt; 48 || charCode &gt; 57) &amp;&amp;
+   
+    (charCode &gt; 42 &amp;&amp; (charCode &lt; 65 || charCode &gt; 90) &amp;&amp; (charCode &lt; 97 || charCode &gt; 122)) )
+       return false;
+   
+
+    return true;
+ }
+ 
+</script>
+	</ui:define>
+</ui:composition>

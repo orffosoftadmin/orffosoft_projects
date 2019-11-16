@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/pages/template/layout.xhtml">
+	<ui:define name="content">
+		<title>InfoTex | Role</title>
+		<h:form id="roleListForm">
+			<div class="page-header page-header-default">
+				<div class="page-header-content">
+					<div class="page-title">
+						<h4>#{msg['role_list']}</h4>
+						<ul class="breadcrumb">
+							<li><a href="#{request.contextPath}/pages/home.xhtml"><i
+									class="icon-home2 position-left"></i>#{msg['home']}</a></li>
+							<li>#{msg['user_management']}</li>
+							<li class="active">#{msg['role_list']}</li>
+						</ul>
+						<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+					</div>
+					<ui:include src="/pages/pageHeadingElements.xhtml" />
+				</div>
+			</div>
+
+			<div class="content">
+				<div class="row">
+					<div class="col-lg-6">
+						<h6 class="panel-title">
+							<b><h:outputText value=""></h:outputText></b> - #{msg['role']}(s)<a
+								class="heading-elements-toggle"><i class="icon-more"></i></a>
+						</h6>
+					</div>
+					<div class="col-lg-6 text-right">
+						<div class="form-group m-b-10">
+							<p:commandButton value="&#xea0e; #{msg['add']}"
+								title="#{msg['add']}" class="btn bg-success font-iconmoon"
+								action="#{itemMasterBean.addItem}"
+								onclick="PF('progressDlg').show();"
+								oncomplete="PF('progressDlg').hide();">
+							</p:commandButton>
+							<p:commandButton value="&#xe912; #{msg['edit']}"
+								title="#{msg['edit']}" class="btn bg-primary font-iconmoon"
+								onclick="PF('progressDlg').show();"
+								oncomplete="PF('progressDlg').hide();"
+								action="#{itemMasterBean.editItem}">
+							</p:commandButton>
+							<p:commandButton value="&#xea18; #{msg['view']}"
+								title="#{msg['view']}" rendered="false"
+								class="btn bg-info heading-btn  font-iconmoon"
+								onclick="PF('progressDlg').show();"
+								oncomplete="PF('progressDlg').hide();">
+							</p:commandButton>
+							<p:commandButton value="&#xe99e; #{msg['delete']}"
+								title="#{msg['delete']}" class="btn bg-danger font-iconmoon"
+								actionListener="#{roleBean.deleteRole}"
+								onclick="PF('progressDlg').show();"
+								oncomplete="PF('progressDlg').hide();">
+							</p:commandButton>
+							<p:commandButton value="&#xe916;&nbsp;#{msg['clear']}"
+								action="#{roleBean.clear}" title="#{msg['clear']}"
+								class="btn bg-slate font-iconmoon"
+								onclick="PF('progressDlg').show();"
+								oncomplete="PF('progressDlg').hide();">
+							</p:commandButton>
+						</div>
+					</div>
+				</div>
+				<p:panel id="panel1">
+					<div class="row label-form ">
+						<div class="col-md-3">
+							<div class="form-group">
+								<p:outputLabel class="fa-input" value="Item Code" for="itemCode" />
+								<p:outputLabel value="*" class="text-danger mand-symbol"
+									for="itemCode" rendered="#{empty param[submit.clientId]}" />
+								<div class="input-group">
+									<span class="input-group-addon"><i class="icon-design"></i></span>
+									<h:selectOneMenu id="itemCode"
+										value="#{productVarietyMasterBean.productVarietyMasterDTO.uomMaster}"
+										required="#{not empty param[submit.clientId]}"
+										autocomplete="off" requiredMessage="#{msg['uom_is_req']}"
+										styleClass="form-control" converter="#{entityConverter}"
+										disabled="#{productVarietyMasterBean.action eq 'VIEW'}">
+										<f:selectItem itemLabel="#{msg['select']}" itemValue="#{null}"
+											noSelectionOption="true" />
+										<f:selectItems var="entity4" itemValue="#{entity4}"
+											itemLabel="#{entity4.name}"
+											value="#{productVarietyMasterBean.uomMasterList}" />
+										<p:ajax event="change" update="itemCode" />
+									</h:selectOneMenu>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<p:outputLabel class="fa-input" value="#{msg['item_name']}" />
+								<p:outputLabel rendered="true" class="mand-red" value="*"></p:outputLabel>
+								<div class="input-group">
+									<span class="input-group-addon"><i class="icon-tree6"></i></span>
+									<p:inputText id="vname" class="form-control" autocomplete="off"
+										required="#{not empty param[submit.clientId]}"
+										requiredMessage="#{msg['product_variety_name_req']}"
+										value="#{productVarietyMasterBean.productVarietyMasterDTO.name}"
+										onkeypress="return checkAlphaNumericSpecial(event)"
+										disabled="#{productVarietyMasterBean.action eq 'VIEW'}">
+										<p:ajax event="keyup" update="msgvcode" />
+									</p:inputText>
+								</div>
+								<h:message for="vname" id="msgvcode"
+									class="validation-error-label" />
+								<p:tooltip for="vname" rendered="true"
+									value="#{msg['product_variety_name_valid_msg']}"></p:tooltip>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<p:outputLabel class="fa-input" value="Item Type" for="itemType" />
+								<p:outputLabel value="*" class="text-danger mand-symbol"
+									for="itemType" rendered="#{empty param[submit.clientId]}" />
+								<div class="input-group">
+									<span class="input-group-addon"><i class="icon-design"></i></span>
+									<h:selectOneMenu id="itemType"
+										value="#{productVarietyMasterBean.productVarietyMasterDTO.uomMaster}"
+										required="#{not empty param[submit.clientId]}"
+										autocomplete="off" requiredMessage="#{msg['uom_is_req']}"
+										styleClass="form-control" converter="#{entityConverter}"
+										disabled="#{productVarietyMasterBean.action eq 'VIEW'}">
+										<f:selectItem itemLabel="#{msg['select']}" itemValue="#{null}"
+											noSelectionOption="true" />
+										<f:selectItems var="entity4" itemValue="#{entity4}"
+											itemLabel="#{entity4.name}"
+											value="#{productVarietyMasterBean.uomMasterList}" />
+										<p:ajax event="change" update="itemType" />
+									</h:selectOneMenu>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<p:outputLabel class="fa-input" value="Item UOM" for="itemUom" />
+								<p:outputLabel value="*" class="text-danger mand-symbol"
+									for="itemUom" rendered="#{empty param[submit.clientId]}" />
+								<div class="input-group">
+									<span class="input-group-addon"><i class="icon-design"></i></span>
+									<h:selectOneMenu id="itemUom"
+										value="#{productVarietyMasterBean.productVarietyMasterDTO.uomMaster}"
+										required="#{not empty param[submit.clientId]}"
+										autocomplete="off" requiredMessage="#{msg['uom_is_req']}"
+										styleClass="form-control" converter="#{entityConverter}"
+										disabled="#{productVarietyMasterBean.action eq 'VIEW'}">
+										<f:selectItem itemLabel="#{msg['select']}" itemValue="#{null}"
+											noSelectionOption="true" />
+										<f:selectItems var="entity4" itemValue="#{entity4}"
+											itemLabel="#{entity4.name}"
+											value="#{productVarietyMasterBean.uomMasterList}" />
+										<p:ajax event="change" update="itemUom" />
+									</h:selectOneMenu>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-3">
+							<div class="form-group">
+								<p:outputLabel class="fa-input" value="Status" for="status" />
+								<p:outputLabel value="*" class="text-danger mand-symbol"
+									for="status" rendered="#{empty param[submit.clientId]}" />
+								<div class="input-group">
+									<span class="input-group-addon"><i class="icon-design"></i></span>
+									<h:selectOneMenu id="status"
+										value="#{productVarietyMasterBean.productVarietyMasterDTO.uomMaster}"
+										required="#{not empty param[submit.clientId]}"
+										autocomplete="off" requiredMessage="#{msg['uom_is_req']}"
+										styleClass="form-control" converter="#{entityConverter}"
+										disabled="#{productVarietyMasterBean.action eq 'VIEW'}">
+										<f:selectItem itemLabel="#{msg['select']}" itemValue="#{null}"
+											noSelectionOption="true" />
+										<f:selectItems var="entity4" itemValue="#{entity4}"
+											itemLabel="#{entity4.name}"
+											value="#{productVarietyMasterBean.uomMasterList}" />
+										<p:ajax event="change" update="status" />
+									</h:selectOneMenu>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="col-md-3">
+							<div class="form-group">
+								<p:outputLabel class="fa-input" value="Record Count" />
+								<div class="input-group">
+									<span class="input-group-addon"><i class="icon-hash"></i></span>
+									<p:outputLabel id="sgst" maxlength="16" class="form-control"
+										value="#{productVarietyMasterBean.productVarietyMasterDTO.cgstPercentage}">
+										<p:ajax event="keyup" class="validation-error-label" />
+										<p:keyFilter regEx="/[0-9\s]/i"></p:keyFilter>
+									</p:outputLabel>
+								</div>
+							</div>
+						</div>
+
+
+						<p:outputPanel
+							rendered="#{productVarietyMasterBean.action eq 'EDIT'}">
+							<div class="col-lg-3 col-md-3 col-sm-3">
+								<p:outputLabel value="#{msg['status']}" />
+								<div class="form-group">
+									<h:selectOneMenu id="city"
+										value="#{productVarietyMasterBean.productVarietyMasterDTO.status}"
+										styleClass="form-control">
+										<f:selectItem itemLabel="#{msg['active']}" itemValue="true" />
+										<f:selectItem itemLabel="#{msg['inactive']}" itemValue="false" />
+									</h:selectOneMenu>
+								</div>
+								<!-- input-group -->
+							</div>
+						</p:outputPanel>
+
+					</div>
+
+					<div class="panel-body p-0">
+						<p:dataTable id="itemTable" var="item" class="table"
+							widgetVar="roletablewdgt" rowKey="#{item.itemPk}"
+							value="#{itemMasterBean.itemMasterDTOList}" lazy="false"
+							emptyMessage="#{msg['no_records_found']}"
+							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rows="10" paginator="true" paginatorPosition="bottom"
+							tableStyleClass="" rowsPerPageTemplate="5,10,15"
+							rowIndexVar="idx">
+							<p:column headerText="#{msg['select']}" selectionMode="single" />
+							<p:column headerText="Item Code">
+								<h:outputText value="#{item.itemCode}">
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Item Name">
+								<h:outputText value="#{item.itemCode}">
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Item Type">
+								<h:outputText value="#{item.itemCode}">
+								</h:outputText>
+							</p:column>
+							<p:column headerText="UOM">
+								<h:outputText value="#{item.itemCode}">
+									<f:convertDateTime timeZone="GMT+05:30" pattern="dd-MMM-YYYY" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Created By">
+								<h:outputText value="#{item.itemCode}">
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Created Date">
+								<h:outputText value="#{item.itemCode}">
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Modify By">
+								<h:outputText value="#{item.itemCode}">
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Modify Date">
+								<h:outputText value="#{item.itemCode}">
+								</h:outputText>
+							</p:column>
+
+						</p:dataTable>
+					</div>
+				</p:panel>
+			</div>
+
+
+
+			<p:dialog header="#{msg['confirmation_delete_title']}"
+				draggable="false" modal="true"
+				styleClass="p-0 overlay-pop modal-dialog" closable="true"
+				width="30%" widgetVar="confirmRoleDelete" showEffect="fade"
+				hideEffect="fade" closeOnEscape="true" resizable="false">
+				<div class="modal-body">
+					<h:outputText value="#{msg['confirmation_delete']}" />
+				</div>
+				<div class="modal-footer m-t-10">
+					<p:commandButton value="&#xed6a;&nbsp;#{msg['no']}"
+						title="#{msg['no']}"
+						styleClass="btn bg-slate heading-btn font-iconmoon"
+						oncomplete="PF('confirmRoleDelete').hide()" />
+					<p:commandButton ajax="false"
+						styleClass="btn bg-success heading-btn font-iconmoon"
+						title="#{msg['yes']}" value="&#xed6e;&nbsp;#{msg['yes']}"
+						action="#{roleBean.deleteRoleConfirm}"
+						oncomplete="PF('confirmRoleDelete').hide()">
+					</p:commandButton>
+				</div>
+			</p:dialog>
+
+		</h:form>
+	</ui:define>
+
+</ui:composition>
