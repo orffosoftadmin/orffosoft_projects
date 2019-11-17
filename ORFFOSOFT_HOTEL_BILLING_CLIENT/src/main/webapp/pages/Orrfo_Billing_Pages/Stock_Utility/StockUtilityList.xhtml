@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/pages/template/layout.xhtml">
+	<ui:define name="content">
+		<title>InfoTex | Role</title>
+		<h:form id="stockForm">
+			<div class="page-header page-header-default">
+				<div class="page-header-content">
+					<div class="page-title">
+						<h4>#{msg['role_list']}</h4>
+						<ul class="breadcrumb">
+							<li><a href="#{request.contextPath}/pages/home.xhtml"><i
+									class="icon-home2 position-left"></i>#{msg['home']}</a></li>
+							<li>#{msg['user_management']}</li>
+							<li class="active">#{msg['role_list']}</li>
+						</ul>
+						<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+					</div>
+					<ui:include src="/pages/pageHeadingElements.xhtml" />
+				</div>
+			</div>
+
+			<div class="content">
+				<div class="row">
+					<div class="col-lg-6">
+						<h6 class="panel-title">
+							<b><h:outputText value=""></h:outputText></b> - #{msg['role']}(s)<a
+								class="heading-elements-toggle"><i class="icon-more"></i></a>
+						</h6>
+					</div>
+					<div class="col-lg-6 text-right">
+						<div class="form-group m-b-10">
+							<p:commandButton value="&#xea0e; #{msg['add']}"
+								title="#{msg['add']}" class="btn bg-success font-iconmoon"
+								action="#{stockUtilityBean.addStockUtilityItem}"
+								onclick="PF('progressDlg').show();"
+								oncomplete="PF('progressDlg').hide();">
+							</p:commandButton>
+							<p:commandButton value="&#xe912; #{msg['edit']}"
+								title="#{msg['edit']}" class="btn bg-primary font-iconmoon"
+								onclick="PF('progressDlg').show();"
+								oncomplete="PF('progressDlg').hide();"
+								action="#{stockUtilityBean.editStockUtilityItem}">
+							</p:commandButton>
+							<p:commandButton value="&#xea18; #{msg['view']}"
+								title="#{msg['view']}"
+								action="#{stockUtilityBean.viewStockUtilityItem}"
+								class="btn bg-info heading-btn  font-iconmoon"
+								onclick="PF('progressDlg').show();"
+								oncomplete="PF('progressDlg').hide();">
+							</p:commandButton>
+						</div>
+					</div>
+				</div>
+				<p:panel id="stockList">
+					<div class="row label-form ">
+						<div class="col-md-3">
+							<div class="form-group">
+								<p:outputLabel class="fa-input" value="Stock Utility Id:"
+									for="stockId" />
+								<p:outputLabel value="*" class="text-danger mand-symbol"
+									for="stockId" rendered="#{empty param[submit.clientId]}" />
+								<div class="input-group">
+									<span class="input-group-addon"><i class="icon-design"></i></span>
+									<h:selectOneMenu id="stockId"
+										value="#{productVarietyMasterBean.productVarietyMasterDTO.uomMaster}"
+										required="#{not empty param[submit.clientId]}"
+										autocomplete="off" requiredMessage="#{msg['uom_is_req']}"
+										styleClass="form-control" converter="#{entityConverter}"
+										disabled="#{productVarietyMasterBean.action eq 'VIEW'}">
+										<f:selectItem itemLabel="#{msg['select']}" itemValue="#{null}"
+											noSelectionOption="true" />
+										<f:selectItems var="entity4" itemValue="#{entity4}"
+											itemLabel="#{entity4.name}"
+											value="#{productVarietyMasterBean.uomMasterList}" />
+										<p:ajax event="change" update="stockId" />
+									</h:selectOneMenu>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-3">
+							<div class="form-group">
+								<p:outputLabel class="fa-input" value="From Date:"
+									for="fromdate" />
+								<p:outputLabel value="*" class="text-danger mand-symbol"
+									for="fromdate" rendered="#{empty param[submit.clientId]}" />
+								<div class="input-group">
+									<span class="input-group-addon"><i class="icon-design"></i></span>
+									<p:calendar id="fromdate" styleClass="form-control" />
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-3">
+							<div class="form-group">
+								<p:outputLabel class="fa-input" value="From Date:" for="todate" />
+								<p:outputLabel value="*" class="text-danger mand-symbol"
+									for="todate" rendered="#{empty param[submit.clientId]}" />
+								<div class="input-group">
+									<span class="input-group-addon"><i class="icon-design"></i></span>
+									<p:calendar id="todate" styleClass="form-control" />
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-3">
+							<div class="form-group">
+								<p:outputLabel class="fa-input" value="Record Count" />
+								<p:outputLabel rendered="true" class="mand-red" value="*"></p:outputLabel>
+								<div class="input-group">
+									<p:outputLabel id="count" autocomplete="off"
+										required="#{not empty param[submit.clientId]}"
+										requiredMessage="#{msg['product_variety_name_req']}" value="5"
+										onkeypress="return checkAlphaNumericSpecial(event)"
+										disabled="#{productVarietyMasterBean.action eq 'VIEW'}">
+										<p:ajax event="keyup" update="count" />
+									</p:outputLabel>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-3"></div>
+						<div class="col-md-3"></div>
+						<div class="col-md-3"></div>
+						<div class="col-md-3">
+							<p:commandButton value="&#xea0e; Search" title="#{msg['add']}"
+								class="btn bg-success font-iconmoon"
+								action="#{stockUtilityBean.saveStockUtilityItem}"
+								onclick="PF('progressDlg').show();"
+								oncomplete="PF('progressDlg').hide();">
+							</p:commandButton>
+							<p:commandButton value="&#xe916;&nbsp; Clear"
+								action="#{roleBean.clear}" title="#{msg['clear']}"
+								class="btn bg-slate font-iconmoon"
+								onclick="PF('progressDlg').show();"
+								oncomplete="PF('progressDlg').hide();">
+							</p:commandButton>
+						</div>
+
+					</div>
+
+					<div class="panel-body p-0">
+						<p:dataTable id="stockTable" var="stock" class="table"
+							widgetVar="roletablewdgt" rowKey="#{stock.stockPk}"
+							selection="#{stockUtilityBean.selectionDTO}"
+							value="#{stockUtilityBean.stockUtilityDTOList}" lazy="false"
+							emptyMessage="#{msg['no_records_found']}"
+							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rows="10" paginator="true" paginatorPosition="bottom"
+							tableStyleClass="" rowsPerPageTemplate="5,10,15"
+							rowIndexVar="idx">
+							<p:column headerText="#{msg['select']}" selectionMode="single" />
+							<p:column headerText="Stock Id">
+								<h:outputText value="#{stock.stockId}">
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Used Date">
+								<h:outputText value="#{stock.usedDateStr}">
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Created By">
+								<h:outputText value="#{stock.createdByName}">
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Created Date">
+								<h:outputText value="#{stock.createdDateStr}">
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Modify By">
+								<h:outputText value="#{stock.modifyByName}">
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Modify Date">
+								<h:outputText value="#{stock.modifyDateStr}">
+								</h:outputText>
+							</p:column>
+
+						</p:dataTable>
+					</div>
+				</p:panel>
+			</div>
+
+
+		</h:form>
+	</ui:define>
+
+</ui:composition>
