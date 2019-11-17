@@ -40,22 +40,11 @@
 				</div>
 				<div class="col-lg-6 text-right">
 					<div class="form-group m-b-10">
-						<p:commandButton value="&#xea0e; #{msg['save']}"
-							title="#{msg['add']}" class="btn bg-success font-iconmoon"
-							action="#{itemMasterBean.saveItem}"
-							onclick="PF('progressDlg').show();"
-							oncomplete="PF('progressDlg').hide();">
-						</p:commandButton>
 						<p:commandButton value="&#xe912; #{msg['back']}"
 							title="#{msg['edit']}" class="btn bg-primary font-iconmoon"
 							onclick="PF('progressDlg').show();"
 							oncomplete="PF('progressDlg').hide();"
 							action="#{stockUtilityBean.backStockUtilityItem}">
-						</p:commandButton>
-						<p:commandButton value="&#xe916;&nbsp;#{msg['clear']}"
-							title="#{msg['clear']}" class="btn bg-slate font-iconmoon"
-							onclick="PF('progressDlg').show();"
-							oncomplete="PF('progressDlg').hide();">
 						</p:commandButton>
 					</div>
 				</div>
@@ -137,7 +126,6 @@
 								</div>
 
 							</div>
-							
 						</div>
 
 						<div class="panel-body p-0">
@@ -154,16 +142,16 @@
 									</h:outputText>
 								</p:column>
 								<p:column headerText="Item">
-									<p:outputLabel>
-									</p:outputLabel>
-								</p:column>
+									<p:inputText>
+									</p:inputText>
+								</p:column>		
 								<p:column headerText="UOM">
-									<p:outputLabel>
-									</p:outputLabel>
+									<p:inputText>
+									</p:inputText>
 								</p:column>
 								<p:column headerText="Cost">
-									<p:outputLabel>
-									</p:outputLabel>
+									<p:inputText>
+									</p:inputText>
 								</p:column>
 								<p:column headerText="Used Qty">
 									<p:inputText>
