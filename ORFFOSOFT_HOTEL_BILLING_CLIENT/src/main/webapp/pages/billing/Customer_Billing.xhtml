@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/pages/template/layout.xhtml">
+	<ui:define name="content">
+		<title>Orffo Bills | Customer Billing </title>
+		<h:form id="stockListForm">
+		<f:metadata>
+			<f:metadata>
+				<f:viewAction action="#{billingBean.init}"
+					onPostBack="true" />
+			</f:metadata>
+		
+				<f:viewAction action="#{itemStockBean.init}"
+					onPostBack="true" />
+			</f:metadata>
+			<div class="page-header page-header-default">
+				<div class="page-header-content">
+					<div class="page-title">
+						<h4>#{msg['customer_billing']}</h4>
+						<ul class="breadcrumb">
+							<li><a href="#{request.contextPath}/pages/home.xhtml"><i
+									class="icon-home2 position-left"></i>#{msg['home']}</a></li>
+							<li>#{msg['user_management']}</li>
+							<li class="active">#{msg['customer_billing']}</li>
+						</ul>
+						<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+					</div>
+					<ui:include src="/pages/pageHeadingElements.xhtml" />
+				</div>
+			</div>
+
+			<div class="content">
+				<div class="row">
+					<div class="col-lg-6">
+						<h6 class="panel-title">
+							<b><h:outputText></h:outputText></b> - #{msg['customer_billing']}(s)<a
+								class="heading-elements-toggle"><i class="icon-more"></i></a>
+						</h6>
+					</div>
+					<div class="col-lg-6 text-right">
+						<div class="form-group m-b-10">
+							<p:commandButton value="&#xe912; #{msg['histor_btn']}"
+								title="#{msg['edit']}" class="btn bg-primary font-iconmoon"
+								action="#{itemStockBean.modifyPage}" update="growls"
+								onclick="PF('progressDlg').show();"
+								oncomplete="PF('progressDlg').hide();">
+							</p:commandButton>
+								<p:commandButton value="&#xe916;&nbsp;#{msg['clear']}"
+							title="#{msg['clear']}" class="btn bg-slate font-iconmoon"
+							onclick="PF('progressDlg').show();"
+							oncomplete="PF('progressDlg').hide();">
+						</p:commandButton>
+					
+						</div>
+					</div>
+				</div>
+
+				<div class="panel-body page-scroll">
+				<p:panel id="mainpanel">
+					<div class="row">
+						
+				<div class="col-md-3">
+						<p:dataTable var="item" id="table" class="table"
+									widgetVar="table" tableStyleClass="" lazy="true"
+									selection="#{billingBean.selectData}"
+									value="#{billingBean.selling_itemList}"
+									rowKey="#{item.item}" rowIndexVar="idx"
+									emptyMessage="#{msg['no_record_found']}">
+							<p:column headerText="#{item.item_name}" filterBy="#{stock.stock_id}">
+								<h:outputText value="#{item.item_name}" />
+							</p:column>
+							<p:column width="2">
+							<p:commandButton value="&#xe912;Add"
+								title="Add Item" class="btn bg-primary font-iconmoon"
+								action="#{billingBean.addBillingItem(item)}" update="stockListForm:basic,stockListForm:outpanel">
+							</p:commandButton>
+							</p:column>
+							</p:dataTable>
+				</div>
+			
+				<div class="col-md-9">
+				<p:panel id="basic" style="margin-bottom:20px">
+						<p:panelGrid columns="8" styleClass="ui-noborder" style="width: 100%">
+							<p:column>
+								<p:column>
+									<p:outputLabel value="#{msg['billing_no']} :" />
+								</p:column>
+								<p:column>
+									<p:outputLabel value="#{itemStockBean.stock_head.stock_id}" />
+								</p:column>
+							</p:column>
+							
+								<p:column>
+								<p:column>
+									<p:outputLabel value="#{msg['billing_date']} :" />
+								</p:column>
+								<p:column>
+									<p:outputLabel value="#{itemStockBean.stock_head.stock_date_str}"/>
+								</p:column>
+							</p:column>
+							
+							<p:column></p:column>
+							<p:column></p:column>
+							<p:column></p:column>
+							<p:column></p:column>
+							<p:column></p:column>
+							<p:column></p:column>
+						</p:panelGrid>
+						<p:dataTable var="stock" value="#{billingBean.bill_head.billing_ItemList}"
+							rowIndexVar="indx" id="billingitem">
+							<p:column headerText="sl No." width="2">
+								<h:outputText value="#{indx+1}" style="text-align:center"  />
+							</p:column>
+
+							<p:column headerText="#{msg['stock_Item']}">
+								<h:outputText value="#{stock.item_name}" />
+							</p:column>
+							
+							<p:column headerText="#{msg['stock_Item_uom']}">
+								<h:outputText value="#{stock.item_uom_name}" />
+							</p:column>
+							
+							<p:column headerText="#{msg['stock_Item_cost']}" >
+								<h:outputText value="#{stock.item_cost}" />
+							</p:column>
+							
+							<p:column headerText="#{msg['billing_oredr_quantity']}" >
+								<p:inputText value="#{stock.item_quantity}" style="text-align:right" />
+							</p:column>
+							<p:column headerText="#{msg['billing_oredr_price']}" >
+								<h:outputText value="#{stock.billing_price}" style="text-align:right"  />
+							</p:column>
+					
+						</p:dataTable>
+				</p:panel>
+				</div>
+				
+			
+				<p:panel id="outpanel">
+				<div class="col-md-4">
+				
+				<p:fieldset>
+				<p:panelGrid styleClass="ui-noborder" columns="2" style="width:100%">
+				<p:inputText placeholder="Enter Bill No"></p:inputText>
+				<p:outputLabel value=""></p:outputLabel>
+				<p:column>
+				<p:commandButton value="&#xe916;&nbsp;#{msg['clear']}"
+								action="#{roleBean.clear}" title="#{msg['clear']}"
+								class="btn bg-slate font-iconmoon"
+								onclick="PF('progressDlg').show();"
+								oncomplete="PF('progressDlg').hide();">
+							</p:commandButton>
+					<p:commandButton value="&#xe916;&nbsp;#{msg['clear']}"
+								action="#{roleBean.clear}" title="#{msg['clear']}"
+								class="btn bg-slate font-iconmoon"
+								onclick="PF('progressDlg').show();"
+								oncomplete="PF('progressDlg').hide();">
+							</p:commandButton>
+							
+				</p:column>
+				<p:column></p:column>
+							
+                         <p:inputTextarea rows="5" cols="50" autoResize="false" />
+                        
+				</p:panelGrid>
+				</p:fieldset>
+				</div>
+				<div class="col-md-6">
+				<p:fieldset>
+					<p:panelGrid styleClass="ui-noborder" columns="2" style="width: 100%">
+				<p:outputLabel value="Billing Items"></p:outputLabel>
+				<p:outputLabel value=""></p:outputLabel>
+				<p:separator style="width: 110%" /><p:separator />
+				
+				<p:outputLabel value=""></p:outputLabel>
+				<p:column>
+			<p:dataTable var="stock" value="#{billingBean.bill_head.billing_ItemList}"
+							rowIndexVar="indx" >
+							<p:column>
+								<h:outputText value="#{stock.item_name}" />
+							</p:column>
+						
+							<p:column>
+								<h:outputText value="#{stock.billing_price}" style="text-align:right"  />
+							</p:column>
+					
+				</p:dataTable>
+				</p:column>
+				
+				<p:outputLabel value=""></p:outputLabel>
+				<p:column>
+				<p:column></p:column>
+				<p:panelGrid styleClass="ui-noborder" columns="2" >
+				<p:outputLabel value="Total : " style="text-align:right"></p:outputLabel>
+				<p:outputLabel value="0.00" style="text-align:right"></p:outputLabel>
+				</p:panelGrid>
+				</p:column>
+				
+				
+				
+				<p:separator style="width: 110%" /><p:separator />
+				
+				<p:outputLabel value="Tax Detail"></p:outputLabel>
+				<p:outputLabel value=""></p:outputLabel>
+				<p:separator style="width: 110%" /><p:separator />
+				
+				<p:outputLabel value=""></p:outputLabel>
+				<p:column>
+				
+				</p:column>
+					<p:outputLabel value=""></p:outputLabel>
+				<p:column>
+				<p:column></p:column>
+				<p:panelGrid styleClass="ui-noborder" columns="2" >
+				<p:outputLabel value="Total : " style="text-align:right"></p:outputLabel>
+				<p:outputLabel value="0.00" style="text-align:right"></p:outputLabel>
+				</p:panelGrid>
+				</p:column>
+				<p:separator style="width: 110%" /><p:separator />
+				
+					<p:outputLabel value="Other charges"></p:outputLabel>
+				<p:outputLabel value=""></p:outputLabel>
+				<p:separator style="width: 110%" /><p:separator />
+				
+				<p:outputLabel value=""></p:outputLabel>
+				<p:column>
+				
+				</p:column>
+					<p:outputLabel value=""></p:outputLabel>
+				<p:column>
+				<p:column></p:column>
+				<p:panelGrid styleClass="ui-noborder" columns="2" >
+				<p:outputLabel value="Total : " style="text-align:right"></p:outputLabel>
+				<p:outputLabel value="0.00" style="text-align:right"></p:outputLabel>
+				</p:panelGrid>
+				</p:column>
+				<p:separator style="width: 110%" /><p:separator />
+				
+				<p:outputLabel value=""></p:outputLabel>
+				<p:column>
+				<p:column></p:column>
+				<p:panelGrid styleClass="ui-noborder" columns="2" >
+				<p:outputLabel value="Total : " style="text-align:right"></p:outputLabel>
+				<p:outputLabel value="0.00" style="text-align:right"></p:outputLabel>
+				</p:panelGrid>
+				</p:column>
+				<p:separator style="width: 110%" /><p:separator />
+				
+							<p:commandButton value="&#xe912; #{msg['generate_bill']}"
+								title="#{msg['edit']}" class="btn bg-primary font-iconmoon"
+								action="#{itemStockBean.modifyPage}" update="growls"
+								onclick="PF('progressDlg').show();"
+								oncomplete="PF('progressDlg').hide();">
+							</p:commandButton>
+								<p:commandButton value="&#xe916;&nbsp;#{msg['clear']}"
+							title="#{msg['clear']}" class="btn bg-slate font-iconmoon"
+							onclick="PF('progressDlg').show();"
+							oncomplete="PF('progressDlg').hide();">
+						</p:commandButton>
+				
+				</p:panelGrid>
+				</p:fieldset>
+				</div>
+				
+				
+				</p:panel>
+				
+		            </div>
+					</p:panel>
+				</div>
+			</div>
+
+			<p:dialog header="#{msg['confirmation_delete_title']}"
+				draggable="false" modal="true"
+				styleClass="p-0 overlay-pop modal-dialog" closable="true"
+				width="30%" widgetVar="confirmRoleDelete" showEffect="fade"
+				hideEffect="fade" closeOnEscape="true" resizable="false">
+				<div class="modal-body">
+					<h:outputText value="#{msg['confirmation_delete']}" />
+				</div>
+				<div class="modal-footer m-t-10">
+					<p:commandButton value="&#xed6a;&nbsp;#{msg['no']}"
+						title="#{msg['no']}"
+						styleClass="btn bg-slate heading-btn font-iconmoon"
+						oncomplete="PF('confirmRoleDelete').hide()" />
+					<p:commandButton ajax="false"
+						styleClass="btn bg-success heading-btn font-iconmoon"
+						title="#{msg['yes']}" value="&#xed6e;&nbsp;#{msg['yes']}"
+						action="#{roleBean.deleteRoleConfirm}"
+						oncomplete="PF('confirmRoleDelete').hide()">
+					</p:commandButton>
+				</div>
+			</p:dialog>
+
+		</h:form>
+	</ui:define>
+
+</ui:composition>

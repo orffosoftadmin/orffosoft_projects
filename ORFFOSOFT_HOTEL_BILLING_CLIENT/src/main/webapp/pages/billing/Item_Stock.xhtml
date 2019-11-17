@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/pages/template/layout.xhtml">
+	<ui:define name="content">
+		<title>Orffo Bills | Item Stock</title>
+		<h:form id="stockListForm">
+		<f:metadata>
+				<f:viewAction action="#{itemStockBean.init}"
+					onPostBack="true" />
+			</f:metadata>
+			<div class="page-header page-header-default">
+				<div class="page-header-content">
+					<div class="page-title">
+						<h4>#{msg['stock_list']}</h4>
+						<ul class="breadcrumb">
+							<li><a href="#{request.contextPath}/pages/home.xhtml"><i
+									class="icon-home2 position-left"></i>#{msg['home']}</a></li>
+							<li>#{msg['user_management']}</li>
+							<li class="active">#{msg['stock_list']}</li>
+						</ul>
+						<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+					</div>
+					<ui:include src="/pages/pageHeadingElements.xhtml" />
+				</div>
+			</div>
+
+			<div class="content">
+				<div class="row">
+					<div class="col-lg-6">
+						<h6 class="panel-title">
+							<b><h:outputText></h:outputText></b> - #{msg['stock']}(s)<a
+								class="heading-elements-toggle"><i class="icon-more"></i></a>
+						</h6>
+					</div>
+					<div class="col-lg-6 text-right">
+						<div class="form-group m-b-10">
+							<p:commandButton value="&#xea0e; #{msg['add']}"
+								title="#{msg['add']}" class="btn bg-success font-iconmoon"
+								action="#{itemStockBean.addPage}" onclick="PF('progressDlg').show();"
+								oncomplete="PF('progressDlg').hide();">
+							</p:commandButton>
+							<p:commandButton value="&#xe912; #{msg['edit']}"
+								title="#{msg['edit']}" class="btn bg-primary font-iconmoon"
+								action="#{itemStockBean.modifyPage}" update="growls"
+								onclick="PF('progressDlg').show();"
+								oncomplete="PF('progressDlg').hide();">
+							</p:commandButton>
+							<p:commandButton value="&#xea18; #{msg['view']}"
+								title="#{msg['view']}"
+								action="#{itemStockBean.viedPage}"
+								class="btn bg-info heading-btn  font-iconmoon"
+								onclick="PF('progressDlg').show();"
+								oncomplete="PF('progressDlg').hide();">
+							</p:commandButton>
+					
+						</div>
+					</div>
+				</div>
+
+				<div class="panel-body page-scroll">
+					<div class="row">
+					<p:panel id="basic" style="margin-bottom:20px">
+						<p:panelGrid columns="4" styleClass="ui-noborder" style="width: 100%">
+							<p:column>
+								<div class="form-group ">
+									<p:outputLabel value="#{msg['stock_id']}" />
+									<span class="text-danger">*</span>
+									<div class="input-group">
+										<span class="input-group-addon"><i
+											class="icon-user-check"></i></span>
+										<p:selectOneMenu id="stockid" styleClass="form-control int-drop">
+										<f:selectItem itemLabel="Please Select" itemValue="ADMIN"></f:selectItem>
+											<f:selectItem itemLabel="ST20191117SVM001" itemValue="ADMIN"></f:selectItem>
+											<f:selectItem itemLabel="ST20191117SVM002" itemValue="CASHIER"></f:selectItem>
+										</p:selectOneMenu>
+									</div>
+									<h:message id="stockidmsg" for="stockid"
+										class="validation-error-label" />
+									<p:focus for="stockid" />
+									<p:tooltip for="stockid" value="#{msg['role_name_valid_msg']}" />
+								</div>
+							</p:column>
+							
+								<p:column>
+								<div class="form-group ">
+									<p:outputLabel value="#{msg['stock_from_date']}" />
+									<span class="text-danger">*</span>
+									<div class="input-group">
+										<span class="input-group-addon"><i
+											class="icon-user-check"></i></span>
+										  <p:calendar id="stockFromdate" placeholder="dd-mmm-yyyy"
+												pattern="dd-MMM-yyyy">
+												<p:ajax event="dateSelect" />
+											</p:calendar>
+									</div>
+									<h:message id="stockFromdatemsg" for="stockFromdate"
+										class="validation-error-label" />
+									<p:focus for="stockFromdate" />
+									<p:tooltip for="stockFromdate" value="#{msg['role_name_valid_msg']}" />
+								</div>
+							</p:column>
+							
+								<p:column>
+								<div class="form-group">
+									<p:outputLabel value="#{msg['stock_to_date']}" />
+									<span class="text-danger">*</span>
+									<div class="input-group">
+										<span class="input-group-addon"><i
+											class="icon-user-check"></i></span>
+										 <p:calendar id="stockTodate" placeholder="dd-mmm-yyyy"
+												pattern="dd-MMM-yyyy">
+												<p:ajax event="dateSelect" />
+											</p:calendar>
+									</div>
+									<h:message id="stockTodatemsg" for="stockTodate"
+										class="validation-error-label" />
+									<p:focus for="stockTodate" />
+									<p:tooltip for="stockTodate" value="#{msg['role_name_valid_msg']}" />
+								</div>
+							</p:column>
+							
+		
+							<p:column>
+								<div class="form-group ">
+									<p:outputLabel value="#{msg['stock_status']}" />
+									<span class="text-danger">*</span>
+									<div class="input-group">
+										<span class="input-group-addon"><i
+											class="icon-user-check"></i></span>
+										<p:selectOneMenu id="stockstatus"
+											styleClass="form-control int-drop">
+											<f:selectItem itemLabel="Please Select" itemValue=""></f:selectItem>
+											<f:selectItem itemLabel="Active" itemValue="A"></f:selectItem>
+											<f:selectItem itemLabel="Inactive" itemValue="I"></f:selectItem>
+										</p:selectOneMenu>
+									</div>
+									<h:message id="stockstatusmsg" for="stockstatus"
+										class="validation-error-label" />
+									<p:focus for="stockstatus" />
+									<p:tooltip for="stockstatus"
+										value="#{msg['role_name_valid_msg']}" />
+								</div>
+							</p:column>
+							<p:column></p:column>
+							<p:column></p:column>
+								<p:column>
+								<p:column>
+									<p:outputLabel value="#{msg['stock_record_count']} :" />
+								</p:column>
+								<p:column>
+									<p:outputLabel value="2" />
+								</p:column>
+							</p:column>
+							<p:column>
+							<p:commandButton value="&#xe92e; #{msg['stock_search']}"
+								title="#{msg['stock_search']}" class="btn bg-danger font-iconmoon"
+								onclick="PF('progressDlg').show();"
+								oncomplete="PF('progressDlg').hide();">
+							</p:commandButton>
+							
+							<p:commandButton value="&#xe916;&nbsp;#{msg['clear']}"
+								action="#{roleBean.clear}" title="#{msg['clear']}"
+								class="btn bg-slate font-iconmoon"
+								onclick="PF('progressDlg').show();"
+								oncomplete="PF('progressDlg').hide();">
+							</p:commandButton>
+							</p:column>
+
+						</p:panelGrid>
+									<p:dataTable var="stock"
+						id="table" class="table"
+									widgetVar="table" tableStyleClass="" lazy="true"
+									selection="#{itemStockBean.selectData}"
+									value="#{itemStockBean.stock_detail_list}"
+									rowKey="#{stock.stock_head_pk}"
+									paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									paginator="true" paginatorPosition="bottom"
+									rowsPerPageTemplate="5,10,15" rows="10" rowIndexVar="idx"
+									emptyMessage="#{msg['no_record_found']}">
+									
+							  <p:column headerText="Select" selectionMode="single" style="width:16px;text-align:center"/>
+
+							<p:column headerText="#{msg['stock_id']}">
+								<h:outputText value="#{stock.stock_id}" />
+							</p:column>
+
+							<p:column headerText="#{msg['stock_date']}">
+								<h:outputText value="#{stock.stock_date_str}" />
+							</p:column>
+							
+							<p:column headerText="#{msg['stock_status']}">
+								<h:outputText value="#{stock.stock_status}" />
+							</p:column>
+							
+							<p:column headerText="#{msg['stock_created_by']}" >
+								<h:outputText value="#{stock.created_by_name}"  />
+							</p:column>
+							<p:column headerText="#{msg['stock_created_date']}" >
+								<h:outputText value="#{stock.created_by_date_str}"  />
+							</p:column>
+							<p:column headerText="#{msg['stock_modify_by']}" >
+								<h:outputText value="#{stock.modify_by_name}"  />
+							</p:column>
+
+							<p:column headerText="#{msg['stock_modify_date']}" >
+								<h:outputText value="#{stock.modify_by_date_str}" />
+							</p:column>
+						</p:dataTable>
+						</p:panel>
+
+			
+
+					</div>
+				</div>
+			</div>
+
+			<p:dialog header="#{msg['confirmation_delete_title']}"
+				draggable="false" modal="true"
+				styleClass="p-0 overlay-pop modal-dialog" closable="true"
+				width="30%" widgetVar="confirmRoleDelete" showEffect="fade"
+				hideEffect="fade" closeOnEscape="true" resizable="false">
+				<div class="modal-body">
+					<h:outputText value="#{msg['confirmation_delete']}" />
+				</div>
+				<div class="modal-footer m-t-10">
+					<p:commandButton value="&#xed6a;&nbsp;#{msg['no']}"
+						title="#{msg['no']}"
+						styleClass="btn bg-slate heading-btn font-iconmoon"
+						oncomplete="PF('confirmRoleDelete').hide()" />
+					<p:commandButton ajax="false"
+						styleClass="btn bg-success heading-btn font-iconmoon"
+						title="#{msg['yes']}" value="&#xed6e;&nbsp;#{msg['yes']}"
+						action="#{roleBean.deleteRoleConfirm}"
+						oncomplete="PF('confirmRoleDelete').hide()">
+					</p:commandButton>
+				</div>
+			</p:dialog>
+
+		</h:form>
+	</ui:define>
+
+</ui:composition>

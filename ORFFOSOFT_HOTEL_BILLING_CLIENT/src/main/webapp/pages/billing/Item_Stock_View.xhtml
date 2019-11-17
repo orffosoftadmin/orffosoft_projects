@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	template="/pages/template/layout.xhtml">
+	<ui:define name="content">
+		<h:form id="stockViewForm">
+			<title>Orffo Bills  | Item Stock</title>
+
+			<div class="page-header page-header-default">
+				<div class="page-header-content">
+					<div class="page-title">
+                         <h4>#{msg['edit_role']}</h4>
+						<ul class="breadcrumb">
+							<li><a href="#{request.contextPath}/pages/home.xhtml"><i
+									class="icon-home2 position-left"></i>#{msg['home']}</a></li>
+							<li>#{msg['user_management']}</li>
+
+                          <li class="active"> #{msg['stock_add']}</li>
+						</ul>
+						<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+					</div>
+					<ui:include src="/pages/pageHeadingElements.xhtml" />
+				</div>
+			</div>
+
+			<div class="content">
+						<p:panel id="head" style="margin-bottom:20px">
+						<p:panelGrid columns="4" styleClass="ui-noborder" style="width: 100%">
+							<p:column>
+								<p:column>
+									<p:outputLabel value="#{msg['stock_id']} :" />
+								</p:column>
+								<p:column>
+									<p:outputLabel value="#Auto" />
+								</p:column>
+							</p:column>
+							
+								<p:column>
+								<p:column>
+									<p:outputLabel value="#{msg['stock_date']} :" />
+								</p:column>
+								<p:column>
+									<p:outputLabel value="nkbsjkf" />
+								</p:column>
+							</p:column>
+							
+							<p:column></p:column>
+							<p:column></p:column>
+						</p:panelGrid>
+			
+							<p:dataTable var="stock">
+							<p:column headerText="sl No." width="2">
+								<h:outputText value="#{car.id}" />
+							</p:column>
+
+							<p:column headerText="#{msg['stock_id']}"  >
+								<h:outputText value="#{car.year}" />
+							</p:column>
+
+							<p:column headerText="#{msg['stock_Item']}">
+								<h:outputText value="#{car.brand}" />
+							</p:column>
+							
+							<p:column headerText="#{msg['stock_Item_uom']}">
+								<h:outputText value="#{car.brand}" />
+							</p:column>
+							
+							<p:column headerText="#{msg['stock_Item_cost']}" >
+								<h:outputText value="#{car.color}" />
+							</p:column>
+							<p:column headerText="#{msg['stock_Item_total_price']}" >
+								<h:outputText value="#{car.color}" />
+							</p:column>
+							<p:column headerText="#{msg['stock_Item_total_quantity']}" >
+								<h:outputText value="#{car.color}" />
+							</p:column>
+
+							<p:column headerText="#{msg['stock_status']}" >
+								<h:outputText value="#{car.color}" />
+							</p:column>
+						</p:dataTable>
+						</p:panel>
+						
+
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						<h6 class="panel-title">
+							#{msg['stock']}<span class="pull-right text-13">(<span
+								class="text-danger">*</span> #{msg['marked_field_mandatory']})
+							</span>
+						</h6>
+					</div>
+				
+				</div>
+			</div>
+		</h:form>
+		<script type="text/javascript"
+			src="#{request.contextPath}/assets/js/core/libraries/jquery.min.js"></script>
+
+	</ui:define>
+
+</ui:composition>
