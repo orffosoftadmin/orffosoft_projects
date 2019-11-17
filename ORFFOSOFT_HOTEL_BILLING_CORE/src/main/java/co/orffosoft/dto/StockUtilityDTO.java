@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class StockUtilityDTO {
 	
-	private int stockPk;
+	private int stockPk ;
 	private String stockId;
 	private String usedDateStr;
 	private int createdBy;
